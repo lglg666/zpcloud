@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+    .pad{
+      padding-top: 3.5rem;
+    }
+
+</style>
+
+<body >
+  <header class="aui-bar aui-bar-nav" id="header">
+      <a class="aui-pull-left"  onclick="fh()">
+          <i class="iconfont icon-arrow-left aui-iconfont"></i>
+      </a>
+      <div class="aui-title">通知公告</div>
+  </header>
+<div class="pad"></div>
+<div class="ll">
+  <input type="text" v-model="msg">
+   {{msg}}
+</div>
+</body>
+<script type="text/javascript" src="../../script/vue/vue.min.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script>
+new Vue({
+ el: '.ll',
+ data: {
+ msg  : '',
+ }
+})
+H.ready(function() {
+  $base.showLoading();
+
+  setTimeout(function(){
+    $base.closeLoading();
+  },100)
+});
+
+
+</script>
+
+</html>

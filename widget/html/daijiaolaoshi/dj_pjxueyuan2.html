@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .top {
+        line-height: 2.5rem;
+        background: #fff;
+        color: #333;
+        font-family: PingFangSC-Regular;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .clo-99 {
+        color: #999999;
+        font-family: PingFangSC-Regular;
+    }
+
+    .clo-459 {
+        color: #4593DE;
+        font-family: PingFangSC-Regular;
+    }
+
+    .clo-33 {
+        color: #333333;
+        font-family: PingFangSC-Regular;
+    }
+
+    .pj {
+        width: 100%;
+        height: 100%;
+    }
+
+    .pc {
+        float: left;
+        height: 100%;
+        padding-top: 0.8rem;
+    }
+
+    .uip {
+        background: #fff;
+        width: 100%;
+        line-height: 3rem;
+        float: left;
+        height: 100%;
+    }
+
+    .dd {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    a {
+        display: inline-block;
+        background: #F1F1F1;
+        padding: 0.5rem;
+        height: 2rem;
+        width: 100%;
+        line-height: 1rem;
+        color: #333333;
+    }
+
+    .a2 {
+        display: inline-block;
+        width: 8.5rem;
+        line-height: 1rem;
+        height: 2rem;
+    }
+
+    .bt {
+        text-align: center;
+        float: left;
+        width: 100%;
+        margin-top: 0.5rem;
+        background: #fff;
+        padding: 0.5rem 0 0.5rem 0;
+    }
+
+    .bt button {
+        width: 80%;
+        text-align: center;
+        border-radius: 4px;
+        height: 2.5rem;
+        font-size: 0.85rem;
+        outline: none;
+        border: 0;
+        background: #4593DE;
+        color: #fff;
+    }
+
+    .active {
+        background: #FFBC2D !important;
+        color: #fff !important;
+    }
+
+    .nav {
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .mar {
+        margin-top: 3.5rem;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left aui-bar-nav" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">评价学员</div>
+    </header>
+    <div class="pad"></div>
+    <div class="nav">
+        <p class="aui-font-size-16 aui-padded-l-15">住院医师：<span id="xy_name"></span></p>
+    </div>
+    <div id="vm">
+        <div v-for="item in list">
+            <div class="pj">
+                <div class="top aui-padded-l-10">
+                    <!-- 劳动纪律情况 -->
+                    {{item.topname}} ({{item.score}}分)
+                </div>
+                <div class="uip  aui-font-size-12">
+                    <div class="d1 dd  aui-col-xs-12 ">
+                        <!-- 能遵守医院及科室各项规章制度，按时上下班，有事能请假 -->
+                        <a :class="['ff',item.score==item1.score?'active':'']" v-for="item1 in item.list" v-tap=['setScore',item1.score] v-on:click="item.score=item1.score">{{item1.navname}}</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class=" bt" tapmode v-on:click="submit()" v-if=" did == false">
+            <button>提交</button>
+        </div>
+    </div>
+
+
+
+</body>
+<script src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui-toast.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script>
+    _list = [{
+        topname: "劳动纪律情况",
+        score:0,
+        list: [{
+            id: 0,
+            navname: '能遵守医院及科室各项规章制度，按时上下班，有事能请假',
+            score: 10,
+        }, {
+            id: 0,
+            navname: '基本上能遵守各项规章制度，偶有迟到、早退，有事能请假',
+            score: 8,
+        }, {
+            id: 0,
+            navname: '不遵守规章制度，经常迟到、早退，有事不请假',
+            score: 6,
+        }]
+    }, {
+        topname: "工作情况",
+        score:0,
+        list: [{
+            id: 0,
+            navname: '工作认真、负责，服从科室安排',
+            score: 10,
+        }, {
+            id: 0,
+            navname: '工作认真、责任心较强，基本上能服从科室安排',
+            score: 8,
+        }, {
+            id: 0,
+            navname: '工作不认真，责任心不强，不服从科室安排',
+            score: 6,
+        }]
+    }, {
+        topname: "服务情况",
+        score:0,
+        list: [{
+            id: 0,
+            navname: '服务热情、周到，态度好',
+            score: 10,
+        }, {
+            id: 0,
+            navname: '一般',
+            score: 8,
+        }, {
+            id: 0,
+            navname: '较差',
+            score: 6,
+        }]
+    }, {
+        topname: "学习情况",
+        score:0,
+        list: [{
+            id: 0,
+            navname: '刻苦学习，勤学好问',
+            score: 10,
+        }, {
+            id: 0,
+            navname: '一般',
+            score: 8,
+        }, {
+            id: 0,
+            navname: '学习不主动',
+            score: 6,
+        }]
+    }, {
+        topname: "医德医风",
+        score:0,
+        list: [{
+            id: 0,
+            navname: '医德高尚，视病人如亲人，不以医谋私',
+            score: 10,
+        }, {
+            id: 0,
+            navname: '医德尚可，能关心病人，不以医谋私',
+            score: 8,
+        }, {
+            id: 0,
+            navname: '医德较差，不关心病人，以医谋私',
+            score: 6,
+        }]
+    }, {
+        topname: "体格检查",
+        score:0,
+        list: [{
+            id: 0,
+            navname: '体检全面、系统，手法正确熟练，能准确查出阳性体征',
+            score: 10,
+        }, {
+            id: 0,
+            navname: '体检基本全面、系统，手法基本正确，偶尔遗漏阳性体征',
+            score: 8,
+        }, {
+            id: 0,
+            navname: '体检不够全面、系统',
+            score: 6,
+        }]
+    }, {
+        topname: "理论基础",
+        score:0,
+        list: [{
+            id: 0,
+            navname: '基础较好，理论知识较扎实',
+            score: 10,
+        }, {
+            id: 0,
+            navname: '基础尚可，理论知识欠佳',
+            score: 8,
+        }, {
+            id: 0,
+            navname: '基础较差，理论知识较差',
+            score: 6,
+        }]
+    }, {
+        topname: "技能操作",
+        score:0,
+        list: [{
+            id: 0,
+            navname: '按实习要求，熟练掌握各种常用临床技能操作程序，操作规范',
+            score: 10,
+        }, {
+            id: 0,
+            navname: '基本掌握各种常用临床技能操作程序，操作较规范',
+            score: 8,
+        }, {
+            id: 0,
+            navname: '不能掌握各种常用临床技能操作程序，操作不规范',
+            score: 6,
+        }]
+    }, {
+        topname: "团队意识合作精神",
+        score:0,
+        list: [{
+            id: 0,
+            navname: '较强的团队意识，能与各级医护人员友好合作',
+            score: 10,
+        }, {
+            id: 0,
+            navname: '一般',
+            score: 8,
+        }, {
+            id: 0,
+            navname: '没有团队意识，不能很好地与别人合作',
+            score: 6,
+        }]
+    }, {
+        topname: "病历书写情况	",
+        score:0,
+        list: [{
+            id: 0,
+            navname: '病历书写认真、及时，字迹清楚，语句通顺，逻辑性较强',
+            score: 10,
+        }, {
+            id: 0,
+            navname: '病历书写一般',
+            score: 8,
+        }, {
+            id: 0,
+            navname: '病历书写不认真、不及时，字迹潦草，语句不通',
+            score: 6,
+        }]
+    }]
+    var vm = new Vue({
+        el: "#vm",
+        data: {
+            list: _list,
+            did:false,
+        },
+        methods: {
+          setScore:function (t,score) {
+            t.score = score;
+          },
+          submit:function () {
+            console.log(this.list[0].list[0].score);
+            var ids = [];
+            var scores = [];
+            var content = "";
+            var projects = [];
+            var sum = 0;
+            var _this = this;
+            this.list.forEach(function(t) {
+                t.list.forEach(function(v) {
+                    sum += v.score;
+                })
+            });
+            for (var item in vm.list) {
+                    var scitem = vm.list[item];
+                    projects.push(vm.list[item].score);
+            }
+
+            var token = H.getStorage('token');
+            var id = H.getStorage("xy_id");
+            var data = {
+                token: token,
+                action:"do",
+                uid: id,
+                projects: projects,
+            }
+            console.log(JSON.stringify(data));
+            var url = '/Hospital/index.php/api/teacher/evaluate';
+            $base.ajax(url, data, function(ret) {
+              console.log(JSON.stringify(ret));
+                if (ret.status == 1) {
+                    //输出成功信息
+                    $base.toast(ret.errmsg);
+                    api.sendEvent({
+                        name: 'dj_pjxy',
+                        extra: {
+                            key1: 'value1',
+                        }
+                    });
+                    setTimeout(function() {
+                        api.closeWin({});
+                    },500)
+
+                } else {
+                    //输出错误信息
+                    $base.toast(ret.errmsg);
+                }
+            })
+          }
+        },
+        computed:{
+          sum_score: function() {
+              var sum = 0;
+              this.list.forEach(function(t) {
+                  vm.list.forEach(function(v) {
+                      sum += v.score;
+                  })
+              })
+              return sum + "分";
+          }
+        }
+
+    })
+
+    function fh() {
+        api.closeWin({});
+    }
+
+
+
+    H.ready(function() {
+    var name=  H.getStorage("pjxy_name");
+    document.getElementById("xy_name").innerHTML = name;
+        var address = "/Hospital/index.php/api/teacher/evaluate";
+        var token = H.getStorage('token');
+        var id = H.getStorage("xy_yeid");
+        var ajaxData = {
+            token: token,
+            action: 'detail',
+            yetid:id,
+        };
+        console.log(id);
+        $base.get(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret));
+            console.log(JSON.stringify(ret.data));
+              if (ret.data &&  ret.data.id > 0) {
+                  //已评价
+                  //一维数组
+                  var scoreitems = ret.data.scoreitem;
+
+
+          console.log(scoreitems);
+                  var scoreitems_index = 0;
+                  for (var item in vm.list) {
+                          var scitem = vm.list[item];
+                          vm.list[item].score = scoreitems[scoreitems_index++];
+                  }
+                  vm.did = true;
+                  //vm._list
+              } else {
+                  //未评价
+              }
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        })
+    })
+
+    var toast = new auiToast({})
+
+    function showDefault(type) {
+        switch (type) {
+            case "success":
+                toast.success({
+                    title: "提交成功",
+                    duration: 2000
+                });
+
+        }
+
+    }
+</script>
+
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+    <link rel="stylesheet" href="../../css/style/style.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .sun_con {
+        background-color: #fff;
+        line-height: 1.5rem;
+    }
+
+    .btn {
+        position: relative;
+        text-align: right;
+        right: .5rem;
+        line-height: 1.5rem;
+        margin: .5rem auto;
+    }
+
+    .btn button {
+        border-radius: 0.1rem;
+        padding: 0 1rem;
+        width: auto;
+        height: 1.6rem;
+        line-height: 1.6rem;
+    }
+
+    .btn_lan {
+        background: #fff;
+        border: 1px solid #4593DE;
+        color: #4593DE;
+    }
+
+    .btn_hong {
+        background: #fff;
+        border: 1px solid #FF6655;
+        color: #FF6655;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfonst"></i>
+        </a>
+        <div class="aui-title">出科小结</div>
+    </header>
+    <div class="pad"></div>
+    <div class="sum ">
+        <!-- 无数据 -->
+        <template v-if="list == false">
+        <div class="aui-text-center "id="wsj">
+            <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+            <p class="aui-font-size-16">暂无数据</p>
+        </div>
+      </template>
+
+        <div v-for="item in list" v-else>
+            <div class="sun_con aui-padded-10 aui-margin-15">
+                <p class="aui-font-size-16 clo-33">账号：<span class="clo-99">{{item.account}}</span></p>
+                <p class="aui-font-size-16 clo-33">住院医生：<span class="clo-99">{{item.name}}</span></p>
+                <p class="aui-font-size-16 clo-33">专业：<span class="clo-99">{{item.professioname}}</span></p>
+                <p class="aui-font-size-16 clo-33">学历：<span class="clo-99">{{item.educationame}}</span></p>
+                <p class="aui-font-size-16 clo-33">类型：<span class="clo-99">{{item.typename}}</span></p>
+                <p class="aui-font-size-16 clo-33">届数：<span class="clo-99">{{item.grade}}</span></p>
+                <p class="aui-font-size-16 clo-33">规培状态：<span class="clo-99">{{item.rotate_status}}</span></p>
+                <div class=" aui-margin-b-10 " style="height:1.3rem;">
+                    <p class="clo-lan  aui-col-xs-6 aui-font-size-16">带教已审批：<span class="clo-lan">{{item.passnum}}</span></p>
+                    <p class="clo-lan aui-col-xs-6 aui-font-size-16">带教未审批：<span class="clo-lan">{{item.notpassnum}}</span></p>
+                </div>
+                <div class="aui-hr aui-margin-b-15"></div>
+                <div class="btn">
+                    <button class="btn_lan aui-font-size-14" tapmode v-on:click="Sum1(item.id)">查看详情</button>
+                    <button class="btn_hong aui-font-size-14 aui-margin-l-10" tapmode v-on:click="sc(item.id)">一键审核</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/aui-tab.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script>
+    var vm = new Vue({
+        el: ".sum",
+        data: {
+            list: []
+        },
+        methods: {
+            sc: (id) => {
+                var address = "/Hospital/index.php/api/teacher/summarize";
+                var token = H.getStorage('token');
+                var ajaxData = {
+                    token: token,
+                    action: "allpass",
+                    id: id,
+                };
+                $base.submit(address, ajaxData, function(ret) {
+                    console.log(JSON.stringify(ret));
+                    if (ret.status == 1) {
+                        $base.toast(ret.errmsg);
+                        setTimeout(function() {
+                            location.reload();
+                        }, 500)
+                    } else {
+                        $base.toast(ret.errmsg);
+                    }
+                }, function(err) {
+                    console.log(JSON.stringify(err));
+                });
+            },
+            Sum1: (id) => {
+                H.setStorage("dj_Summary_id", id);
+                api.openWin({
+                    name: 'dj_Sum1',
+                    url: '../daijiaolaoshi/dj_Summary1.html',
+                    pageParam: {
+                        name: 'test'
+                    }
+                });
+            }
+        }
+    })
+    H.ready(function() {
+        var address = "/Hospital/index.php/api/teacher/summarize";
+        var token = H.getStorage('token');
+        var ajaxData = {
+            token: token,
+        };
+        $base.get(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret));
+            vm.list = ret.data;
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        })
+    })
+
+    function fh() {
+        api.closeWin({});
+
+    }
+</script>
+
+</html>

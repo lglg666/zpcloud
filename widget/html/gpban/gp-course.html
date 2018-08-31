@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href="../../css/aui.css">
+<link rel="stylesheet" type="text/css" href="../../css/iconfont/iconfont.css">
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .Title {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        background-color: #fff;
+    }
+
+    .Title input {
+        width: 80%;
+        height: 100%;
+        text-align: right;
+        padding-right: 0.5rem;
+    }
+
+    .content {
+        background-color: #fff;
+        height: auto;;
+    }
+
+    .content textarea {
+        line-height: 1.5rem;
+        height: 12rem;
+    }
+
+    .list {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        background-color: #fff;
+    }
+
+    .list input {
+        width: 60%;
+        height: 100%;
+        text-align: right;
+        padding-right: 0.5rem;
+        line-height: 2.5rem;
+    }
+
+    .list .inp {
+        width: 70%;
+        line-height: 2.5rem;
+    }
+
+    .bt {
+        text-align: center;
+        background: #fff;
+        padding: 0.5rem 0 0.5rem 0;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .bt button {
+        width: 80%;
+        text-align: center;
+        border-radius: 4px;
+        height: 2.5rem;
+        font-size: 0.85rem;
+        outline: none;
+        border: 0;
+        background: #4593de;
+        color: #fff;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">发布课程</div>
+    </header>
+    <div class="pad"></div>
+    <div class="vue">
+        <div class="Title">
+            <p class="clo-33 aui-pull-left aui-font-size-18 aui-padded-l-10">标题</p>
+            <input type="text" placeholder="请输入标题" class="aui-pull-right clo-99" value="" v-model="item.title">
+        </div>
+        <div class="content">
+            <textarea name="name" rows="8" cols="80" placeholder="请输入公告内容" value="" class="aui-padded-t-10 aui-padded-l-10" v-model="item.content"></textarea>
+        </div>
+
+
+        <div class="list  aui-margin-t-15">
+            <p class="clo-33 aui-pull-left aui-font-size-16 aui-padded-l-10">上课时间</p>
+            <i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-16"></i>
+            <input type="datetime-local" name="" value="" class="inp aui-text-right" v-model="item.start_time">
+        </div>
+        <div class="list  aui-margin-t-15">
+            <p class="clo-33 aui-pull-left aui-font-size-16 aui-padded-l-10">上课地点</p>
+            <input type="text" placeholder="请输入地点" class="aui-pull-right clo-99" value="" v-model="item.place">
+        </div>
+
+        <div class="list  aui-margin-t-15">
+            <p class="clo-33 aui-pull-left aui-font-size-16 aui-padded-l-10">课程人数</p>
+            <input type="text" placeholder="请输入人数" class="aui-pull-right clo-99" value="" v-model="item.people_num">
+        </div>
+
+        <div class="list  aui-margin-t-15">
+            <p class="clo-33 aui-pull-left aui-font-size-16 aui-padded-l-10">讲课老师</p>
+            <input type="text" placeholder="请输入讲师" class="aui-pull-right clo-99" value="" v-model="item.course_teacher">
+        </div>
+
+        <div class=" bt aui-margin-t-15" tapmode v-on:click="submit()">
+            <button>发布</button>
+        </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/aui-toast.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script>
+    var vm = new Vue({
+        el: '.vue',
+        data: {
+            item: {
+              start_time:"2018-05-11T00:00",
+            }
+        },
+        methods: {
+            submit: function() {
+                console.log(JSON.stringify(this.item.title));
+                var address = "/Hospital/index.php/api/user/course";
+                var token = H.getStorage('token');
+                var ajaxData = {
+                    token: token,
+                    action: "pub",
+                    name: this.item.title,
+                    content: this.item.content,
+                    start_time: this.item.start_time,
+                    place: this.item.place,
+                    people_num: this.item.people_num,
+                    course_teacher: this.item.course_teacher,
+
+                };
+                $base.get(address, ajaxData, function(ret) {
+                    console.log(JSON.stringify(ret));
+                      if(ret.status == 1){
+                        $base.toast(ret.errmsg)
+                      }else{
+                        $base.toast(ret.errmsg)
+                      }
+                }, function(err) {
+                    console.log(JSON.stringify(err));
+                });
+            }
+        },
+    })
+    H.ready(function() {
+      //处理点击延迟
+      $(function() {
+          FastClick.attach(document.body);
+      });
+    })
+
+    var toast = new auiToast({})
+
+    function showDefault(type) {
+        switch (type) {
+            case "success":
+                toast.success({
+                    title: "发布成功",
+                    duration: 2000
+                });
+                break;
+        }
+    }
+
+    function fh() {
+        api.closeWin({});
+
+    }
+</script>
+
+</html>

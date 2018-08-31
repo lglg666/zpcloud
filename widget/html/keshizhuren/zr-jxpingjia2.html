@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+      <link rel="stylesheet" type="text/css" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+header {
+    position: fixed !important;
+    width: 100%;
+    font-size: 1rem;
+}
+
+header i {
+    color: #222222;
+    font-size: 1rem !important;
+    font-weight: 600;
+}
+.pad{
+  padding-top: 3.5rem;
+}
+
+    .ki {
+          margin-top: 3rem;
+        height: 1.5rem;
+        line-height: 1.5rem;
+    }
+
+    ul {
+        padding-left: 0;
+        overflow: hidden;
+    }
+
+    .xx ul li {
+        float: left;
+        list-style: none;
+        width: 1.3rem;
+        height: 1.3rem;
+        background: url(../../image/evaluation_btn.png) no-repeat;
+        margin: 0 0.3rem;
+        margin-top: 0.5rem;
+        background-size: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .zw {
+        background: #fff;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .g1 {
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .zw ul {
+        height: 3rem;
+        line-height: 3rem;
+    }
+    .back {
+        background: url(../../image/evaluation_btn_s.png)no-repeat !important;
+        width: 1.3rem !important;
+        height: 1.3rem !important;
+        background-size: 100% !important;
+    }
+
+    .xx {
+        position: relative;
+    }
+
+    .xx p {
+        position: absolute;
+        right: 6rem;
+        top: 0.7rem;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">李小呈的评价</div>
+    </header>
+  <div class="pad"></div>
+    <div class="aui-text-left aui-margin-t-15 aui-margin-b-15 aui-padded-l-10 aui-font-size-16 ki">
+        教学设计
+    </div>
+    <div class="zw">
+        <p class="g1 aui-font-size-16 aui-padded-l-10">符合学科课程标准和教材的要求及学生实际</p>
+        <div class="xx" id="star">
+            <input type="text" name="score" value="1" style="display:none;">
+            <ul id="ul">
+                <li class="back"></li>
+                <li class="back"></li>
+                <li class="back"></li>
+                <li class="back"></li>
+                <li></li>
+            </ul>
+            <p>较好</p>
+        </div>
+    </div>
+    <div class="zw">
+        <p class="g1 aui-font-size-16 aui-padded-l-10">符合学科课程标准和教材的要求及学生实际</p>
+        <div class="xx" id="star">
+            <input type="text" name="score" value="1" style="display:none;">
+            <ul id="ul">
+                <li class="back"></li>
+                <li class="back"></li>
+                <li class="back"></li>
+                <li class="back"></li>
+                <li></li>
+            </ul>
+            <p>良好</p>
+        </div>
+    </div>
+    <div class="zw">
+        <p class="g1 aui-font-size-16 aui-padded-l-10">符合学科课程标准和教材的要求及学生实际</p>
+        <div class="xx" id="star">
+            <input type="text" name="score" value="1" style="display:none;">
+            <ul id="ul">
+                <li class="back"></li>
+                <li class="back"></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <p>较差</p>
+        </div>
+    </div>
+
+
+
+    <div class="aui-text-left aui-margin-t-15 aui-margin-b-15 aui-padded-l-10 aui-font-size-16 ki">
+        教学实施
+    </div>
+    <div class="zw">
+        <p class="g1 aui-font-size-16 aui-padded-l-10">符合学科课程标准和教材的要求及学生实际</p>
+        <div class="xx" id="star">
+            <input type="text" name="score" value="1" style="display:none;">
+            <ul id="ul">
+                <li class="back"></li>
+                <li class="back"></li>
+                <li class="back"></li>
+                <li class="back"></li>
+                <li class="back"></li>
+            </ul>
+            <p>非常好</p>
+        </div>
+    </div>
+    <div class="zw">
+        <p class="g1 aui-font-size-16 aui-padded-l-10">符合学科课程标准和教材的要求及学生实际</p>
+        <div class="xx" id="star">
+            <input type="text" name="score" value="1" style="display:none;">
+            <ul id="ul">
+                <li class="back"></li>
+                <li class="back"></li>
+                <li class="back"></li>
+                <li class="back"></li>
+                <li></li>
+            </ul>
+            <p>较好</p>
+        </div>
+    </div>
+    <div class="zw">
+        <p class="g1 aui-font-size-16 aui-padded-l-10">符合学科课程标准和教材的要求及学生实际</p>
+        <div class="xx" id="star">
+            <input type="text" name="score" value="1" style="display:none;">
+            <ul id="ul">
+                <li class="back"></li>
+                <li class="back"></li>
+                <li class="back"></li>
+                <li class="back"></li>
+                <li class="back"></li>
+            </ul>
+            <p>非常好</p>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript" src="../../script/aui-toast.js"></script>
+<script src="../../script/Zepto.min.js"></script>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script>
+H.ready(function () {
+
+})
+
+    function fh() {
+        api.closeWin({
+            name: 'zr-jxpj2'
+        });
+
+    }
+</script>
+
+</html>

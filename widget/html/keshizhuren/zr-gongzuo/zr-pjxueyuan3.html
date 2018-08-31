@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../../css/aui.css">
+    <link rel="stylesheet" href="../../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .inp {
+        background: #fff;
+        position: relative;
+    }
+
+    .inp textarea {
+        padding-top: 0.5rem;
+        font-size: 0.7rem;
+        color: #9e9e9e;
+        height: 6rem;
+    }
+
+    .inp p {
+        position: absolute;
+        right: 0.2rem;
+        bottom: 0;
+    }
+
+    .bc {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        background: #fff;
+        font-family: PingFang-SC-Medium;
+    }
+
+    .bt {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .bg-lan {
+        background: #4593DE;
+        color: #fff;
+    }
+
+    .bg-bai {
+        background: #fff;
+    }
+
+    .col-h {
+        color: #FFBC2D;
+    }
+
+    .bottom {
+        height: 2.5rem;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">住院医师各科轮转培训考核表</div>
+    </header>
+    <div class="pad"></div>
+    <div class="vm-body">
+        <div v-for="item in list" class="content aui-margin-b-15">
+            <div class="aui-text-left aui-font-size-16 bc aui-padded-l-10 clo-22">
+                <span v-text="item.name"></span>
+                <span class="aui-font-size-12 clo-99 aui-pull-right aui-padded-r-10">(最高{{item.max_score}}分)</span>
+            </div>
+            <div class="aui-hr"></div>
+            <div class="inp">
+                <textarea v-model="item.value" placeholder="请输入考核情况" :maxlength="item.max_length" class="aui-padded-l-10"></textarea>
+                <p class="aui-padded-r-10"><span v-text="item.value.length"></span v-text="'/'+item.max_length">/240</p>
+          </div>
+          <div class="aui-hr"></div>
+          <div class="aui-text-left aui-font-size-16 bc aui-padded-l-10 clo-22">
+              实得分
+              <i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-16"></i>
+              <span class="aui-font-size-16 clo-99 aui-pull-right aui-padded-r-10">15分</span>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div id="body2">
+        <div v-for="item in list" class="content aui-margin-b-15">
+            <div class="aui-text-left aui-font-size-16 bc aui-padded-l-10 clo-22">
+                <span v-text="item.name"></span>
+                <span class="aui-font-size-12 clo-99 aui-pull-right aui-padded-r-10">(最高{{item.max_score}}分)</span>
+            </div>
+            <div class="aui-hr"></div>
+            <div class="inp">
+                <textarea v-model="item.value" placeholder="请输入考核情况" :maxlength="item.max_length" class="aui-padded-l-10"></textarea>
+                <p class="aui-padded-r-10"><span v-text="item.value.length"></span v-text="'/'+item.max_length">/240</p>
+          </div>
+          <div class="aui-hr"></div>
+      </div>
+    </div>
+
+      <div class="bottom aui-margin-t-15"></div>
+    <div class="bt aui-text-center" tapmode onclick="showDefault('success')">
+        <div class="aui-col-xs-12 bg-bai">
+            <p class="aui-font-size-16 col-22"> 总得分：<span class="aui-font-size-20 col-h">75</span> <span class="clo-99 aui-font-size-12">总分100</span></p>
+            </div>
+        </div>
+</body>
+<script src="../../../script/api.js"></script>
+<script src="../../../script/AHelper.js"></script>
+<script src="../../../script/aui-toast.js"></script>
+<script src="../../../script/zepto.min.js"></script>
+<script src="../../../script/vue/vue.min.js"></script>
+<script>
+    //判断字数
+    var vm = new Vue({
+        el: ".vm-body",
+        data: {
+            list: [{
+                id: 0,
+                name: "政治思想职业道德",
+                max_score: 20,
+                max_length: 240,
+                value: "专业理论考核情况内容专业理论考核情况内容专业理 论考核情况内容专业理论考核情况内容专业理论考核 情况内容专业理论考核情况内容专业理论考核情况内 容专业理论考核情况内容专业理论考核情况内容。"
+            }, {
+                id: 1,
+                name: "实践时间",
+                max_score: 20,
+                max_length: 240,
+                value: "专业理论考核情况内容专业理论考核情况内容专业理 论考核情况内容专业理论考核情况内容专业理论考核 情况内容专业理论考核情况内容专业理论考核情况内 容专业理论考核情况内容专业理论考核情况内容。"
+            }, {
+                id: 2,
+                name: "实践技能",
+                max_score: 20,
+                max_length: 240,
+                value: "专业理论考核情况内容专业理论考核情况内容专业理 论考核情况内容专业理论考核情况内容专业理论考核 情况内容专业理论考核情况内容专业理论考核情况内 容专业理论考核情况内容专业理论考核情况内容。"
+            }, {
+                id: 3,
+                name: "专业理论",
+                max_score: 20,
+                max_length: 240,
+                value: "专业理论考核情况内容专业理论考核情况内容专业理 论考核情况内容专业理论考核情况内容专业理论考核 情况内容专业理论考核情况内容专业理论考核情况内 容专业理论考核情况内容专业理论考核情况内容。"
+            }],
+        },
+        methods: {
+
+        }
+    })
+
+
+    new Vue({
+        el: '#body2',
+        data: {
+            list: [{
+                id: 0,
+                name: "科室主任考评意见",
+                max_score: 20,
+                max_length: 240,
+                value: "专业理论考核情况内容专业理论考核情况内容专业理 论考核情况内容专业理论考核情况内容专业理论考核 情况内容专业理论考核情况内容专业理论考核情况内 容专业理论考核情况内容专业理论考核情况内容。"
+            }, {
+                id: 1,
+                name: "考核小组意见",
+                max_score: 20,
+                max_length: 240,
+                value: "专业理论考核情况内容专业理论考核情况内容专业理 论考核情况内容专业理论考核情况内容专业理论考核 情况内容专业理论考核情况内容专业理论考核情况内 容专业理论考核情况内容专业理论考核情况内容。"
+            }],
+        },
+        methods: {
+
+        }
+    })
+
+
+
+    function fh() {
+        api.closeWin({});
+
+    }
+
+  H.ready(function () {
+
+  })
+    var toast = new auiToast({})
+
+    function showDefault(type) {
+        switch (type) {
+            case "success":
+                toast.success({
+                    title: "提交成功",
+                    duration: 2000
+                });
+        }
+    }
+</script>
+
+</html>

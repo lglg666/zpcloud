@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+      <link rel="stylesheet" href="../../css/style/style.css">
+</head>
+
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .content {
+        border-radius: 0.2rem;
+        line-height: 1.5rem;
+        background: #FFF;
+    }
+
+    .btn button {
+        border-radius: 0.1rem;
+    }
+
+    .btn_lan {
+        background: #fff;
+        border: 1px solid #289BD8;
+        color: #289BD8;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">评价学员</div>
+    </header>
+    <div class="pad"></div>
+    <div class="Student">
+      <!-- 无数据 -->
+      <template v-if="list == false">
+        <div class="aui-text-center "id="wsj">
+            <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+            <p class="aui-font-size-16">暂无数据</p>
+        </div>
+      </template>
+
+        <div v-for="item in list" v-else>
+            <div class="content aui-margin-15 aui-padded-10">
+                <p class="aui-font-size-16 clo-33">住院医师:<span class="clo-33 aui-padded-l-10">{{item.username}}</span></p>
+                <p class="aui-font-size-16 clo-33">医院:<span class="clo-33 aui-padded-l-10">{{item.hospitalname}}</span></p>
+                <p class="aui-font-size-16 clo-33">对应科室:<span class="clo-33 aui-padded-l-10"> {{item.departmentname}}</span></p>
+                <p class="aui-font-size-16 clo-33">对应专业:<span class="clo-33 aui-padded-l-10"> {{item.professioname}}</span></p>
+                <p class="aui-font-size-16 clo-33">开始时间:<span class="clo-33 aui-padded-l-10"> {{item.start}}</span></p>
+                <p class="aui-font-size-16 clo-33">结束时间: <span class="clo-33 aui-padded-l-10">{{item.end}}</span></p>
+                <p class="aui-font-size-16 clo-33">分数: <span class="clo-lan aui-padded-l-10">{{item.totalnum}}</span></p>
+                <div class="btn aui-text-right aui-padded-t-10 aui-padded-b-10">
+                    <button class="btn_lan" tapmode v-on:click="pjxy(item.yetid,item.id,item.username)">评价学员</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="../../script/aui-dialog.js"></script>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script>
+    var xy = new Vue({
+        el: ".Student",
+        data: {
+            list: []
+        },
+        methods: {
+            pjxy: function(yetid,id,name) {
+                H.setStorage("xy_yeid", yetid);
+                H.setStorage("xy_id", id);
+                H.setStorage("xy_name", name);
+                api.openWin({
+                    name: 'dj_pjxy2',
+                    url: '../daijiaolaoshi/dj_pjxueyuan2.html',
+                    pageParam: {
+                        name: 'test'
+                    }
+                });
+            }
+        }
+    })
+
+    function fh() {
+        api.closeWin({});
+
+    }
+    H.ready(function() {
+        var address = "/Hospital/index.php/api/teacher/evaluate";
+        var token = H.getStorage('token');
+        var ajaxData = {
+            token: token,
+        };
+        $base.get(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret));
+            xy.list = ret.data;
+        })
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        })
+
+        api.addEventListener({
+            name: 'dj_pjxy'
+        }, function(ret, err){
+            if( ret ){
+                 console.log( JSON.stringify( ret ) );
+                 location.reload();
+            }else{
+                 alert( JSON.stringify( err ) );
+            }
+        });
+
+    })
+</script>
+
+</html>

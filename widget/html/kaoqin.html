@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/aui.css">
+    <link rel="stylesheet" type="text/css" href="../css/aui-calendar.css" />
+    <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .riqi {
+        margin-top: 2rem;
+    }
+
+    .riqi,
+    .riqi3 {
+        background: #fff;
+        width: 100%;
+        float: left;
+    }
+
+    .yue {
+        width: 16%;
+        float: left;
+        color: #333;
+        height: 2.65rem;
+        line-height: 2.5rem;
+    }
+
+    .active {
+        border-bottom: 0.1rem solid #4593DE;
+        color: #4593DE;
+    }
+
+    .active2 {
+        color: #4593DE !important;
+    }
+
+    .active3 {
+        border-radius: 50%;
+        color: #fff !important;
+        background: #4593DE;
+    }
+
+    .riqi2 {
+        background: #fff;
+        float: left;
+        width: 100%;
+        color: #999999;
+    }
+
+    .bg {
+        background: #fff;
+    }
+
+    .zhou {
+        float: left;
+        width: 14.28571428571429%;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        font-family: ios9SC-Medium;
+    }
+
+    .ll {
+        height: 3.5rem;
+        line-height: 3.5rem;
+    }
+
+    .ri {
+        margin: 1rem 0.56rem;
+        height: 1.6rem;
+        float: left;
+        line-height: 1.6rem;
+        width: 8.285714%;
+        position: relative;
+        color: #333333;
+        font-size: 1rem;
+    }
+
+    .tab-head-item {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1 0 auto;
+        -ms-flex: 1 0 auto;
+        flex: 1 0 auto;
+        padding: 0 5px;
+    }
+
+    .ri .aui-dot {
+        top: 1.6rem !important;
+        right: 35% !important;
+        background: #4593DE !important;
+    }
+
+    .wei p {
+        color: #FDA832;
+        padding: 3rem 0 1rem 0;
+    }
+
+    .yuan1 {
+        width: 8rem;
+        height: 8rem;
+        margin: 0 auto;
+        border-radius: 50%;
+        background: #FFE8C8;
+        position: relative;
+    }
+
+    .yuan2 {
+        position: absolute;
+        width: 6rem;
+        height: 6rem;
+        margin: 1rem 1rem;
+        border-radius: 50%;
+        background: #FDA832;
+    }
+
+    .yuan2 p {
+        position: relative;
+        font-size: 1.4rem;
+        color: #fff;
+        top: -1rem;
+    }
+
+    .p1 {
+        font-size: 1.5rem;
+        color: #4593DE;
+        line-height: 3rem;
+    }
+
+    .aui-hr {
+        width: 70%;
+        height: 0.2rem;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .frd {
+        position: relative;
+        top: -0.5rem;
+        width: 40%;
+        margin: 0 auto;
+        background: #fff;
+        color: #999999;
+        font-family: PingFangSC-Light;
+    }
+
+    .wei img {
+        margin-top: 2rem;
+        width: 100%;
+        margin-bottom: 2rem;
+    }
+
+    footer img {
+        width: 1.3rem;
+        height: 1.3rem;
+        margin: 0 auto;
+    }
+
+    footer p {
+        color: #999999;
+        margin: 0 auto;
+        width: 2rem;
+        padding-left: 0.4rem;
+    }
+
+    .aui-calendar {
+        list-style-type: none;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+        -webkit-box-pack: justify;
+        -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        background: #fff;
+        padding: 0;
+        overflow: auto;
+    }
+
+    .aui-calendar-header tr th {
+        color:
+    }
+
+    .panel {}
+
+    .aui-calendar-body {}
+
+    #calendar {
+        height: 7rem;
+        transition: all .2s;
+    }
+
+    #calendar.ca_active {
+        height: 19rem;
+    }
+
+    .nima {
+        border: 1px solid #4593DE;
+        background: #4593DE;
+    }
+
+    .pad {
+        padding-top: 1.5rem;
+    }
+
+    footer {
+        background: #fff;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+    }
+
+    footer img {
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">考勤登记</div>
+    </header>
+    <div class="pad"></div>
+    <div class="aui-tips aui-tips-primary" style="display:none;">
+        <div class="aui-tips-content aui-ellipsis-1">
+            当前选择的日期为：<span id="result"></span>
+        </div>
+    </div>
+
+
+    <div id="calendar" class="aui-content aui-calendar  swiper-containe" style="margin-top:2rem;">
+
+    </div>
+
+    <div class="aui-text-center bg flip">
+        <i class="iconfont icon-arrow-down"></i>
+    </div>
+
+    <div class="wei aui-margin-t-15 bg aui-text-center">
+        <p class="aui-font-size-14" id="qiandao">今天未签到</p>
+        <div class="yuan1">
+            <div class="yuan2 aui-font-size-18" tapmode onclick="sign()">
+                <p id="qiandao1">签到</p>
+            </div>
+        </div>
+
+        <span class=" p1" id="he">5</span>
+
+        <div class="aui-hr">
+            <div class="frd aui-font-size-14">已连续签到</div>
+        </div>
+
+        <img src="../image/bolang.png" alt="">
+    </div>
+
+    <footer onclick="qj()">
+        <img src="../image/leave_btn.png" alt="">
+        <p class="font-size:0.55rem;">请假</p>
+    </footer>
+
+</body>
+<script src="../script/api.js"></script>
+<script src="../script/AHelper.js"></script>
+<script type="text/javascript" src="../script/aui-tap.js"></script>
+<script type="text/javascript" src="../script/aui-calendar.js"></script>
+<script src="../script/jquery.min.js"></script>
+<script src="../script/zepto.min.js"></script>
+<script src="../script/base.js"></script>
+<script src="../script/fastclick.js"></script>
+<script>
+H.ready(function() {
+    //请求数据
+    var address = "/Hospital/index.php/api/ys/sign";
+    var token = H.getStorage('token');
+    // $base.showLoading();
+    var ajaxData = {
+        token: token,
+        action: 'list',
+    };
+    $base.submit(address, ajaxData, function(ret) {
+        console.log(JSON.stringify(ret));
+        H.setStorage('day',ret.data.monthtotal)
+        if(ret.data.today_sign == 1){
+          $("#qiandao").html("今天已签到");
+          $("#qiandao1").html("已签到");
+          $("#today").addClass("nima");
+        }else{
+
+        }
+        console.log(ret.data.today_sign);
+        var monthtotal = ret.data.monthtotal;
+        $("#he").html(monthtotal)
+    }, function(err) {
+        console.log(JSON.stringify(err));
+    });
+
+
+    //日历 初始化
+    var todayDate = new Date();
+    var startDate = todayDate.getFullYear() + '-' + (todayDate.getMonth() + 1) + '-' + todayDate.getDate();
+    var endDate = (todayDate.getFullYear()) + '-' + (todayDate.getMonth() + 1);
+    var calendar = new auiCalendar({
+        container: document.getElementById("calendar"),
+        startDate: startDate,
+        endDate: endDate,
+        lunarShow: true,
+        dateActive: dateActive,
+        beforeStartDateClick: false
+    });
+
+    function dateActive(date) {
+        document.getElementById("result").textContent = date;
+    }
+
+    $(".flip").click(function() {
+        $("#calendar").toggleClass("ca_active");
+        //$(".panel").fadeToggle("slow");
+    });
+
+    $(".ll li").click(function() {
+        $(this).addClass("active").siblings().removeClass("active");
+    })
+
+    $(function() {
+        FastClick.attach(document.body);
+    })
+
+})
+
+
+    //签到开关
+
+
+    function sign(){
+      var address = "/Hospital/index.php/api/ys/sign";
+      var token = H.getStorage('token');
+      // $base.showLoading();
+      var ajaxData = {
+          token: token,
+          action: 'click',
+      };
+      $base.submit(address, ajaxData, function(ret) {
+          console.log(JSON.stringify(ret));
+          if(ret.status == 1){
+          $("#qiandao").html("今天已签到");
+          $("#qiandao1").html("已签到");
+          $("#today").addClass("nima");
+          var gg = H.getStorage("day");
+          $("#he").html((gg-0)+1)
+          $base.toast("签到成功");
+
+        }else{
+    $base.toast('今天已经签过到了');
+        }
+      }, function(err) {
+          console.log(JSON.stringify(err));
+      });
+}
+
+
+
+
+    //关闭考勤
+    function fh() {
+        api.closeWin({
+            name: 'kq'
+        });
+    }
+    //打开请假
+    function qj() {
+        api.openWin({
+            name: 'qj',
+            url: './qingjia.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+</script>
+
+</html>

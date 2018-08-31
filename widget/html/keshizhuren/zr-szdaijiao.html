@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style>
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .xs {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        font-family: PingFang-SC-Medium;
+    }
+
+    .color-99 {
+        color: #999999;
+    }
+
+    .color-33 {
+        color: #333333
+    }
+
+    .xs1 {
+        background: #fff;
+        height: 8rem;
+        line-height: 2.5rem;
+    }
+
+    .xs2 {
+        background: #fff;
+        height: 3rem;
+        line-height: 3rem;
+    }
+
+    .btn {
+        width: 80%;
+        height: 4rem;
+        line-height: 4rem;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .btn button {
+        width: 100%;
+        height: 2.3rem;
+        background: #4593de;
+        color: #fff;
+        border: 0;
+    }
+</style>
+
+<body id="body">
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">指定带教老师</div>
+    </header>
+    <div class="pad"></div>
+    <div class="aui-text-left xs aui-font-size-16 aui-padded-l-10">
+        学生信息
+    </div>
+    <div id="ysinfo">
+        <div class="xs1">
+            <p class="color-99 aui-padded-l-10 aui-font-size-16">姓名：<span class="color-33">{{username}}</span></p>
+            <div class="aui-hr"></div>
+            <p class="color-99 aui-padded-l-10 aui-font-size-16">账号：<span class="color-33">{{useraccount}}</span></p>
+            <div class="aui-hr"></div>
+            <p class="color-99 aui-padded-l-10 aui-font-size-16">科室：<span class="color-33">{{departmentname}}</span></p>
+        </div>
+
+        <div class="aui-text-left xs aui-font-size-16 aui-padded-l-10">
+            带教指定
+        </div>
+
+        <div class="xs2" tapmode onclick="xzdj()">
+            <p class="color-99 aui-padded-l-10 aui-font-size-16">带教指定：{{djstr}}</p>
+        </div>
+        <div class="btn" tapmode v-on:click="doset()">
+            <button type="button" name="button" class="color-lan aui-font-size-16">确定</button>
+        </div>
+      </div>
+
+
+
+</body>
+<script src="../../script/aui-tab.js"></script>
+<script src="../../script/aui-toast.js"></script>
+<script src="../../script/aui-dialog.js"></script>
+<script src="../../script/api.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script type="text/javascript">
+var  ysinfo = new Vue({
+    el: '#ysinfo',
+    data: {
+      ysid:H.getStorage('ysid'),
+      username:H.getStorage('username'),
+      useraccount:H.getStorage('useraccount'),
+      departmentname:H.getStorage('departmentname'),
+      djstr     :   '请指定带教',
+    },methods:{
+        doset:function(){
+          var rid  = H.getStorage('rid');
+          var ysid = H.getStorage('ysid');
+          var tid  = H.getStorage('tid');
+
+          var address = "/Hospital/index.php/api/department/rotate_message";
+          var ajaxData = {
+              token   : H.getStorage('token'),
+              action  : 'seteacher',
+              rid     : rid,
+              tid     : tid
+          };
+          $base.submit(address, ajaxData, function(ret) {
+                if(ret.status == 1){
+                $base.toast(ret.errmsg)
+                    setTimeout(function () {
+                        api.closeWin({});
+                    },1000)
+
+                    api.sendEvent({
+                        name: 'szdj',
+                        extra: {
+                            key1: true,
+                        }
+                    });
+
+                }else{
+                  toast.success({
+                      title: ret.errmsg,
+                      duration: 2000
+                  });
+                }
+          }, function(err) {
+              console.log(err);
+          });
+        }
+    }
+});
+  H.ready(function () {
+    api.addEventListener({
+        name: 'chose'
+    }, function(ret, err){
+        if( ret ){
+             console.log( JSON.stringify( ret ) );
+             ysinfo.djstr = ret.value.tname;
+        }else{
+             alert( JSON.stringify( err ) );
+        }
+    });
+
+    //处理点击延迟
+    $(function() {
+        FastClick.attach(document.body);
+    });
+  })
+
+
+
+    var toast = new auiToast({})
+
+    function showDefault(type) {
+        switch (type) {
+            case "qd":
+                toast.success({
+                    title: "接收成功",
+                    duration: 2000
+                });
+                break;
+        }
+    }
+
+    function fh() {
+        api.closeWin({
+            name: 'zr-szdj'
+        });
+    }
+
+    function xzdj() {
+        api.openWin({
+            name: 'zr-xzdj',
+            url: '../keshizhuren/zr-xzdaijiao.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+    }
+</script>
+
+</html>

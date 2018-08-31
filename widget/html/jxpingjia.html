@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/aui.css">
+    <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    body {
+        width: 100%;
+        height: 100%;
+    }
+
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .jx {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .evaluate {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        background: #fff;
+    }
+
+    .bt {
+        background: #fff;
+        position: relative;
+        width: 80%;
+        margin: 2rem auto;
+    }
+
+    .bt button {
+        width: 100%;
+        margin: 0 auto;
+        border-radius: 4px;
+        height: 2.5rem;
+        font-size: 0.85rem;
+        outline: none;
+        border: 0;
+        background: #4593DE;
+        color: #fff;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .top {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        background: #fff;
+    }
+
+    .top p {
+        line-height: 2.5rem;
+        font-family: PingFang-SC-Medium;
+        font-weight: 500;
+    }
+
+    .kuai {
+        height: 1rem;
+        width: 0.3rem;
+        top: .7rem;
+        position: relative;
+        background: #4593de;
+    }
+
+    .con p {
+        width: 90%;
+        height: auto;
+    }
+
+    .text textarea {
+        height: 5rem;
+        width: 100%;
+    }
+
+    .inp {
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .inp input {
+        width: 60% !important;
+        height: 100%;
+    }
+
+    .yj {
+        background: #fff;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">活动评价</div>
+    </header>
+    <div class="pad"></div>
+    <div class="pj">
+        <div class="evaluate aui-margin-t-15 aui-margin-b-15" v-for="(item,index) in list">
+            <div class="top" v-if="item.toptitle !== ''">
+                <div class="kuai aui-pull-left aui-margin-l-15 aui-margin-r-10"></div>
+                <p class="aui-font-size-18 clo-33">{{item.toptitle}}</p>
+            </div>
+            <div class="con">
+                <div class="kuai aui-pull-left aui-margin-l-15 aui-margin-r-10" v-if="item.type == 1"></div>
+                <p class="aui-margin-l-15 aui-font-size-16 clo-33 aui-padded-t-15 aui-padded-b-15">{{index + 1}}, {{item.content}}</p>
+            </div>
+            <div class="aui-hr"></div>
+            <div class="top">
+                <p class="aui-font-size-18 clo-33 aui-margin-l-15">评语及建议</p>
+            </div>
+            <div class="text aui-padded-t-10">
+                <textarea name="name" rows="8" cols="80" placeholder="请输入评语及建议" class="aui-padded-l-15" v-model="item.text"></textarea>
+            </div>
+            <div class="aui-hr"></div>
+            <div class="inp">
+                <p class="aui-font-size-16 clo-33 aui-margin-l-15 aui-pull-left">分数(满分{{item.maxscore}}分)</p>
+                <input type="number" class="aui-pull-left aui-text-right aui-font-size-16" placeholder="请输入分数" v-model="item.score" @blur="if(item.score>item.maxscore)item.score=''">
+            </div>
+        </div>
+
+        <div class="top aui-margin-b-15">
+            <div class="kuai aui-pull-left aui-margin-l-15 "></div>
+            <p class="clo-33 aui-pull-left aui-font-size-16 aui-padded-l-5">总分(满分100分)</p>
+            <p class="aui-font-size-16 clo-lan aui-pull-right aui-padded-r-15">{{sum_score}}</p>
+        </div>
+        <div class="yj">
+            <div class="top">
+                <div class="kuai aui-pull-left aui-margin-l-15 aui-margin-r-10"></div>
+                <p class="aui-font-size-18 clo-33">建议与意见</p>
+            </div>
+            <div class="text aui-padded-t-10">
+                <textarea name="name" rows="8" cols="80" placeholder="请输入建议与意见" class="aui-padded-l-15" v-model="yijian"></textarea>
+            </div>
+        </div>
+        <div class="bt" tapmode v-on:click="submit()">
+            <button>提交</button>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript" src="../script/aui-toast.js"></script>
+<script src="../script/Zepto.min.js"></script>
+<script src="../script/vue/vue.min.js"></script>
+<script src="../script/api.js"></script>
+<script src="../script/AHelper.js"></script>
+<script src="../script/base.js"></script>
+<script src="../script/jxpj_data.js"></script>
+
+<script>
+    var vm = new Vue({
+        el: '.pj',
+        data: {
+            yijian: "",
+            list: [],
+        },
+        methods: {
+            inputFunc: (max, score) => {
+                if (score <= max) {
+                    console.log("xiaoyu");
+                } else {
+                    $base.toast('请输入正确的分数')
+                    this.item.score = '';
+                }
+            },
+            submit: () => {
+                var scores = [];
+                var contents = [];
+                for (item in vm.list) {
+                    console.log(JSON.stringify(vm.list[item].score));
+                    scores.push(vm.list[item].score);
+                    contents.push(vm.list[item].text);
+                }
+                contents.push(vm.yijian);
+                var address = "/Hospital/index.php/api/ys/teaching_activities";
+                var token = H.getStorage('token');
+                var id = H.getStorage("jx_id");
+                var tauid = H.getStorage("jx_tauid");
+                var tid = H.getStorage("jx_tid");
+                var type = H.getStorage("jxpj_type");
+                console.log(id);
+                var ajaxData = {
+                    type: type,
+                    token: token,
+                    teach_id: id,
+                    action: "evaluate",
+                    bid: tauid,
+                    tid: tid,
+                    scores: scores,
+                    contents: contents,
+                };
+                console.log(JSON.stringify(ajaxData));
+                $base.submit(address, ajaxData, function(ret) {
+                    console.log(JSON.stringify(ret));
+                    if(ret.status == 1){
+                      $base.toast(ret.msg);
+                      setTimeout(function () {
+                        api.closeWin({});
+                      },800)
+                    }else{
+                        $base.toast(ret.errmsg);
+                    }
+                }, function(err) {
+                    console.log(JSON.stringify(err));
+                });
+            }
+
+
+        },
+        computed: {
+            sum_score: function() {
+                var uu = 0;
+                this.list.forEach(function(t) {
+                    uu += Number(t.score);
+                })
+                return uu + "分";
+            },
+
+        }
+    })
+
+    H.ready(function() {
+            var type = H.getStorage("jxpj_type");
+            if (type == 1) {
+                vm.list = xjk;
+            } else if (type == 2) {
+                vm.list = xsll;
+            } else if (type == 3) {
+                vm.list = jxcf;
+            } else if (type == 4) {
+                vm.list = bltl;
+            }
+        })
+
+    function fh() {
+        api.closeWin({});
+    }
+</script>
+
+</html>

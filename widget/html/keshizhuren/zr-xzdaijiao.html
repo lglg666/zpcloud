@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100% !important;
+        top: 0;
+        background: #fff!important;
+        color: #222!important;
+        height: 3rem;
+        line-height: 3rem;
+    }
+
+    header span {
+        color: #222!important;
+    }
+
+    header p {
+        color: #4593de;
+        font-size: 0.7rem;
+    }
+
+    .aui-bar-nav .aui-pull-left {
+        font-size: 1.1rem !important;
+    }
+
+    .aui-bar-nav {
+        line-height: 3rem;
+    }
+
+    .aui-searchbar {
+        float: left;
+        width: 75% !important;
+        background-color: #fff !important;
+    }
+
+    .aui-searchbar-input {
+        background: #F2F2F2;
+        border-radius: 1.25rem;
+        height: 1.6rem;
+        line-height: 1.6rem;
+    }
+
+    .aui-bar-nav .aui-btn {
+        height: 3rem;
+        line-height: 3rem;
+    }
+
+    .aui-bar-nav .aui-btn .aui-iconfont {
+        font-size: 1rem;
+    }
+
+    .aui-searchbar {
+        height: 3rem;
+    }
+
+    .xs {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        font-family: PingFang-SC-Medium;
+        margin-top: 2.5rem;
+        background: #fff;
+    }
+
+    .color-33 {
+        color: #333333;
+    }
+
+    .color-99 {
+        color: #999999;
+    }
+
+    .r {
+        background: #fff;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .pad {
+        padding-top: 1.5rem;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <i class="iconfont icon-arrow-left aui-pull-left" tapmode onclick="fh()"></i>
+        <div class="aui-searchbar" id="search">
+            <div class="aui-searchbar-input aui-border-radius">
+                <i class="iconfont icon-search"></i>
+                <form action="javascript:search();">
+                    <input type="search" placeholder="搜索带教" id="search-input">
+                </form>
+            </div>
+        </div>
+        <p>搜索</p>
+    </header>
+    <div class="pad"></div>
+
+    <div id="teacherinfo">
+        <div class="aui-text-left xs aui-font-size-16 aui-padded-l-10 aui-border-b aui-margin-b-15">
+            <p class="aui-font-size-16 color-33">带教老师 <i class="iconfont icon-arrow-right "></i>{{departmentname}}<span class="aui-font-size-14 color-66 aui-padded-l-10">({{teachernum}}人)</span></p>
+        </div>
+
+        <div class="ren">
+            <div class="r aui-padded-l-10 aui-border-b" v-for="(user,index) in users" v-on:click="chooseteacher(user.id,user.username)">
+                <p class="aui-font-size-16 clo-22">{{user.username}} <span class="aui-font-size-15 clo-66 aui-padded-l-10">已带教人数({{user.student}}人)</span></p>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../../script/aui-tab.js"></script>
+<script src="../../script/aui-toast.js"></script>
+<script src="../../script/aui-dialog.js"></script>
+<script src="../../script/api.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script>
+    function fh() {
+        api.closeWin({
+            name: 'zr-xzdj'
+        });
+    }
+    H.ready(function() {
+        var teacherlist = new Vue({
+            el: '#teacherinfo',
+            data: {
+                departmentname: "",
+                teachernum: 0,
+                users: [{
+                    name: '蔡学华'
+                }],
+            },
+            methods: {
+                chooseteacher: function(id, username) {
+                    H.setStorage('tid', id);
+                    H.setStorage('tusername', username);
+                    // api.sendEvent('chose');
+                    api.sendEvent({
+                        name: 'chose',
+                        extra: {
+                            tname: username,
+                        }
+                    });
+
+                    api.closeWin({
+                        name: 'zr-xzdj'
+                    });
+                }
+            }
+        });
+
+        var address = "/Hospital/index.php/api/department/teacher";
+        var ajaxData = {
+            token: H.getStorage('token'),
+        };
+        $base.submit(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret));
+            teacherlist.users = ret.data;
+            teacherlist.departmentname = ret.data[0].departmentname;
+            teacherlist.teachernum = ret.data.length;
+        }, function(err) {
+            console.log(err);
+        });
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        });
+    })
+</script>
+
+</html>

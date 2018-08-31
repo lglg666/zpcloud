@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        s width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .top {
+        padding-top: 2rem;
+        line-height: 2.5rem;
+        background: #fff;
+        color: #333;
+        font-family: PingFangSC-Regular;
+    }
+
+    .clo-99 {
+        color: #999999;
+        font-family: PingFangSC-Regular;
+    }
+
+    .clo-459 {
+        color: #4593DE;
+        font-family: PingFangSC-Regular;
+    }
+
+    .clo-33 {
+        color: #333333;
+        font-family: PingFangSC-Regular;
+    }
+
+    .mm {
+        background: #fff;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        font-family: PingFang-SC-Bold;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .gg {
+        background: #fff;
+        height: 6rem;
+        line-height: 2.5rem;
+        font-family: PingFang-SC-Bold;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .hh {
+        background: #fff;
+        height: 6rem;
+        font-family: PingFang-SC-Bold;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .hh p {
+        color: #333;
+    }
+
+    .inp1 {
+        width: 6rem !important;
+    }
+
+    .inp2 {
+        width: 5rem !important;
+    }
+
+    .bt {
+        text-align: center;
+        float: left;
+        width: 100%;
+        margin: 1rem auto auto auto;
+        background: #fff;
+        padding: 0.5rem 0 0.5rem 0;
+    }
+
+    .bt button {
+        width: 80%;
+        text-align: center;
+        border-radius: 4px;
+        height: 2.5rem;
+        font-size: 0.85rem;
+        outline: none;
+        border: 0;
+        background: #4593DE;
+        color: #fff;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">编辑手术登记</div>
+    </header>
+
+    <div class="pad"></div>
+
+<div class="ss">
+
+
+    <div class="mm">
+        <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">手术名称</div>
+        <div class="aui-pull-right aui-padded-r-10 aui-font-size-16">胸腔</div>
+    </div>
+
+    <div class="mm">
+        <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">病人姓名</div>
+        <div class="aui-pull-right aui-padded-r-10 aui-font-size-16"><input type="text" placeholder="请输入病人姓名" class="inp1 aui-text-right" v-model="input.patient"></div>
+    </div>
+
+    <div class="mm">
+        <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">病例号</div>
+        <div class="aui-pull-right aui-padded-r-10 aui-font-size-16"><input type="text" placeholder="请输入病例号" class="inp2 aui-text-right" v-model="input.medical_record"></div>
+    </div>
+
+    <div class="mm">
+        <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">记录日期</div>
+        <i class="aui-iconfont aui-icon-right aui-pull-right aui-padded-r-10"></i>
+        <div class="aui-pull-right aui-padded-r-10 aui-font-size-16"><input type="date" id="add-time" value="2018-01-15" style="padding: 0.7rem 0;" v-model="input.date"/></div>
+    </div>
+
+    <div class="gg aui-margin-t-15">
+        <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 clo-99" v-model="input.patient">操作及手术：</div>
+        <textarea name="a" class="aui-padded-l-10" v-model="input.work" placeholder="请输入操作及手术"></textarea>
+    </div>
+
+    <div class="gg aui-margin-t-15">
+        <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 clo-99" v-model="input.patient">备注：</div>
+        <textarea name="a" class="aui-padded-l-10" v-model="input.remark" placeholder="请输入备注"></textarea>
+    </div>
+
+    <div class=" bt" tapmode v-on:click="sub()">
+        <button>提交</button>
+    </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script type="text/javascript" src="../../script/aui-toast.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/base.js"></script>
+<script>
+
+var ss = new Vue({
+  el:".ss",
+  data:{
+    input:{},
+  },
+  methods:{
+    sub:function () {
+      console.log(JSON.stringify(this.input));
+      var address = "/Hospital/index.php/api/ys/operationrecord";
+      var token = H.getStorage('token');
+      var id = H.getStorage('ys_ss1_id');
+      var ajaxData = {
+          token: token,
+          action: "update",
+          id: id,
+          patient:this.input.patient,
+          medical_record:this.input.medical_record,
+          work:this.input.work,
+          date:this.input.date,
+          remark:this.input.remark,
+      };
+      console.log(JSON.stringify(ajaxData));
+      $base.get2(address, ajaxData, function(ret) {
+          console.log(JSON.stringify(ret));
+          if (ret.status == 1) {
+              $base.toast(ret.errmsg);
+              api.sendEvent({
+                  name: 'ss',
+                  extra: {
+                      key1: true,
+                  }
+              });
+              setTimeout(function () {
+                api.closeWin({});
+              },500)
+          } else {
+              $base.toast(ret.errmsg);
+          }
+      }, function(err) {
+          console.log(JSON.stringify(err));
+      });
+    }
+  }
+})
+    function fh() {
+        api.closeWin({});
+    }
+
+
+  H.ready(function () {
+    var data = H.getStorage('ys_ss_data');
+    console.log(JSON.stringify(data));
+    ss.input = data;
+  })
+
+
+</script>
+
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/aui.css">
+    <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .logo {
+        padding-top: 4rem;
+    }
+
+    .logo img {
+        width: 5rem;
+        height: 5rem;
+        margin: 1rem auto;
+    }
+
+    .logo p {
+        color: #4593DE;
+    }
+
+    .main_2 i {
+        color: #222222;
+        float: right;
+        padding-right: 0.5rem;
+        font-size: 0.8rem !important;
+    }
+
+    .main_2 p {
+        padding-left: 0.5rem;
+        color: #222;
+        font-size: 0.75rem;
+    }
+
+    .main_2 {
+        background: #fff;
+        font-size: 0.8rem;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        margin: 2.5rem auto;
+    }
+
+    .bq {
+        position: absolute;
+        margin: 0 auto;
+        width: 100%;
+        bottom: 0;
+    }
+
+    .bq p {
+        color: #9e9e9e;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">版本</div>
+    </header>
+    <div class="aui-text-center logo">
+        <img src="../image/logo1.png" alt="">
+        <p class="aui-font-size-16">炬海医师规培 &nbsp 2.0</p>
+    </div>
+    <div class="main_2" tapmode>
+        <i class="aui-iconfont aui-icon-right"></i>
+        <p class="aui-text-left">更新版本请到应用商店进行更新</p>
+
+    </div>
+
+    <div class="aui-text-center bq ">
+        <p class="aui-font-size-14">广州炬海科技有限公司版权所有</p>
+        <p class="aui-font-size-14">Guang Zhou juhai technology co, LTD</p>
+    </div>
+</body>
+<script src="../script/api.js"></script>
+<script src="../script/AHelper.js"></script>
+<script>
+    function fh() {
+        api.closeWin({
+            name: 'bb'
+        });
+
+
+    }
+
+    // function bb2() {
+    //     api.openWin({
+    //         name: 'bb2',
+    //         url: './banben2.html',
+    //         pageParam: {
+    //             name: 'test'
+    //         }
+    //     });
+    //
+    //
+    // }
+  H.ready(function () {
+
+  })
+</script>
+
+</html>

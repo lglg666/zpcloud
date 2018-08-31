@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">c
+</head>
+<style>
+    body { 
+        background: #fff;
+    }
+
+    .sj_top {
+        overflow: hidden;
+        background: #fff;
+        width: 100%;
+    }
+
+    .aui-pull-left {
+        font-size: 1rem;
+        padding-left: 10px;
+        /*text-align: center;*/
+    }
+
+    .aui-pull-right {
+        font-size: 1rem;
+        padding-right: 10px;
+        text-align: center;
+    }
+
+    .sj_main {
+        overflow: hidden;
+        background: #fff;
+        height: auto;
+    }
+
+    .sj_main textarea {
+        height: 10rem;
+        font-size: 0.7rem;
+    }
+
+    .sj_main p {
+        margin: 1rem;
+        font-size: 0.8rem;
+        color: #333333;
+        line-height: 2rem;
+    }
+
+    .x {
+        width: 100%;
+        margin: 1.2rem;
+        font-size: 0.8rem;
+        color: #333;
+    }
+
+    .l {
+        color: #4593DE;
+    }
+
+    .x a {
+        float: left;
+        display: block;
+        width: 1.2rem;
+        font-size: 0.75rem;
+        border: 1px solid #4593DE;
+        /*border-radius: 50%;*/
+        text-align: center;
+        margin-right: 1.4rem;
+        /*color: #4593DE;*/
+    }
+
+    #sj_footer {
+        height: 4rem;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .aui-h {
+        color: #FF6655;
+    }
+
+    .aui-color-l {
+        background: #4593DE;
+        color: #fff;
+    }
+
+    .aui-color-h {
+        background: #FF6655;
+        color: #fff;
+    }
+
+    .aui-color-b {
+        background: #fff;
+        color: #4593DE;
+    }
+
+    .aui-bg {
+        background: #fff;
+    }
+
+    .aui-lin-hei {
+        line-height: 1.5rem;
+    }
+
+    .ys {
+        color: #333333;
+    }
+
+    .aui-grid {
+        background: #EBEBEB;
+    }
+
+    .tj {
+        width: 5rem;
+        height: 2rem;
+        border: 1px solid #4593DE;
+        color: #4593DE;
+        border-radius: 1rem;
+        font-size: 0.8rem;
+    }
+
+    .aui-grid {
+        background: #EBEBEB;
+    }
+
+    .tip {
+        padding-top: 2rem;
+    }
+
+    .aui-col-xs-4 i img {
+        margin: 0 auto;
+        width: 1.2rem;
+        height: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .col-lan {
+        color: #4593DE;
+    }
+
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 2.5rem;
+    }
+
+    header p {
+        color: #222;
+        font-size: 0.9rem;
+        font-family: PingFangSC-Regular;
+    }
+
+    .aui-pull-left a {
+        color: #4593DE;
+    }
+
+    .aui-content-padded {
+        margin: 0 !important;
+    }
+
+    .aui-collapse-item {
+        line-height: 1.5rem;
+    }
+
+    .col-33 {
+        color: #333333;
+    }
+</style>
+
+<body>
+    <div class="kaoshi2">
+        <header class="aui-bar aui-bar-nav" id="header">
+            <a class="aui-pull-left" tapmode onclick="fh()">
+                <i class="iconfont icon-arrow-left aui-iconfont"></i>
+            </a>
+            <div class="aui-title">2017年12月住院医师考试</div>
+            <p class="aui-pull-right aui-col-xs-2 aui-font-size-16" tapmode onclick="jc()">纠错</p>
+        </header>
+        <div class="pad"></div>
+        <div class="sj_top ">
+        </div>
+
+
+        <section class="aui-content-padded">
+            <ul class="aui-list aui-collapse aui-border">
+                <div class="aui-collapse-item">
+                    <li class="aui-list-item aui-collapse-header">
+                        <div class="aui-list-item-inner">
+                            <div class="aui-list-item-title">
+                                <p class="aui-pull-left col-33 aui-font-size-16"> 四,客观题</p>
+                                <p href="" class="aui-pull-left aui-font-size-12"><a>1</a>/50</p>
+                                <!-- <p href="" class="aui-pull-left aui-font-size-12">在每小题的5个备选答案中，有2个或2个以上的答案是正确的，选 择2个或2个以上的正确答案。</p> -->
+
+                            </div>
+                            <div class="aui-list-item-right">
+                                <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                            </div>
+                        </div>
+                    </li>
+                    <div class="aui-collapse-content">
+                        <li class="aui-list-item" tapmode onclick="yi()">
+                            <div class="aui-list-item-inner">
+                                <div class="aui-list-item-title">
+                                    <p class="aui-pull-left col-33 aui-font-size-16">一, 单项选择题</p>
+                                    <!-- <p href="" class="aui-pull-left aui-font-size-12">在每小题的5个备选答案中，选出1个最佳的或最恰当的答案。</p> -->
+                                </div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item" tapmode onclick="er()">
+                            <div class="aui-list-item-inner">
+                                <div class="aui-list-item-title">
+                                    <p class="aui-pull-left col-33 aui-font-size-16">二,多项选择题</p>
+                                    <!-- <p href="" class="aui-pull-left aui-font-size-12">根据案例材料相关内容的概括和描述，简明扼要对给出的问题进行 分析解答。</p> -->
+                                </div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item" tapmode onclick="san()">
+                            <div class="aui-list-item-inner">
+                                <div class="aui-list-item-title">
+                                    <p class="aui-pull-left col-33 aui-font-size-16">三,填空题</p>
+                                    <!-- <p href="" class="aui-pull-left aui-font-size-12">根据学习的课件知识，在填空输入框内填写空缺的部分文字，使其 叙述完整。</p> -->
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="aui-list-item" tapmode onclick="wu()">
+                            <div class="aui-list-item-inner">
+                                <div class="aui-list-item-title">
+                                    <p class="aui-pull-left col-33 aui-font-size-16">五,判断题</p>
+                                    <!-- <p href="" class="aui-pull-left aui-font-size-12">对给出的题目内容进行分析和判断对错。</p> -->
+                                </div>
+                            </div>
+                        </li>
+                    </div>
+                </div>
+            </ul>
+        </section>
+
+
+        <div class="sj_main aui-margin-b-15">
+            <p class="aui-font-size-14">1.1岁6个月男婴,6个月断母乳喂养改混合喂养(米糊、粥、蛋、鱼、肉均有补充),并保证每天有鲜牛奶。易发热、咳嗽,常于食牛奶后诉脐周痛,大便1~2次/日,稀糊状。体检面色苍白,心、肺(-),腹平软,肝肋下1cm,脾肋下未及。RBC3.5×1012/L,Hb80g/L,MCV67fl,网织红细胞0.015。最可能的诊断是？</p>
+            <textarea name="name" rows="8" cols="80" placeholder="请输入你的答案" class="aui-border-t aui-padded-l-10 aui-padded-t-15"></textarea>
+        </div>
+
+
+
+
+
+
+        <div id="sj_footer">
+            <secton class="aui-grid">
+                <div class="row aui-text-center">
+                    <div class="aui-col-xs-4" tapmode onclick="dtk()">
+                        <i class="aui-iconfont"><img src="../../image/answer_sheet_btn.png" alt=""></i>
+                        <p class="aui-font-size-12  col-lan">答题卡</p>
+                    </div>
+                    <div class="aui-col-xs-4" tapmode onclick="openDialog('text')">
+                        <i class="aui-iconfont "> <img src="../../image/submit_btn.png" alt=""></i>
+                        <p class="aui-font-size-12 col-lan">提交试卷</p>
+                    </div>
+                    <div class="aui-col-xs-4">
+                        <i class="aui-iconfont "><img src="../../image/time_btn.png" alt=""></i>
+                        <p class="aui-font-size-12 col-lan">00:55:56</p>
+                    </div>
+            </secton>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../../script/aui-collapse.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/AHelper.js"></script>
+<script type="text/javascript" src="../../script/aui-dialog.js"></script>
+<script src="../../script/index.js"></script>
+<script>
+    function fh() {
+        api.closeWin({
+            name: 'ks4'
+        });
+
+    }
+
+    function dtk() {
+        api.openWin({
+            name: 'dtk1',
+            url: './datik1.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    var collapse = new auiCollapse({
+        autoHide: true //是否自动隐藏已经展开的容器
+    });
+
+    function yi() {
+        api.openWin({
+            name: 'ks1',
+            url: './kaoshi1.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function san() {
+        api.openWin({
+            name: 'ks3',
+            url: './kaoshi3.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function er() {
+        api.openWin({
+            name: 'ks2',
+            url: './kaoshi2.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function wu() {
+        api.openWin({
+            name: 'ks5',
+            url: './kaoshi5.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    H.ready(function () {
+
+    })
+
+    var dialog = new auiDialog({})
+
+    function openDialog(type) {
+        switch (type) {
+            case "text":
+                dialog.alert({
+                    title: "提交试卷",
+                    msg: '试卷还没有做完，确认提交试卷？',
+                    buttons: ['继续做题', '确定提交']
+                }, function(ret) {
+                    if (ret.buttonIndex == 2) {
+                        submit_answer();
+                    }
+                })
+        }
+
+
+    }
+
+    function jc() {
+        api.openWin({
+            name: 'jc',
+            url: './jiucuo.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+</script>
+
+</html>

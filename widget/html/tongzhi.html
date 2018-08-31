@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/aui.css">
+    <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .main_2 i {
+        color: #222222;
+        float: right;
+        padding-right: 0.5rem;
+        font-size: 0.9rem !important;
+    }
+
+    .main_2 p {
+        padding-left: 0.5rem;
+        color: #222;
+        font-size: 0.75rem;
+    }
+
+    .s {
+        background: #cecece;
+        color: #fff;
+        list-style: none;
+        border-radius: 0.3rem;
+        line-height: 1.22rem;
+        width: 3rem;
+        padding: .2rem;
+        font-size: 0.7rem;
+    }
+
+    .aui-text-center .j {
+        display: inline-block;
+        width: 4rem;
+        height: 1.1rem;
+        background: #cecece;
+        color: #fff;
+        border-radius: 0.3rem;
+        margin: 0.6rem;
+        font-size: 0.7rem;
+    }
+
+    .main {
+        margin: 0.8rem;
+    }
+
+    .p1 {
+        color: #222;
+        font-weight: 700;
+    }
+
+    .p2 {
+        /*font-size: 0.7rem;*/
+        color: #333;
+        line-height: 1rem;
+        margin: 0.5rem;
+        font-family: PingFang-SC-Medium;
+    }
+
+    .main_2 {
+        font-size: 0.8rem;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .tz {
+        background: #fff;
+    }
+
+    .ks {
+        display: block;
+        line-height: 1.6rem;
+        background: #fff;
+        position: relative;
+    }
+
+    .aui-hr {
+        width: 94%;
+        margin: 0 auto;
+    }
+
+    .color-99 {
+        color: #999999;
+    }
+
+    .color-22 {
+        color: #222222;
+    }
+
+    .color-33 {
+        font-family: PingFang-SC-Medium;
+        color: #333333;
+    }
+
+    .pad {
+        padding-top: 4.5rem;
+    }
+
+    .tz_title {
+        line-height: 1.5rem;
+        padding-bottom: .5rem;
+    }
+
+    .tz_title i {
+        font-size: 1.2rem
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">通知公告</div>
+    </header>
+    <div class="pad"></div>
+
+    <div class="" id="notice_info">
+        <div class="" v-for="item in list">
+            <div class=" aui-text-center">
+                <a class="s">{{item.date}}</a>
+            </div>
+            <div class="main">
+                <div class="tz aui-padded-t-15 aui-padded-r-15 aui-padded-l-15">
+                    <!-- {{item.title}}  -->
+                    <div class="tz_title">
+                        <i class="iconfont icon-announcement aui-pull-left clo-lan  aui-padded-r-5"></i>
+                        <p class="p1 aui-font-size-16">{{item.title}}</p>
+                    </div>
+                    <p class="aui-font-size-16 clo-99 aui-padded-b-15">{{item.content}}</p>
+                    <div class="aui-hr"></div>
+                    <div class="main_2" tapmode v-on:click="select(item.id)">
+                        <i class="iconfont icon-arrow-right"></i>
+                        <p class="aui-text-left aui-font-size-16">查看详情</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+<script src="../script/api.js"></script>
+<script src="../script/AHelper.js"></script>
+<script src="../script/vue/vue.min.js"></script>
+<script src="../script/base.js"></script>
+<script src="../script/zepto.min.js"></script>
+<script src="../script/fastclick.js"></script>
+<script>
+    H.ready(function() {
+        var address = "/Hospital/index.php/api/user/get_notice_info";
+        var token = H.getStorage('token');
+        var userid = H.getStorage("user_id");
+        var user_role = H.getStorage("user_role");
+        $base.showLoading();
+        var ajaxData = {
+            token: token,
+            userid: userid,
+            user_role: user_role
+        };
+        $base.get(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret.notice_info));
+            vm.list = ret.notice_info;
+            $base.closeLoading();
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+
+
+        $(function() {
+            FastClick.attach(document.body);
+        })
+
+        api.addEventListener({
+            name: 'fbgg'
+        }, function(ret, err){
+            if( ret ){
+                 console.log( JSON.stringify( ret ) );
+                location.reload();
+            }else{
+                 alert( JSON.stringify( err ) );
+            }
+        });
+
+    });
+
+    var vm = new Vue({
+        el: "#notice_info",
+        data: {
+            list: []
+        },
+        methods: {
+            select: function(id) {
+                // alert(id);
+                H.setStorage("notice_id", id);
+                api.openWin({
+                    name: 'tz2',
+                    url: './tongzhi2.html',
+                    pageParam: {
+                        name: 'test'
+                    }
+                });
+            }
+
+        }
+    })
+
+
+    function fh() {
+        api.sendEvent({
+            name: 'hongdian',
+            extra: {
+                hong: true
+            }
+        });
+        api.closeWin({
+            name: 'tz'
+        });
+
+    }
+</script>
+
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/aui.css">
+    <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .aui-text-center .s {
+        display: inline-block;
+        width: 3.5rem;
+        height: 1.1rem;
+        background: #cecece;
+        color: #fff;
+        border-radius: 0.3rem;
+        margin-top: 0.6rem;
+        font-size: 0.7rem;
+    }
+
+    /*.q {
+        padding-top: 2.5rem;
+    }*/
+
+    .db {
+        background: #fff;
+        line-height: 1.5rem;
+    }
+
+    .color-33 {
+        color: #333;
+    }
+
+    .color-99 {
+        color: #999;
+    }
+
+    .color-22 {
+        color: #222;
+    }
+
+    .aui-hr {
+        margin-top: 0.6rem;
+    }
+
+    .main_2 i {
+        color: #222222;
+        float: right;
+        padding-right: 0.5rem;
+        font-size: 0.9rem !important;
+    }
+
+    .main_2 p {
+        color: #222;
+        font-size: 0.75rem;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .main_2 {
+        font-size: 0.8rem;
+        height: 2.5rem;
+        line-height: 3rem;
+    }
+
+    .pad {
+        padding-top: 4rem;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">课程信息</div>
+        <p class="clo-lan aui-font-size-16 aui-pull-right aui-padded-r-10" tapmode onclick="course()" id="fb">发布课程</p>
+    </header>
+    <div class="pad"></div>
+    <div class="course">
+      <div v-for="item in list">
+    <div class="aui-text-center q">
+        <div class="s">15:08</div>
+    </div>
+
+    <div class="db aui-margin-15 ">
+        <div class="kl">
+            <p class="aui-font-size-18 color-22 aui-padded-10 chu">{{item.name}}</p>
+            <p class="aui-font-size-16 color-99 aui-padded-l-10">发布日期：<span class="color-22"> {{item.release_time}}</span></p>
+            <p class="aui-font-size-16 color-99 aui-padded-l-10">主讲人：<span class="color-22"> {{item.course_teacher}}</span></p>
+            <p class="aui-font-size-16 color-99 aui-padded-l-10">地点：<span class="color-22"> {{item.place}}</span></p>
+            <div class="aui-hr"></div>
+            <div class="main_2"  tapmode v-on:click="select(item.id)">
+                <i class="aui-iconfont iconfont icon-arrow-right"></i>
+                <p class="aui-text-left aui-padded-l-10">查看详情</p>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+</body>
+<script src="../script/api.js "></script>
+<script src="../script/AHelper.js "></script>
+<script src="../script/zepto.min.js "></script>
+<script src="../script/base.js "></script>
+<script src="../script/vue/vue.min.js "></script>
+<script src="../script/fastclick.js "></script>
+<script>
+var vm = new Vue({
+  el:".course",
+  data:{
+  list: []
+},
+methods:{
+   select: function(id) {
+      // alert(id);
+      H.setStorage("course_id", id);
+      api.openWin({
+          name: 'kc1',
+          url: './kecheng1.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+  }
+},
+})
+    function fh() {
+        api.closeWin({});
+    }
+
+    function course() {
+        api.openWin({
+            name: 'gp-course',
+            url: './gpban/gp-course.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+
+    H.ready(function() {
+        var role = H.getStorage('user_role');
+        if (role == 4) {
+            $("#fb").show();
+        } else {
+            $("#fb").hide();
+        }
+
+        var address = "/Hospital/index.php/api/user/course";
+        var token = H.getStorage('token');
+        $base.showLoading();
+        var ajaxData = {
+            token: token,
+        };
+        $base.get(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret));
+              vm.list = ret.data;
+            $base.closeLoading();
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        });
+    })
+</script>
+
+</html>

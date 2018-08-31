@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 99;
+    }
+
+    .top {
+        color: #222222;
+        background: #fff;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        font-family: PingFangSC-Regular;
+    }
+
+    .aui-icon-right {
+        font-size: 0.8rem;
+        padding: 0 0.2rem;
+        font-weight: 800;
+    }
+
+    .q {
+        height: 2rem;
+        line-height: 2rem;
+        color: #222222;
+        font-size: 0.8rem;
+        font-weight: 600;
+        font-family: ios9SC-Medium;
+        background: #fff;
+    }
+
+    .aui-col-xs-3 img {
+        margin: 0 auto;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+    .pad {
+        padding-top: 3rem;
+    }
+
+    .top_name {
+        /*width: 60%;*/
+        /*margin: 0 auto;*/
+        text-align: center;
+        height: 100%;
+    }
+    .top_name i{
+      font-size: 1.2rem;
+    }
+    .top_name a{
+      font-weight: 700;
+      width: auto;
+    }
+    .top_img{
+      background: #fff;
+      width: 100%;
+    }
+</style>
+
+<body>
+    <header>
+        <div class="top  aui-font-size-18">
+            <div class="top_name">
+                <i class="iconfont icon-switch-identity   clo-lan"></i>
+              <a class="aui-font-size-18 clo-22" tapmode onclick="qhks()"><span id="departmentname">呼吸科</span><span class="aui-font-size-14 clo-99" >(切换科室)</span></a>
+            </div>
+
+        </div>
+    </header>
+    <div class="pad"></div>
+    <div class="top_img">
+      <img src="../../image/advertising.png" alt="" class="aui-padded-l-10 aui-padded-r-10 aui-padded-b-10">
+    </div>
+    <div class=" aui-margin-b-15 aui-margin-t-15">
+        <div class="q aui-padded-l-15">
+            带教管理
+        </div>
+
+        <section class="aui-grid">
+            <div class="aui-row">
+                <div class="aui-col-xs-3" tapmode onclick="djck()">
+                    <img src="../../image/look-over-teacher.png" alt="">
+                    <div class="aui-grid-label">带教查看</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="tjdj()">
+                    <img src="../../image/add-to-teacher.png" alt="">
+                    <div class="aui-grid-label">添加带教</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <div class="jj aui-margin-b-15">
+        <div class="q aui-padded-l-15">
+            审核工作
+        </div>
+        <section class="aui-grid">
+            <div class="aui-row">
+                <div class="aui-col-xs-3" tapmode onclick="bz()">
+                    <img src="../../image/disease_registration_btn.png" alt="">
+                    <div class="aui-grid-label">病种登记</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="ss()">
+                    <img src="../../image/surgical_registration_btn.png" alt="">
+                    <div class="aui-grid-label">手术登记</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="jn()">
+                    <img src="../../image/skills_registration_btn.png" alt="">
+                    <div class="aui-grid-label">技能要求</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="qj()">
+                    <img src="../../image/rescue-record.png" alt="">
+                    <div class="aui-grid-label">抢救记录</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="px()">
+                    <img src="../../image/training-teaching.png" alt="">
+                    <div class="aui-grid-label">培训教学</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="sx()">
+                    <img src="../../image/writing-medical-records.png" alt="">
+                    <div class="aui-grid-label">书写病历</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="mz()">
+                    <img src="../../image/outpatient-diagnosis-and-treatment.png" alt="">
+                    <div class="aui-grid-label">门诊诊治</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="jz()">
+                    <img src="../../image/emergency-treatment.png" alt="">
+                    <div class="aui-grid-label">急诊诊治</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="xx()">
+                    <img src="../../image/learn-to-read.png" alt="">
+                    <div class="aui-grid-label">学习阅读</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="jxdbl()">
+                    <img src="../../image/great-medical-record.png" alt="">
+                    <div class="aui-grid-label">教学大病历</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="ckxj()">
+                    <img src="../../image/summary_btn.png" alt="">
+                    <div class="aui-grid-label">出科小结</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="kq()">
+                    <img src="../../image/attendance_registration_btn.png" alt="">
+                    <div class="aui-grid-label">考勤审批</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="jj aui-margin-b-15">
+        <div class="q aui-padded-l-15">
+            评价工作
+        </div>
+        <section class="aui-grid">
+            <div class="aui-row">
+                <div class="aui-col-xs-3" tapmode onclick="pjxy()">
+                    <img src="../../image/evaluation_of_teaching_btn.png" alt="">
+                    <div class="aui-grid-label">学员评价</div>
+                </div>
+                <!-- <div class="aui-col-xs-3" tapmode onclick="mnpg()">
+                    <img src="../../image/evaluation-form.png" alt="">
+                    <div class="aui-grid-label">MINI-CEX</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="dops()">
+                    <img src="../../image/work-dops.png" alt="">
+                    <div class="aui-grid-label">DOPS</div>
+                </div> -->
+            </div>
+        </section>
+    </div>
+
+
+    <div class="jj aui-margin-b-15">
+        <div class="q aui-padded-l-15">
+            考试工作
+        </div>
+        <section class="aui-grid">
+            <div class="aui-row">
+                <div class="aui-col-xs-3" tapmode onclick="jnks()">
+                    <img src="../../image/designated-exam.png" alt="">
+                    <div class="aui-grid-label">技能考试</div>
+                </div>
+
+                <div class="aui-col-xs-3" tapmode onclick="ckks()">
+                    <img src="../../image/exams_test_btn.png" alt="">
+                    <div class="aui-grid-label">出科考试</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="jj aui-margin-b-15">
+        <div class="q aui-padded-l-15">
+            教学活动
+        </div>
+        <section class="aui-grid">
+            <div class="aui-row">
+                <div class="aui-col-xs-3" tapmode onclick="xjk()">
+                    <img src="../../image/summary_btn.png" alt="">
+                    <div class="aui-grid-label">小讲课</div>
+                </div>
+
+                <div class="aui-col-xs-3" tapmode onclick="bltl()">
+                    <img src="../../image/case-discussion.png" alt="">
+                    <div class="aui-grid-label">病例讨论</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="xsll()">
+                    <img src="../../image/academic.png" alt="">
+                    <div class="aui-grid-label">学术/理论</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="jxcf()">
+                    <img src="../../image/teaching.png" alt="">
+                    <div class="aui-grid-label">教学查房</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script>
+  H.ready(function () {
+$('#departmentname').text(H.getStorage('Now_Department'));
+})
+    function tjdj() {
+        api.openWin({
+            name: 'zr-tjdj',
+            url: '../keshizhuren/zr-gongzuo/zr-tjdaijiao.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+
+    }
+
+    function djck() {
+        api.openWin({
+            name: 'zr-djck',
+            url: '../keshizhuren/zr-gongzuo/zr-djchakan.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+
+    }
+
+    function ckks() {
+        api.openWin({
+            name: 'zr-ckks2',
+            url: '../keshizhuren/zr-gongzuo/zr-ckkaoshi2.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function bz() {
+        api.openWin({
+            name: 'zr-bz',
+            url: '../keshizhuren/zr-gongzuo/zr-bingzhong.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function ss() {
+        api.openWin({
+            name: 'zr-ss',
+            url: '../keshizhuren/zr-gongzuo/zr-shoushu.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function jn() {
+        api.openWin({
+            name: 'zr-jn',
+            url: '../keshizhuren/zr-gongzuo/zr-jineng.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function pjxy() {
+        api.openWin({
+            name: 'zr-pjxy',
+            url: '../keshizhuren/zr-gongzuo/zr-pjxueyuan.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function xjk() {
+        api.openWin({
+            name: 'zr-xjk',
+            url: '../keshizhuren/zr-gongzuo/zr-xjiangke.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function bltl() {
+        api.openWin({
+            name: 'zr-xjk',
+            url: '../keshizhuren/zr-gongzuo/zr-binglitaolun.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function jnks() {
+        api.openWin({
+            name: 'zr-jnks',
+            url: '../keshizhuren/zr-gongzuo/zr-jnkaoshi.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function qhks() {
+        api.openWin({
+            name: 'qhks',
+            url: '../qiehuanks.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function jxcf() {
+        api.openWin({
+            name: 'zr_jxcf',
+            url: '../keshizhuren/zr-gongzuo/zr_chafang.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function xsll() {
+        api.openWin({
+            name: 'dj_xsll',
+            url: './zr-gongzuo/zr_xsll.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function ckxj() {
+        api.openWin({
+            name: 'zr-Sum',
+            url: '../keshizhuren/zr-gongzuo/zr-Summary.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function qj() {
+        api.openWin({
+            name: 'zr-rescue',
+            url: '../keshizhuren/zr-gongzuo/zr-rescue.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function px() {
+        api.openWin({
+            name: 'zr_Train',
+            url: '../keshizhuren/zr-gongzuo/zr_Train.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function sx() {
+        api.openWin({
+            name: 'zr_Medical',
+            url: '../keshizhuren/zr-gongzuo/zr_Medical.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function mz() {
+        api.openWin({
+            name: 'zr_menzhen',
+            url: '../keshizhuren/zr-gongzuo/zr_menzhen.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function jz() {
+        api.openWin({
+            name: 'zr_jizhen',
+            url: '../keshizhuren/zr-gongzuo/zr_jizhen.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function xx() {
+        api.openWin({
+            name: 'zr_xuexi',
+            url: '../keshizhuren/zr-gongzuo/zr_xuexi.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function jxdbl() {
+      api.openWin({
+          name: 'zr-jxdbl',
+          url: '../keshizhuren/zr-gongzuo/zr-jxdbl.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+    }
+    function kq() {
+      api.openWin({
+          name: 'zr_kq',
+          url: '../keshizhuren/zr-gongzuo/zr-kaoqin.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+    }
+</script>
+
+</html>

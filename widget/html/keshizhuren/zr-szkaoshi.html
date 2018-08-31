@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" type="text/css" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .xs {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        font-family: PingFang-SC-Medium;
+    }
+
+    .xs1 {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        font-family: PingFang-SC-Medium;
+    }
+
+    .l1 {
+        font-family: PingFang-SC-Medium;
+        line-height: 2.5rem;
+        background: #fff;
+    }
+
+    .l1 i {
+        font-weight: 600;
+    }
+
+    .btn {
+        width: 80%;
+        margin: 0 auto;
+        height: 5rem;
+        line-height: 5rem;
+    }
+
+    .btn button {
+        width: 100%;
+        border-radius: 4px;
+        height: 2.5rem;
+        color: #fff;
+        font-size: 0.85rem;
+        outline: none;
+        border: 0;
+        background: #4593DE;
+    }
+</style>
+
+<body id="body">
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">出科考试设置</div>
+    </header>
+    <div class="pad"></div>
+    <div class="aui-text-left xs aui-font-size-18 aui-padded-l-10">
+        学生信息
+    </div>
+
+    <div class="l1" id="ysinfo">
+        <p class="aui-font-size-16 clo-99 aui-padded-l-10">姓名：<span class="clo-33">{{username}}</span> </p>
+        <div class="aui-hr"></div>
+        <p class="aui-font-size-16 clo-99 aui-padded-l-10">账号： <span class="clo-33">{{useraccount}}</span></p>
+        <div class="aui-hr"></div>
+        <p class="aui-font-size-16 clo-99 aui-padded-l-10">科室：<span class="clo-33"> {{departmentname}}</span></p>
+    </div>
+
+    <div class="aui-text-left xs1 aui-font-size-18 aui-padded-l-10">
+        试卷设置
+    </div>
+
+    <div class="l1">
+        <p class="aui-font-size-16 clo-99 aui-padded-l-10">试卷名称：<span class="clo-33">《2017年第三季度考试》</span> </p>
+        <div class="aui-hr"></div>
+        <p class="aui-font-size-16 clo-99 aui-padded-l-10" tapmode onclick="s1()">考试用时： <span class="clo-33" id="s1">60</span><i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-18 clo-33"></i></p>
+        <div class="aui-hr"></div>
+        <p class="aui-font-size-16 clo-99 aui-padded-l-10">试卷类型：<span class="clo-33"> 出科考试</span></p>
+        <div class="aui-hr"></div>
+        <p class="aui-font-size-16 clo-99 aui-padded-l-10" tapmode onclick="s2()">查看分数：<span class="clo-33" id="s2">拒绝</span><i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-18 clo-33"></i></p>
+        <div class="aui-hr"></div>
+        <p class="aui-font-size-16 clo-99 aui-padded-l-10" tapmode onclick="s3()">查看答案：<span class="clo-33" id="s3">拒绝</span><i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-18 clo-33"></i></p>
+        <div class="aui-hr"></div>
+        <p class="aui-font-size-16 clo-99 aui-padded-l-10" tapmode onclick="s4()">是否导出：<span class="clo-33" id="s4">拒绝</span><i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-18 clo-33"></i></p>
+    </div>
+
+    <div class="btn" tapmode onclick="showDefault('success')">
+        <button>确定考试</button>
+    </div>
+</body>
+<script src="../../script/aui-tab.js"></script>
+<script src="../../script/aui-toast.js"></script>
+<script src="../../script/aui-dialog.js"></script>
+<script src="../../script/api.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script src="../../script/aui-actionsheet.js"></script>
+<script>
+    new Vue({
+        el: '#ysinfo',
+        data: {
+          ysid:H.getStorage('ysid'),
+          username:H.getStorage('username'),
+          useraccount:H.getStorage('useraccount'),
+          departmentname:H.getStorage('departmentname')
+        }
+    });
+    var actionsheet = new auiActionsheet();
+
+    function s1() {
+        actionsheet.init({
+            frameBounces: true, //当前页面是否弹动，（主要针对安卓端）
+            // title:"这里是标题",
+            cancelTitle: '取消',
+            // destructiveTitle:'红色警告按钮',
+            buttons: ['60', '90', '120']
+        }, function(ret) {
+            if (ret.buttonIndex == 1) {
+                document.getElementById('s1').innerHTML = "60"
+            }
+            if (ret.buttonIndex == 2) {
+                document.getElementById('s1').innerHTML = "90"
+            }
+            if (ret.buttonIndex == 3) {
+                document.getElementById('s1').innerHTML = "120"
+            }
+        })
+    }
+
+    function s2() {
+        actionsheet.init({
+            frameBounces: true, //当前页面是否弹动，（主要针对安卓端）
+            // title:"这里是标题",
+            cancelTitle: '取消',
+            // destructiveTitle:'红色警告按钮',
+            buttons: ['拒绝', '允许']
+        }, function(ret) {
+            if (ret.buttonIndex == 1) {
+                document.getElementById('s2').innerHTML = "拒绝"
+            }
+            if (ret.buttonIndex == 2) {
+                document.getElementById('s2').innerHTML = "允许"
+            }
+        })
+    }
+
+    function s3() {
+        actionsheet.init({
+            frameBounces: true, //当前页面是否弹动，（主要针对安卓端）
+            // title:"这里是标题",
+            cancelTitle: '取消',
+            // destructiveTitle:'红色警告按钮',
+            buttons: ['拒绝', '允许']
+        }, function(ret) {
+            if (ret.buttonIndex == 1) {
+                document.getElementById('s3').innerHTML = "拒绝"
+            }
+            if (ret.buttonIndex == 2) {
+                document.getElementById('s3').innerHTML = "允许"
+            }
+        })
+    }
+
+    function s4() {
+        actionsheet.init({
+            frameBounces: true, //当前页面是否弹动，（主要针对安卓端）
+            // title:"这里是标题",
+            cancelTitle: '取消',
+            // destructiveTitle:'红色警告按钮',
+            buttons: ['拒绝', '允许']
+        }, function(ret) {
+            if (ret.buttonIndex == 1) {
+                document.getElementById('s4').innerHTML = "拒绝"
+            }
+            if (ret.buttonIndex == 2) {
+                document.getElementById('s4').innerHTML = "允许"
+            }
+        })
+    }
+
+    H.ready(function () {
+      //处理点击延迟
+      $(function() {
+          FastClick.attach(document.body);
+      });
+    })
+    var toast = new auiToast({})
+
+    function showDefault(type) {
+        switch (type) {
+            case "success":
+                toast.success({
+                    title: "出题成功",
+                    duration: 2000
+                });
+                break;
+        }
+    }
+
+
+    function fh() {
+        api.closeWin({});
+
+    }
+</script>
+
+</html>

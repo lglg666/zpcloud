@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../../css/aui.css">
+    <link rel="stylesheet" href="../../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .net {
+        background: #fff;
+        line-height: 2.5rem;
+    }
+
+    textarea {
+        height: 5rem;
+    }
+
+    .btn button {
+        border-radius: 0.1rem;
+    }
+
+    .btn_lan {
+        background: #fff;
+        border: 1px solid #4593DE;
+        color: #4593DE;
+    }
+
+    .ewm img {
+        width: 7rem;
+        margin: 0 auto;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">发布活动</div>
+    </header>
+    <div class="pad"></div>
+    <div class="net">
+        <p class="aui-font-size-16 aui-padded-l-10 clo-99 ">活动形式 <i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 clo-33"></i> <span class="aui-pull-right aui-padded-r-10 clo-33">小讲课</span></p>
+        <div class="aui-hr"></div>
+        <p class="aui-font-size-16 aui-padded-l-10 clo-99 ">活动名称 <span class="aui-pull-right aui-padded-r-10 clo-33">主持病例讨论</span></p>
+        <div class="aui-hr"></div>
+        <p class="aui-font-size-16 aui-padded-l-10 clo-99 ">病人姓名 <span class="aui-pull-right aui-padded-r-10 clo-33">肖大大</span></p>
+        <div class="aui-hr"></div>
+        <p class="aui-font-size-16 aui-padded-l-10 clo-99 ">病历号 <span class="aui-pull-right aui-padded-r-10 clo-33">Q02454</span></p>
+        <div class="aui-hr"></div>
+        <p class="aui-font-size-16 aui-padded-l-10 clo-99 ">活动内容 <textarea name="a" class="clo-33" placeholder="请输入活动内容"></textarea></p>
+        <div class="aui-hr"></div>
+        <p class="aui-font-size-16 aui-padded-l-10 clo-99 ">参与人员 <i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 clo-33"></i> <span class="aui-pull-right aui-padded-r-10 clo-33">住院医师</span></p>
+        <div class="aui-hr"></div>
+        <p class="aui-font-size-16 aui-padded-l-10 clo-99 ">主讲人 <i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 clo-33"></i> <span class="aui-pull-right aui-padded-r-10 clo-33">肖大大</span></p>
+        <div class="aui-hr"></div>
+        <p class="aui-font-size-16 aui-padded-l-10 clo-99 ">学时 <span class="aui-pull-right aui-padded-r-10 clo-33">3时</span></p>
+        <div class="aui-hr"></div>
+        <p class="aui-font-size-16 aui-padded-l-10 clo-99 ">活动时间 <i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 clo-33"></i> <span class="aui-pull-right aui-padded-r-10 clo-33">2017-01-17</span></p>
+        <div class="aui-hr"></div>
+        <p class="aui-font-size-16 aui-padded-l-10 clo-99 ">活动地点 <span class="aui-pull-right aui-padded-r-10 clo-33">会议室</span></p>
+        <div class="aui-hr"></div>
+
+        <div class="btn aui-text-center aui-padded-l-10">
+            <button class="btn_lan aui-margin-r-10">重新生成二维码</button>
+        </div>
+        <div class="ewm">
+            <img src="../../../image/fb.png" alt="">
+        </div>
+    </div>
+</body>
+<script src="../../../script/api.js"></script>
+<script src="../../../script/AHelper.js"></script>
+<script>
+    function fh() {
+        api.closeWin({
+            name: 'zr-fbhd'
+        });
+
+    }
+    H.ready(function () {
+
+    })
+</script>
+
+</html>

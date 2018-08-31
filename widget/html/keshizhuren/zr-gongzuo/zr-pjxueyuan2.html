@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../../css/aui.css">
+    <link rel="stylesheet" href="../../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .inp {
+        background: #fff;
+        position: relative;
+    }
+
+    .inp textarea {
+        padding-top: 0.5rem;
+        font-size: 0.7rem;
+        color: #9e9e9e;
+        height: 6rem;
+    }
+
+    .inp p {
+        position: absolute;
+        right: 0.2rem;
+        bottom: 0;
+    }
+
+    .bc {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        background: #fff;
+        font-family: PingFang-SC-Medium;
+    }
+
+    .bt {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .bg-lan {
+        background: #4593DE;
+        color: #fff;
+    }
+
+    .bg-bai {
+        background: #fff;
+    }
+
+    .col-h {
+        color: #FFBC2D;
+    }
+
+    .bottom {
+        height: 2.5rem;
+    }
+
+    select {
+        float: right;
+        text-align: center;
+        width: 15%;
+    }
+    .wid{
+      width: 100% !important;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">主任评价学员</div>
+    </header>
+    <div class="pad"></div>
+    <div class="vm-body">
+        <div v-for="item in list" class="content aui-margin-b-15">
+            <div class="aui-text-left aui-font-size-16 bc aui-padded-l-10 clo-22">
+                <span v-text="item.name"></span>
+                <span class="aui-font-size-12 clo-99 aui-pull-right aui-padded-r-10" v-if="item.zuigao">(最高{{item.max_score}}分)</span>
+            </div>
+            <div class="aui-hr"></div>
+            <div class="inp">
+                <textarea v-model="item.value" placeholder="请输入考核情况" :maxlength="item.max_length" class="aui-padded-l-10"></textarea>
+                <p class="aui-padded-r-10"><span v-text="item.value.length"></span v-text="'/'+item.max_length">/240</p>
+          </div>
+          <div class="aui-hr"></div>
+          <div class="aui-text-left aui-font-size-16 bc aui-padded-l-10 clo-22"v-if="item.df">
+              实得分
+              <i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-16"></i>
+              <!-- <span class="aui-font-size-16 clo-99 aui-pull-right aui-padded-r-10">0分</span> -->
+                    <!-- {{item.s/core}} -->
+                    <select class="" name="" value="" v-model="item.score">
+                  <option value=""v-for="item1 in item.list" :value="item1.score">{{item1.score}}分</option>
+                </select>
+            </div>
+        </div>
+        <div class="aui-text-left aui-font-size-16 bc aui-padded-l-10 clo-22 aui-margin-b-15">
+            <span>科室主任签名</span>
+            <span class="aui-font-size-12 clo-99 aui-pull-right aui-padded-r-10"><input type="text" name="" placeholder="请输入签名" v-model="zrqm" value="科室主任"></span>
+        </div>
+        <div class="aui-text-left aui-font-size-16 bc aui-padded-l-10 clo-22">
+            <span>考核小组签名</span>
+            <span class="aui-font-size-12 clo-99 aui-pull-right aui-padded-r-10"><input type="text" name="" placeholder="请输入签名" v-model="xzqm"></span>
+        </div>
+        <div class="bottom aui-margin-t-15"></div>
+        <div class="bt aui-text-center" >
+            <div class="aui-col-xs-8 bg-bai" :class="ok == 1? 'wid':''">
+                <p class="aui-font-size-16 col-22"> 总得分：<span class="aui-font-size-20 col-h">{{sum_score}}</span> <span class="clo-99 aui-font-size-12">总分100</span></p>
+            </div>
+            <div class="aui-col-xs-4 aui-font-size-18 bg-lan" @click="submit(xzqm)" v-if="ok ==0">提交</div>
+        </div>
+    </div>
+
+
+</body>
+<script src="../../../script/api.js"></script>
+<script src="../../../script/AHelper.js"></script>
+<script src="../../../script/base.js"></script>
+<script src="../../../script/zepto.min.js"></script>
+<script src="../../../script/vue/vue.min.js"></script>
+<script src="../../../script/fastclick.js"></script>
+<script>
+    //判断字数
+    var _list = [{
+        score: 1
+    }, {
+        score: 2
+    }, {
+        score: 3
+    }, {
+        score: 4
+    }, {
+        score: 5
+    }, {
+        score: 6
+    }, {
+        score: 7
+    }, {
+        score: 8
+    }, {
+        score: 9
+    }, {
+        score: 10
+    }, {
+        score: 11
+    }, {
+        score: 12
+    }, {
+        score: 13
+    }, {
+        score: 14
+    }, {
+        score: 15
+    }, {
+        score: 16
+    }, {
+        score: 17
+    }, {
+        score: 18
+    }, {
+        score: 19
+    }, {
+        score: 20
+    }]
+
+    var _list1 = [{
+        score: 1
+    }, {
+        score: 2
+    }, {
+        score: 3
+    }, {
+        score: 4
+    }, {
+        score: 5
+    }, {
+        score: 6
+    }, {
+        score: 7
+    }, {
+        score: 8
+    }, {
+        score: 9
+    }, {
+        score: 10
+    }, {
+        score: 11
+    }, {
+        score: 12
+    }, {
+        score: 13
+    }, {
+        score: 14
+    }, {
+        score: 15
+    }, {
+        score: 16
+    }, {
+        score: 17
+    }, {
+        score: 18
+    }, {
+        score: 19
+    }, {
+        score: 20
+    }, {
+        score: 21
+    }, {
+        score: 22
+    }, {
+        score: 23
+    }, {
+        score: 24
+    }, {
+        score: 25
+    }, {
+        score: 26
+    }, {
+        score: 27
+    }, {
+        score: 28
+    }, {
+        score: 29
+    }, {
+        score: 30
+    }]
+    var vm = new Vue({
+        el: ".vm-body",
+        data: {
+            zrqm: "科室主任",
+            xzqm: "",
+            ok:0,
+            list: [{
+                id: 0,
+                name: "政治思想职业道德",
+                max_score: 20,
+                max_length: 240,
+                value: "",
+                df: true,
+                zuigao: true,
+                score: 0,
+                list: _list,
+
+            }, {
+                id: 1,
+                name: "实践时间",
+                max_score: 30,
+                max_length: 240,
+                value: "",
+                df: true,
+                zuigao: true,
+                score: 0,
+                list: _list1,
+            }, {
+                id: 2,
+                name: "实践技能",
+                max_score: 30,
+                max_length: 240,
+                value: "",
+                df: true,
+                zuigao: true,
+                score: 0,
+                list: _list1,
+            }, {
+                id: 3,
+                name: "专业理论",
+                max_score: 20,
+                max_length: 240,
+                value: "",
+                df: true,
+                zuigao: true,
+                score: 0,
+                list: _list,
+            }, {
+                id: 4,
+                name: "科室主任考评意见",
+                max_score: 20,
+                max_length: 240,
+                value: "",
+                zuigao: false,
+                df: false,
+                score: 0,
+            }, {
+                id: 5,
+                name: "考核小组意见",
+                max_score: 20,
+                max_length: 240,
+                value: "",
+                zuigao: false,
+                df: false,
+                score: 0,
+            }],
+        },
+        methods: {
+            submit: (xzqm) => {
+                console.log(JSON.stringify(vm.list))
+                const self = this;
+                // var content =  this.$refs.mybox.value;
+                // console.log(content);
+                var data = [];
+                for (item in vm.list) {
+                    data.push(vm.list[item].score);
+                    data.push(vm.list[item].value);
+                }
+                var address = "/Hospital/index.php/api/department/department_evaluate";
+                var token = H.getStorage('token');
+                var id = H.getStorage('zr_pjxy_id');
+                var ajaxData = {
+                    token: token,
+                    rid: id,
+                    action: "eva",
+                    inputattrs: data,
+                    eval_f: xzqm
+                };
+                console.log(JSON.stringify(ajaxData));
+                $base.submit(address, ajaxData, function(ret) {
+                    console.log(JSON.stringify(ret));
+                    if (ret.status == 1) {
+                        $base.toast(ret.errmsg);
+                        setTimeout(function() {
+                            api.closeWin({});
+                        }, 500)
+                        api.sendEvent({
+                            name: 'zr-pjxy',
+                            extra: {
+                                key1: 'value1',
+                            }
+                        });
+
+                    } else {
+                        $base.toast(ret.errmsg);
+                    }
+                }, function(err) {
+                    console.log(JSON.stringify(err));
+                });
+            }
+
+        },
+        computed: {
+            sum_score: function() {
+                var sum = 0;
+                this.list.forEach(function(t) {
+                    sum += t.score;
+                })
+                return sum + "分";
+            },
+
+        }
+    })
+
+
+
+
+    function fh() {
+        api.closeWin({});
+
+    }
+
+    H.ready(function() {
+        var address = "/Hospital/index.php/api/department/department_evaluate";
+        $base.showLoading();
+        var token = H.getStorage('token');
+        console.log(token);
+        var id = H.getStorage('zr_pjxy_id');
+        console.log(id);
+        var ajaxData = {
+            token: token,
+            action: "detail",
+            rid: id
+        };
+        $base.get(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret));
+            if (ret.data.id > 0) {
+                //已评价
+                //一维数组
+                var items = ret.data.vals;
+                console.log(items);
+                var items_index = 0;
+                for (var i = 0; i < items.length; i++) {
+                    if (i % 2 == 0) {
+                        console.log(items[i]);
+                        vm.list[Math.ceil((i+1)/2)-1].score = parseInt(items[i]);
+                    } else {
+                      vm.list[Math.ceil((i+1)/2)-1].value = items[i];
+                    }
+                }
+                console.log(vm.xzqm);
+                vm.xzqm = ret.data.eval_f;
+                vm.ok = 1;
+                $base.closeLoading();
+            } else {
+                $base.closeLoading();
+                //未评价
+            }
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        });
+    })
+</script>
+
+</html>

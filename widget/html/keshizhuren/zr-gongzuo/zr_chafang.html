@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href="../../../css/aui.css">
+<link rel="stylesheet" href="../../../css/iconfont/iconfont.css">
+<link rel="stylesheet" href="../../../css/style/style.css">
+<style>
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .lin {
+        line-height: 1.5rem;
+    }
+
+    .main {
+        border-radius: 0.2rem;
+        background: #fff;
+        font-family: PingFang-SC-Medium;
+    }
+
+    .btn button {
+        border-radius: 0.1rem;
+    }
+
+    .btn_lan {
+        background: #fff;
+        border: 1px solid #4593DE;
+        color: #4593DE;
+    }
+
+    .fb {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 5rem;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">教学查房</div>
+    </header>
+    <div class="pad"></div>
+    <div class="content" id="content">
+        <!-- 无数据 -->
+        <template v-if="list == false">
+        <div class="aui-text-center "id="wsj">
+            <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+            <p class="aui-font-size-16">暂无数据</p>
+        </div>
+      </template>
+
+        <div class="aui-margin-15  main aui-padded-10" v-for="item in list" v-else>
+            <div class=" lin">
+                <p class="clo-99 aui-font-size-16 ">带教姓名:<span class="clo-33" v-text="item.username"> </span></p>
+                <p class="clo-99 aui-font-size-16 ">带教账号:<span class="clo-33" v-text="item.useraccount"> </span></p>
+                <p class="clo-99 aui-font-size-16 ">所属专业:<span class="clo-33" v-text="item.professioname"> </span></p>
+                <p class="clo-99 aui-font-size-16 ">所属科室:<span class="clo-33" v-text="item.departmentname"> </span></p>
+                <p class="clo-99 aui-font-size-16 ">活动数量:<span class="clo-33" v-text="item.binglitaolun">  </span></p>
+                <div class="btn aui-text-right aui-padded-l-10">
+                    <button class="btn_lan aui-margin-r-10" tapmode v-on:click="sp(item.id)">查看详情</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../../../script/aui-tab.js"></script>
+<script src="../../../script/aui-toast.js"></script>
+<script src="../../../script/aui-dialog.js"></script>
+<script src="../../../script/api.js"></script>
+<script src="../../../script/zepto.min.js"></script>
+<script src="../../../script/vue/vue.min.js"></script>
+<script src="../../../script/base.js"></script>
+<script src="../../../script/AHelper.js"></script>
+<script src="../../../script/fastclick.js"></script>
+<script type="text/javascript">
+    var content = new Vue({
+        el: "#content",
+        data: {
+            list: [],
+        },
+        methods: {
+            sp: (id) => {
+                // alert(id);
+                H.setStorage('zr_jxid_id', id);
+                H.setStorage('tatype', 3);
+                api.openWin({
+                    name: 'zr-jiaoxue',
+                    url: '../../keshizhuren/zr-jiaoxue.html',
+                    pageParam: {
+                        name: 'test'
+                    }
+                });
+            }
+        }
+    });
+
+
+
+    function fbhd() {
+        api.openWin({
+            name: 'zr-fbhd',
+            url: '../../keshizhuren/zr-gongzuo/zr-fbhuodong.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function fh() {
+        api.closeWin({});
+
+    }
+    H.ready(function() {
+        var address = "/Hospital/index.php/api/department/teaching_activities";
+        var token = H.getStorage('token');
+        var ajaxData = {
+            token: token,
+            type: 4,
+        };
+        $base.get(address, ajaxData, function(ret) {
+            console.log(address);
+            content.list = ret.data;
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        });
+
+    })
+</script>
+
+</html>

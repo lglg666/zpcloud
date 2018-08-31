@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+    <style media="screen">
+        body {
+            background: #fff;
+        }
+
+        .d-list {
+            overflow: hidden;
+            padding:  0 0 0 .5rem;
+        }
+
+        .d-list ul {text-align: left;}
+
+        .d-list li {
+            display: inline-block;
+            background: #EFF6F9;
+            padding: 0 0.4rem;
+            height: 1.7rem;
+            line-height: 1.7rem;
+            color: #333333;
+            border: 1px solid #d8d8d8;
+            margin: 0.5rem;
+            margin-right: .5rem;
+            font-size: .7rem;
+        }
+
+        .btn {
+            width: 80%;
+            margin: 2.5rem auto;
+        }
+
+        .btn button {
+            width: 100%;
+            background: #DDE1E3;
+            height: 2.5rem;
+            line-height: 2.5rem;
+            color: #fff;
+            font-size: 0.9rem;
+            border: none;
+        }
+
+        .active {
+            background-color: #4593de !important;
+            color: #fff !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header"></div>
+    <div class="aui-font-size-20 aui-margin-15 aui-text-center clo-33 ">请选择科室</div>
+    <div class="d-list">
+        <ul class="d1">
+            <li>外科</li>
+            <li>内科</li>
+            <li>妇产科</li>
+            <li>男科</li>
+            <li>儿科</li>
+            <li>肿瘤科</li>
+            <li>皮肤性病科</li>
+            <li>中医科</li>
+            <li>传染科</li>
+            <li>精神心理科</li>
+            <li>整形美容科</li>
+            <li>生殖中心</li>
+            <li>麻醉医学科</li>
+            <li>医学影像科</li>
+            <li>眼科</li>
+            <li>其它科室</li>
+        </ul>
+    </div>
+    <div class="btn ">
+        <button>确认</button></div>
+</body>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script>
+    $(".d1>li").click(function() {
+        $(this).addClass("active");
+        $(this).siblings().removeClass("active");
+        if($(".d1").find(".active")){
+          $(".btn").children().addClass("active");
+        }else{
+
+        }
+    });
+H.ready(function () {
+
+})
+</script>
+
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" type="text/css" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .con {
+        background-color: #fff;
+    }
+
+    .con_tent p {
+        height: 1.5rem;
+        line-height: 1.5rem;
+    }
+
+    .btn {
+        position: relative;
+        text-align: right;
+        right: .5rem;
+    }
+
+    .btn_lan {
+        background: #fff;
+        border: 1px solid #4593DE;
+        color: #4593DE;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">教学活动</div>
+    </header>
+    <div class="pad"></div>
+    <div class="dj">
+        <div v-for="item in list">
+            <div class="con aui-margin-15">
+                <div class="con_tent aui-padded-10">
+                    <p class="aui-font-size-16 clo-33">id:<span>{{item.id}}</span></p>
+                    <p class="aui-font-size-16 clo-33">带教姓名：<span>{{item.name}}</span></p>
+                    <p class="aui-font-size-16 clo-33">带教账号：<span>{{item.account}}</span></p>
+                    <p class="aui-font-size-16 clo-33">账号状态：<span>{{item.status}}</span></p>
+                    <p class="aui-font-size-16 clo-33">科室名称：<span>{{item.departmentname}}</span></p>
+                    <p class="aui-font-size-16 clo-33">主讲小讲课：<span>{{item.xiaojiangke}}</span></p>
+                    <p class="aui-font-size-16 clo-33">主持理论大课：<span>{{item.lilun}}</span></p>
+                    <p class="aui-font-size-16 clo-33">主持教学查房|阅片|临床巡诊：<span>{{item.jiaoxue}}</span></p>
+                    <p class="aui-font-size-16 clo-33">主持病例讨论：<span>{{item.bingli}}</span></p>
+                    <p class="aui-font-size-16 clo-33">教学活动总数：<span>{{item.totalcount}}</span></p>
+                    <div class="btn" tapmode v-on:click="check(item.id)">
+                        <button class="btn_lan aui-font-size-14">带教活动</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/aui-toast.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script>
+    var gp = new Vue({
+        el: ".dj",
+        data: {
+            list: []
+        },
+        methods: {
+            check: (id) => {
+                H.setStorage("gp_jxid_id", id);
+              api.openWin({
+                  name: 'gp-jx1',
+                  url: '../gpban/gp-jiaoxue1.html',
+                  pageParam: {
+                      name: 'test'
+                  }
+              });
+
+            }
+        }
+    })
+    H.ready(function() {
+        var address = "/Hospital/index.php/api/office/teaching_activities";
+        var token = H.getStorage('token');
+        $base.showLoading();
+        var ajaxData = {
+            token: token,
+        };
+        $base.get(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret.data));
+            gp.list = ret.data;
+            $base.closeLoading();
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        });
+    })
+
+
+    function fh() {
+        api.closeWin({});
+
+    }
+</script>
+
+</html>

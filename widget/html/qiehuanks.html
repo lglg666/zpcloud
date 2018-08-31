@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/aui.css">
+    <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+      <link rel="stylesheet" href="../css/style/style.css">
+</head>
+<style>
+    body {
+        background: #FFF;
+    }
+
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .content {
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">选择角色</div>
+    </header>
+    <div class="pad"></div>
+
+    <div class="content">
+      <!-- 无数据 -->
+      <template v-if="list == false">
+        <div class="aui-text-center "id="wsj">
+            <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+            <p class="aui-font-size-16">暂无可切换的角色</p>
+        </div>
+      </template>
+        <div v-for="(item,index) in list" tapmode v-on:click="select(index)" v-else>
+            <p class="aui-font-size-16 clo-33 aui-padded-l-10 aui-pull-left" v-text="item.department"></p>
+            <span v-text="item.role_desc" class="aui-padded-l-10"></span>
+            <span v-text="item.name" class="aui-padded-l-10"></span>
+            <div class="aui-hr"></div>
+        </div>
+    </div>
+</body>
+<script src="../script/vue/vue.min.js"></script>
+<script src="../script/api.js"></script>
+<script src="../script/AHelper.js"></script>
+<script src="../script/zepto.min.js"></script>
+<script src="../script/base.js"></script>
+<script src="../script/fastclick.js"></script>
+<script>
+    H.ready(function() {
+          var userlist       =    H.getStorage('userlist');
+          vm.list            =    userlist;
+          //处理点击延迟
+          $(function() {
+              FastClick.attach(document.body);
+          })
+    });
+
+    vm = new Vue({
+        el: ".content",
+        data: {
+            list: []
+        },
+        methods: {
+          select: function(index) {
+              // alert(_ip);
+              //根据选择的用户信息去登录系统
+              var address = "/Hospital/index.php/api/login/select_user_index";
+              var ajaxData = {
+                  index: index
+              };
+
+              $base.submit(address, ajaxData, function(ret) {
+                  var status = ret.status;
+                  console.log(JSON.stringify(ret));
+                  if (status == 1) {
+                    H.setStorage("token", ret.data.token);
+                    H.setStorage("user_role", ret.data.user_role);
+                    H.setStorage("user_id", ret.data.userid);
+                    H.setStorage("Now_Department", ret.data.d_name);
+
+                    var role = ret.data.user_role ;
+
+                    if (role == 1) {
+                        api.openWin({
+                            name: 'main',
+                            url: './main.html',
+                            slidBackEnabled: 'false',
+                            pageParam: {
+                                name: 'test'
+                            }
+                        });
+                        setTimeout(function() {
+                            H.$hideProgress();
+                        }, 500)
+
+                    } else if (role == 2) {
+                        console.log("这个是带教老师");
+                        api.openWin({
+                            name: 'main1',
+                            url: './dj-main.html',
+                            slidBackEnabled: 'false',
+                            pageParam: {
+                                name: 'test'
+                            }
+                        });
+                        setTimeout(function() {
+                            H.$hideProgress();
+                        }, 500)
+                    } else if (role == 3) {
+                        api.openWin({
+                            name: 'main2',
+                            url: './zr-main.html',
+                            slidBackEnabled: 'false',
+                            pageParam: {
+                                name: 'test'
+                            }
+                        });
+                        setTimeout(function() {
+                            H.$hideProgress();
+                        }, 500)
+                    }
+
+                  } else {
+
+                  }
+              }, function(err) {
+                  console.log(err);
+              });
+
+              setTimeout(function() {
+                  api.closeWin({
+                      name: 'select'
+                  });
+              }, 500)
+          }
+        }
+    })
+
+    function fh() {
+        api.closeWin();
+    }
+</script>
+
+</html>

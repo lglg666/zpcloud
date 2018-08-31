@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .sun_con {
+        background-color: #fff;
+    }
+
+    .sum_top {
+        height: 5rem;
+    }
+
+    .sum_top2 {
+        line-height: 1.5rem;
+    }
+
+    .btn {
+        position: relative;
+        text-align: right;
+        right: .5rem;
+        line-height: 1.5rem
+    }
+
+    .btn button {
+        border-radius: 0.1rem;
+        padding: 0 1rem;
+        width: 4.5rem;
+    }
+
+    .btn_lan {
+        background: #fff;
+        border: 1px solid #4593DE;
+        color: #4593DE;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfonst"></i>
+        </a>
+        <div class="aui-title">出科小结内容</div>
+    </header>
+    <div class="pad"></div>
+    <div id="vm">
+        <template v-for="item in list">
+        <div class="sum aui-margin-15">
+            <div class="sun_con aui-padded-10">
+                <div class="sum_top">
+                    <div class="top1 aui-col-xs-3 ">
+                        <p class="aui-font-size-16 clo-33 ">科室小结:</p>
+                    </div>
+                    <div class="top2 aui-col-xs-9 ">
+                        <p class="aui-font-size-16 clo-99">{{item.content}}</p>
+                    </div>
+                </div>
+                <div class="sum_top2">
+                    <p class="aui-font-size-16 clo-33">科室评语：<span>{{item.d_content}}</span></p>
+                    <p class="aui-font-size-16 clo-33">科室主任签名：<span>{{item.d_name}}</span></p>
+                    <p class="aui-font-size-16 clo-33">记录日期：<span>{{item.work_time}}</span></p>
+                    <p class="clo-22 aui-font-size-16">教师审批：<span v-bind:class="item.t_stauts==1 ? 'clo-lan' : 'clo-hong'" v-text="item.t_stauts == 1?'已审核':'未审核'">已审核</span></p>
+                    <p class="clo-22 aui-font-size-16">科室审批：<span v-bind:class="item.d_stauts==1 ? 'clo-lan' : 'clo-hong'" v-text="item.d_stauts == 1?'已审核':'未审核'">未审核</span></p>
+                </div>
+                <div class="aui-hr aui-margin-t-10 aui-margin-b-15"></div>
+                <div class="btn">
+                    <button class="btn_lan aui-font-size-14" tapmode v-on:click="sh(item.id)">审核</button>
+                </div>
+            </div>
+        </div>
+      </template>
+    </div>
+
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#vm",
+        data: {
+            list: []
+        },
+        methods: {
+
+            sh: (id) => {
+                var address = "/Hospital/index.php/api/teacher/summarize";
+                var token = H.getStorage('token');
+                var ajaxData = {
+                    token: token,
+                    action: "allpass",
+                    id: id,
+                };
+                $base.submit(address, ajaxData, function(ret) {
+                    console.log(JSON.stringify(ret));
+                    if (ret.status == 1) {
+                        $base.toast(ret.errmsg);
+                        setTimeout(function() {
+                            location.reload();
+                        }, 500)
+                    } else {
+                        $base.toast(ret.errmsg);
+                    }
+                }, function(err) {
+                    console.log(JSON.stringify(err));
+                });
+            }
+        }
+    })
+    H.ready(function() {
+        var address = "/Hospital/index.php/api/teacher/summarize";
+        var token = H.getStorage('token');
+        var id = H.getStorage('dj_Summary_id');
+        console.log(id);
+        var ajaxData = {
+            token: token,
+            action: "list",
+            uid: id
+        };
+        $base.get(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret));
+            vm.list = ret.data;
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        })
+    })
+
+    function fh() {
+        api.closeWin({});
+
+    }
+</script>
+
+</html>

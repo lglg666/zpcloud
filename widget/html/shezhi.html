@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/aui.css">
+    <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .jd {
+        height: 3rem;
+    }
+
+    .aui-list-item-title {
+        color: #333 !important;
+    }
+
+    .aui-text-right {
+        /*overflow: hidden;
+  text-overflow: ellipsis ;*/
+        color: #999;
+    }
+
+    .tx img {
+        border: 1px solid #fff;
+        border-radius: 50%;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .btn {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .btn button {
+        width: 100%;
+        border-radius: 4px;
+        height: 2.5rem;
+        color: #4593DE;
+        font-size: 0.85rem;
+        outline: none;
+        border: 0;
+        background: #fff;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+</style>
+
+<body>
+    <div class="sz">
+        <header class="aui-bar aui-bar-nav" id="header">
+            <a class="aui-pull-left" tapmode onclick="fh()">
+                <i class="iconfont icon-arrow-left aui-iconfont"></i>
+            </a>
+            <div class="aui-title">设置</div>
+        </header>
+        <div class="pad"></div>
+        <div class="aui-content aui-margin-b-15">
+            <ul class="aui-list aui-list-in">
+
+                <li class="aui-list-item jd">
+                    <div class="aui-list-item-inner aui-list-item-arrow">
+                        <div class="aui-list-item-title">头像</div>
+                        <div class="aui-text-right tx"><img src="../image/gril.jpg" alt="" id="user_head"> </div>
+                    </div>
+                </li>
+                <li class="aui-list-item" tapmode onclick="openDialog('yh')">
+                    <div class="aui-list-item-inner aui-list-item-arrow ">
+                        <div class="aui-list-item-title">用户名</div>
+                        <div class="aui-text-right" id="mz">  </div>
+                    </div>
+                </li>
+                <li class="aui-list-item" tapmode onclick="openActionsheet()">
+                    <div class="aui-list-item-inner aui-list-item-arrow">
+                        <div class="aui-list-item-title">性别</div>
+                        <div class="aui-text-right" id="xb">  </div>
+                    </div>
+                </li>
+                <li class="aui-list-item" tapmode onclick="xgmm()">
+                    <div class="aui-list-item-inner aui-list-item-arrow">
+                        <div class="aui-list-item-title">密码</div>
+                        <div class="aui-text-right"> 修改 </div>
+                    </div>
+                </li>
+                <li class="aui-list-item" tapmode onclick="openDialog('ghsj')">
+                    <div class="aui-list-item-inner aui-list-item-arrow">
+                        <div class="aui-list-item-title">更换手机号</div>
+                        <div class="aui-text-right" id="phone"> 1356****485 </div>
+                    </div>
+                </li>
+                <li class="aui-list-item" tapmode onclick="cll()">
+                    <div class="aui-list-item-inner aui-list-item-arrow">
+                        <div class="aui-list-item-title">缓存</div>
+                        <div class="aui-text-right" id="hc"> </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="btn" tapmode onclick="openDialog('text')">
+            <button>退出</button>
+        </div>
+    </div>
+    <script type="text/javascript" src="../script/aui-dialog.js"></script>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/aui-actionsheet.js"></script>
+    <script type="text/javascript" src="../script/aui-toast.js"></script>
+    <script type="text/javascript" src="../script/AHelper.js"></script>
+    <script src="../script/base.js"></script>
+    <script src="../script/zepto.min.js"></script>
+    <script type="text/javascript">
+        H.ready(function() {
+            api.getCacheSize(function(ret) {
+                var size = ret.size;
+                var cache = Math.round(size / 1024 / 1024)
+                document.getElementById("hc").innerHTML = cache + "M"
+                console.log(Math.round(size / 1024 / 1024));
+            });
+
+            var address = "/Hospital/index.php/api/user/user_info";
+            var token = H.getStorage('token');
+            var userid = H.getStorage("user_id");
+
+            var ajaxData = {
+                token: token,
+                userid: userid
+            };
+            $base.get(address, ajaxData, function(ret) {
+                $("#mz").html(ret.data.user_name);
+                $("#xb").html(ret.data.sex);
+                $("#phone").html(ret.data.phone);
+                if (ret.data.user_head != "") {
+                    $("#user_head").attr("src", ret.data.user_head);
+                } else {
+                    $("#user_head").attr("src", "../image/gril.jpg");
+                }
+
+            }, function(ret) {
+                console.log(JSON.stringify(ret));
+            });
+
+        })
+
+
+        var actionsheet = new auiActionsheet();
+
+        function openActionsheet() {
+            actionsheet.init({
+                frameBounces: true, //当前页面是否弹动，（主要针对安卓端）
+                // title:"这里是标题",
+                cancelTitle: '取消',
+                // destructiveTitle:'红色警告按钮',
+                buttons: ['男', '女']
+            }, function(ret) {
+                if (ret.buttonIndex == 1) {
+                    document.getElementById('xb').innerHTML = "男";
+
+                    var token = H.getStorage('token');
+                    var userid = H.getStorage("user_id");
+
+                    var address = "/Hospital/index.php/api/user/update_user_info";
+                    var ajaxData = {
+                        token: token,
+                        userid: userid,
+                        value: "男",
+                        table: "user_info",
+                        key: "sex"
+                    };
+
+                    $base.submit(address, ajaxData, function(ret) {
+                        var status = ret.status;
+                        console.log(status);
+                        if (status == 1) {
+                            console.log(ret);
+                            $base.toast("修改成功！");
+                        } else {
+
+                        }
+                    }, function(err) {
+                        console.log(err);
+                    });
+
+
+                }
+                if (ret.buttonIndex == 2) {
+                    document.getElementById('xb').innerHTML = "女";
+
+                    var token = H.getStorage('token');
+                    var userid = H.getStorage("user_id");
+
+                    var address = "/Hospital/index.php/api/user/update_user_info";
+                    var ajaxData = {
+                        token: token,
+                        userid: userid,
+                        value: "女",
+                        table: "user_info",
+                        key: "sex"
+                    };
+
+                    $base.submit(address, ajaxData, function(ret) {
+                        var status = ret.status;
+                        console.log(status);
+                        if (status == 1) {
+                            console.log(ret);
+                            $base.toast("修改成功！");
+                        } else {
+
+                        }
+                    }, function(err) {
+                        console.log(err);
+                    });
+                }
+            })
+        }
+
+        //改名称
+        var dialog = new auiDialog({})
+
+        function openDialog(type) {
+            switch (type) {
+                case "yh":
+                    dialog.prompt({
+                        title: "修改用户名",
+                        text: '输入名称',
+                        buttons: ['取消', '确定']
+                    }, function(ret) {
+                        if (ret.buttonIndex == 2) {
+                          if(ret.text != ''){
+                            dialog.alert({
+                                title: "提示",
+                                msg: "您的名称修改为：" + ret.text,
+                                buttons: ['确定']
+                            });
+
+                            document.getElementById('mz').innerHTML = ret.text;
+
+                            var token = H.getStorage('token');
+                            var userid = H.getStorage("user_id");
+
+                            var address = "/Hospital/index.php/api/user/update_user_info";
+                            var ajaxData = {
+                                token: token,
+                                userid: userid,
+                                value: ret.text,
+                                table: "user_info",
+                                key: "name"
+                            };
+
+                            $base.submit(address, ajaxData, function(ret) {
+                                var status = ret.status;
+                                console.log(status);
+                                if (status == 1) {
+                                    console.log(ret);
+                                    //$base.toast("修改成功！");
+                                } else {
+
+                                }
+                            }, function(err) {
+                                console.log(err);
+                            });
+                            api.sendEvent({
+                              name: 'modify_name',
+                              extra: {
+                                  key: true
+                              }
+                          });
+                        }else{
+                          $base.toast('用户名不能为空');
+                        }
+                        }
+                    })
+                    break;
+                case "text":
+                    dialog.alert({
+                        title: "提示",
+                        msg: '确定要退出账号',
+                        buttons: ['取消', '确定']
+                    }, function(ret) {
+                        if (ret.buttonIndex == 2) {
+                            // H.removeStorage('user_role');
+                            H.clearStorage();
+                            api.closeToWin({
+                                name: 'login'
+                            });
+                            H.$showProgress("正在退出中。。。")
+                            api.sendEvent({
+                                name: 'tuichu',
+                                extra: {
+                                    tc: true,
+                                }
+                            });
+                            setTimeout(function() {
+                                H.$hideProgress();
+                                api.openWin({
+                                    name: 'login',
+                                    url: './login.html',
+                                    slidBackEnabled: 'false',
+                                    pageParam: {
+                                        name: 'test'
+                                    }
+                                });
+                            }, 500)
+                        }
+                    })
+                    break;
+                    case "ghsj":
+                        dialog.prompt({
+                            title: "更换手机",
+                            text: '输入手机号码',
+                            buttons: ['取消', '确定']
+                        }, function(ret) {
+                            if (ret.buttonIndex == 2) {
+                              console.log(ret.text);
+                                var myreg =/^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/;
+                                if (!myreg.test(ret.text)) {
+                                  $base.toast("请输入正确手机号码")
+                                    return false;
+                                } else {
+                                  $base.toast("修改成功");
+                                    dialog.alert({
+                                        title: "提示",
+                                        msg: "您的手机修改为：" + ret.text,
+                                        buttons: ['确定']
+                                    });
+
+                                }
+
+                                document.getElementById('phone').innerHTML = ret.text;
+
+                                var token = H.getStorage('token');
+                                var userid = H.getStorage("user_id");
+
+                                var address = "/Hospital/index.php/api/user/update_user_info";
+                                var ajaxData = {
+                                    token: token,
+                                    userid: userid,
+                                    value:ret.text,
+                                    table: "user_info",
+                                    key: "phone"
+                                };
+
+                                $base.submit(address, ajaxData, function(ret) {
+                                    var status = ret.status;
+                                    console.log(status);
+                                    if (status == 1) {
+                                        console.log(ret);
+                                        //$base.toast("修改成功！");
+                                    } else {
+
+                                    }
+                                }, function(err) {
+                                    console.log(err);
+                                });
+
+                            }
+                        })
+                        break;
+            }
+        }
+
+
+        function xgmm() {
+            api.openWin({
+                name: 'xgmm',
+                url: './xgmm.html',
+                pageParam: {
+                    name: 'test'
+                }
+            });
+
+
+        }
+
+        function fh() {
+            api.closeWin({
+                name: 'sz'
+            });
+
+        }
+
+        function cll() {
+            api.clearCache(function() {
+                api.toast({
+                    msg: '清除完成'
+                });
+                api.getCacheSize(function(ret) {
+                    var size = ret.size;
+                    var cache = Math.round(size / 1024 / 1024)
+                    document.getElementById("hc").innerHTML = cache + "M"
+                    console.log(Math.round(size / 1024 / 1024));
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>

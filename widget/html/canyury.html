@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/aui.css">
+    <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .nav {
+        background: #fff;
+    }
+
+    .nav p {
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .ren {
+        overflow: hidden;
+        height: auto;
+        background: #fff;
+    }
+
+    .ren p {
+        display: block;
+        line-height: 2rem;
+        height: 2rem;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">参与人员</div>
+    </header>
+    <div class="pad"></div>
+    <div class="nav">
+        <p class="clo-33 aui-font-size-16 aui-padded-l-15 chu">已报名参与人员(<span class="clo-99" id="sign_users_num"></span>)</p>
+        <div class="aui-hr" style="background-size:95% 1px ;"></div>
+    </div>
+
+    <div class="ren">
+        <div v-for="item in list">
+            <p class="aui-font-size-14 color-33 aui-col-xs-3 aui-text-center" v-text ="item.name"></p>
+        </div>
+    </div>
+</body>
+<script src="../script/api.js"></script>
+<script src="../script/AHelper.js"></script>
+<script src="../script/base.js"></script>
+<script src="../script/vue/vue.min.js"></script>
+<script src="../script/zepto.min.js"></script>
+<script>
+    var vm = new Vue({
+        el: ".ren",
+        data: {
+            list: []
+        }
+    })
+
+    function fh() {
+        api.closeWin({});
+
+    }
+    H.ready(function() {
+        var pp = H.getStorage("panduan");
+        console.log(pp);
+        if (pp == "jx") {
+            var address = "/Hospital/index.php/api/ys/teaching_activities";
+            var token = H.getStorage('token');
+            var id = H.getStorage("jx_id");
+            console.log(id);
+            $base.showLoading();
+            var ajaxData = {
+                token: token,
+                id: id,
+                action: "detail",
+            };
+            $base.get(address, ajaxData, function(ret) {
+                console.log(JSON.stringify(ret));
+                $("#sign_users_num").html(ret.data.sign_users_num + "人");
+                vm.list = ret.data.sign_users
+                $base.closeLoading();
+            }, function(err) {
+                console.log(JSON.stringify(err));
+            });
+        } else {
+          console.log("课程");
+            var address = "/Hospital/index.php/api/user/course";
+            var token = H.getStorage('token');
+            var course_id = H.getStorage('course_id');
+            $base.showLoading();
+            var ajaxData = {
+                token: token,
+                action: "detail",
+                id: course_id
+            };
+            $base.get(address, ajaxData, function(ret) {
+                console.log(JSON.stringify(ret));
+                $("#sign_users_num").html(ret.data.people_list_num + "人");
+                vm.list = ret.data.people_list;
+                $base.closeLoading();
+            }, function(err) {
+                console.log(JSON.stringify(err));
+            });
+        }
+
+    })
+</script>
+
+</html>

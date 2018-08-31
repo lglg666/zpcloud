@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/aui.css">
+    <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+</head>
+<style>
+header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .bc {
+        margin: 0.5rem auto;
+        color: #9e9e9e;
+    }
+
+    .inp {
+        background: #fff;
+        position: relative;
+    }
+
+    .inp textarea {
+        padding-top: 0.5rem;
+        font-size: 0.7rem;
+        color: #9e9e9e;
+        height: 6rem;
+    }
+
+    .inp p {
+        position: absolute;
+        right: 0.2rem;
+        bottom: 0;
+    }
+
+    .tu {
+        margin: 0.7rem auto;
+        /*height: 7rem;*/
+        background: #fff;
+    }
+
+    .tu img {
+        width: 3rem;
+        height: 3rem;
+        margin-left: 0.75rem;
+        float: left;
+    }
+
+    .bt {
+        position: absolute;
+        text-align: center;
+        margin-top: 2rem;
+        width: 100%;
+    }
+
+    .bt button {
+        width: 80%;
+        border-radius: 4px;
+        height: 2.5rem;
+        font-size: 0.85rem;
+        outline: none;
+        border: 0;
+        background: #4593DE;
+        color: #fff;
+    }
+}
+.aui-list {
+    border-top: none;
+}
+@media screen and (-webkit-min-device-pixel-ratio: 1.5) {
+    .aui-list {
+        border: none;
+        background-size: 100% 0px;
+    }
+}
+.aui-list .aui-list-item:active {
+    background-color: #FFFFFF;
+}
+.imglist {
+    width: 100%;
+    clear: both;
+    margin: 1rem auto;
+}
+.imglist img {
+    width: 4rem;
+    height: 4rem;
+}
+.add {
+    width: 3rem;
+    height: 3rem;
+    background: url(../image/add_photos_btn.png) no-repeat;
+    background-size: 100% 100%;
+    float: left;
+    margin-left: 0.7rem;
+}
+.addimg {
+    float: left;
+    height: 3rem;
+    width: 3rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+.addimg img {
+    width: 3rem;
+    height: 3rem;
+}
+
+/*遮罩层*/
+.mask {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    display: none;
+}
+.alert {
+    width: 12rem;
+    height: 7.42rem;
+    border-radius: 0.2rem;
+    background: #fff;
+    font-size: 0.75rem;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -6rem;
+    margin-top: -4.2rem;
+}
+.alert p:nth-child(1) {
+    line-height: 5rem;
+    border-bottom: 1px solid #EBEBEB;
+    font-size: 0.9rem;
+}
+.alert p:nth-child(2) span {
+    display: inline-block;
+    width: 49%;
+    height: 2.4rem;
+    line-height: 2.4rem;
+    float: left;
+    font-size: 0.8rem;
+}
+.cancel {
+    border-right: 1px solid #EBEBEB;
+    color: #00BB3D;
+}
+.sure {
+    color: #F60;
+}
+.addimg .x img {
+    width: 0.8rem;
+    height: 0.8rem;
+    position: relative;
+    top: -3.6rem;
+    left: -0.5rem;
+}
+.pad {
+    padding-top: 3.5rem;
+}
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">意见反馈</div>
+    </header>
+
+    <div class="pad"></div>
+    <div class="aui-text-left aui-font-size-14 bc aui-padded-l-10">
+        请补充详细问题和意见
+    </div>
+    <div class="vm-body">
+        <div class="inp" v-for="item in list">
+            <textarea name="a" placeholder="请输入不少于10个字的描述" class="aui-padded-l-10" value="" v-model="item.value" :maxlength="item.max_length"></textarea>
+            <p><span id="fdfd" v-text="item.value.length">0</span v-text="'/'+ item.max_length">/240</p>
+
+    <div class="bt " tapmode v-on:click="fk(item.value)">
+        <button>提交意见</button>
+    </div>
+    </div>
+    </div>
+
+
+
+</body>
+<script src="../script/api.js"></script>
+<script src="../script/AHelper.js"></script>
+<script src="../script/base.js"></script>
+<script src="../script/zepto.min.js"></script>
+<script src="../script/vue/vue.min.js"></script>
+<script src="../script/fastclick.js"></script>
+<script>
+    //判断字数
+    var vm = new Vue({
+        el: ".vm-body",
+        data: {
+            list:[{
+                id: 0,
+                max_length: 240,
+                value: ""
+            }],
+        },
+        methods: {
+        fk:(dd)=>{
+          var address = "/Hospital/index.php/api/user/app_feedback";
+          var token = H.getStorage('token');
+          var ajaxData = {
+              token: token,
+              action:"insert",
+              content:dd,
+          };
+          $base.submit(address, ajaxData, function(ret) {
+              console.log(JSON.stringify(ret));
+              if(ret.status == 1){
+                $base.toast(ret.errmsg);
+                setTimeout(function () {
+                  api.closeWin({});
+                },800)
+              }else{
+                $base.toast(ret.errmsg);
+              }
+          }, function(err) {
+              console.log(JSON.stringify(err));
+          });
+        }
+        }
+    })
+
+    function fh() {
+        api.closeWin({});
+    }
+
+
+H.ready(function () {
+  //处理点击延迟
+  $(function() {
+      FastClick.attach(document.body);
+  });
+})
+
+</script>
+
+</html>

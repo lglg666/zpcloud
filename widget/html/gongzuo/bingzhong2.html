@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .top {
+        line-height: 2.5rem;
+        background: #fff;
+        color: #333;
+        font-family: PingFangSC-Regular;
+    }
+
+    .clo-99 {
+        color: #999999;
+        font-family: PingFangSC-Regular;
+    }
+
+    .clo-459 {
+        color: #4593DE;
+        font-family: PingFangSC-Regular;
+    }
+
+    .clo-33 {
+        color: #333333;
+        font-family: PingFangSC-Regular;
+    }
+
+    .mm {
+        background: #fff;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        font-family: PingFang-SC-Bold;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .gg {
+        background: #fff;
+        height: 6rem;
+        line-height: 2.5rem;
+        font-family: PingFang-SC-Bold;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .hh {
+        background: #fff;
+        height: 6rem;
+        font-family: PingFang-SC-Bold;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .hh p {
+        color: #333;
+    }
+
+    .inp1 {
+        width: 6rem !important;
+    }
+
+    .inp2 {
+        width: 5rem !important;
+    }
+
+    .bt {
+        text-align: center;
+        float: left;
+        width: 100%;
+        margin: 1rem auto auto auto;
+        background: #fff;
+        padding: 0.5rem 0 0.5rem 0;
+    }
+
+    .bt button {
+        width: 80%;
+        text-align: center;
+        border-radius: 4px;
+        height: 2.5rem;
+        font-size: 0.85rem;
+        outline: none;
+        border: 0;
+        background: #4593DE;
+        color: #fff;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">新建病种登记</div>
+    </header>
+    <div class="pad"></div>
+    <div class="top aui-padded-l-10">
+    </div>
+    <div class="bz">
+        <div class="mm">
+            <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">病种名称</div>
+            <div class="aui-pull-right aui-padded-r-10 aui-font-size-16" id="d_name">感冒</div>
+        </div>
+
+        <div class="mm">
+            <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">病人姓名</div>
+            <div class="aui-pull-right aui-padded-r-10 aui-font-size-16"><input type="text" placeholder="请输入病人姓名" class="inp1 aui-text-right" v-model="inp.patient"></div>
+        </div>
+
+        <div class="mm">
+            <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">病例号</div>
+            <div class="aui-pull-right aui-padded-r-10 aui-font-size-16"><input type="text" placeholder="请输入病例号" class="inp2 aui-text-right" v-model="inp.medical_record"></div>
+        </div>
+
+        <div class="mm">
+            <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">记录日期</div>
+            <i class="aui-iconfont aui-icon-right aui-pull-right aui-padded-r-10"></i>
+            <div class="aui-pull-right aui-padded-r-10 aui-font-size-16"><input type="date" id="add-time" value="" style="padding: 0.7rem 0;" v-model="inp.date" /></div>
+        </div>
+
+        <div class="gg aui-margin-t-15">
+            <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">主要诊断：</div>
+            <textarea name="a" class="aui-padded-l-10" placeholder="请输入诊断内容" v-model="inp.principal_diagnosis"></textarea>
+        </div>
+
+        <div class="gg aui-margin-t-15">
+            <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 clo-99">次要措施：</div>
+            <textarea name="a" class="aui-padded-l-10" placeholder="请输入次要措施内容" v-model="inp.secondary_diagnosis"></textarea>
+        </div>
+
+        <div class="gg aui-margin-t-15">
+            <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 clo-99">备注：</div>
+            <textarea name="a" class="aui-padded-l-10" v-model="inp.remark"></textarea>
+        </div>
+
+        <div class=" bt" tapmode v-on:click="submit()">
+            <button>提交</button>
+        </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script>
+    var vm = new Vue({
+            el: '.bz',
+            data: {
+
+                inp: {
+                    date: "2018-06-22",
+                }
+            },
+            methods: {
+                submit: function() {
+                    console.log(JSON.stringify(this.inp));
+                    var address = "/Hospital/index.php/api/ys/disease_register";
+                    var token = H.getStorage('token');
+                    var dis_id = H.getStorage("d_id");
+                    var ajaxData = {
+                        token: token,
+                        dis_id: dis_id,
+                        action:"add",
+                        patient:this.inp.patient,
+                        medical_record:this.inp.medical_record,
+                        date:this.inp.date,
+                        principal_diagnosis:this.inp.principal_diagnosis,
+                        secondary_diagnosis:this.inp.secondary_diagnosis,
+                        remark:this.inp.remark,
+
+                    };
+                    console.log(ajaxData);
+                    $base.submit(address, ajaxData, function(ret) {
+                        console.log(JSON.stringify(ret.data));
+                        $base.toast(ret.data)
+
+                        api.sendEvent({
+                            name: 'bz',
+                            extra: {
+                                bz: true
+                            }
+                        });
+                        setTimeout(function() {
+                          api.closeWin({});
+                        },500)
+                    }, function(err) {
+                        console.log(JSON.stringify(err));
+                    });
+                }
+            },
+        })
+
+    function fh() {
+        api.closeWin({});
+    }
+
+    function gg() {
+        api.openWin({
+            name: 'bz3',
+            url: './bingzhong3.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    H.ready(function() {
+        var name = H.getStorage("d_name");
+        var s = name;
+        if (name.length > 15) {
+            s = name.substring(0, 15) + "....";
+        }
+        $("#d_name").text(s);
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        })
+    })
+</script>
+
+</html>

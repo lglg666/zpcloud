@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/aui.css">
+    <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+      <link rel="stylesheet" href="../css/style/style.css">
+    <title>Document</title>
+</head>
+<style>
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .content {
+        background: #fff;
+        border-radius: 0.2rem;
+    }
+
+    .yi {
+        width: 15%;
+        float: left;
+        background: #FF6655;
+        width: 1rem;
+        height: 1rem;
+        border-radius: 0.1rem;
+    }
+
+    .yi p {
+        color: #fff;
+        font-size: 0.7rem;
+        text-align: center;
+        line-height: 1rem;
+    }
+
+    .huifu {
+        background: #F3F7FA;
+        height: 6rem;
+    }
+
+    .hui {
+        float: left;
+        width: 15%;
+    }
+
+    .con {
+        width: 90%;
+        font-weight: 700;
+        line-height: 1.2rem;
+        float: left;
+        padding-top: 0.2rem;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">意见反馈</div>
+        <p class="aui-text-right aui-font-size-16 clo-lan aui-padded-r-15" tapmode onclick="xfk()">写反馈</p>
+    </header>
+    <div class="pad"></div>
+    <div id="vm">
+      <!-- 无数据 -->
+      <template v-if="list == false">
+      <div class="aui-text-center "id="wsj">
+          <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+          <p class="aui-font-size-16">暂无数据</p>
+      </div>
+    </template>
+
+        <template v-for="item in list" v-else>
+        <div class="content  aui-padded-10  aui-margin-t-15">
+            <div style="height:3rem;">
+                <div class="yi aui-margin-5 ">
+                    <p>意</p>
+                </div>
+                <div class="con">
+                    <p class="aui-font-size-16 clo-33 ">{{item.content}}</p>
+                </div>
+            </div>
+
+            <p class="aui-font-size-14 clo-99 aui-padded-l-5 aui-padded-t-10 aui-padded-b-10">{{item.date_time}} 我的意见反馈</p>
+            <div class="huifu">
+                <div class="hui aui-margin-5 aui-padded-t-15 aui-padded-l-10">
+                    <p class="aui-font-size-16 clo-33">回复</p>
+                </div>
+                <div style="width:80%;float:left;" class="aui-padded-t-15">
+                    <p class="aui-font-size-16 clo-66 ">{{item.back_content}}</p>
+                </div>
+                <div class="" style="width:85%; float:right; line-height:1.5rem;" v-if="item.back_content != null ">
+                    <p class="aui-font-size-14 clo-99">{{item.back_date_time}}</p>
+                </div>
+            </div>
+        </div>
+      </template>
+    </div>
+
+</body>
+<script src="../script/api.js"></script>
+<script src="../script/AHelper.js"></script>
+<script src="../script/base.js"></script>
+<script src="../script/vue/vue.min.js"></script>
+<script>
+    function xfk() {
+        api.openWin({
+            name: 'yjfk1',
+            url: './yijianfk1.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+    }
+
+    function fh() {
+        api.closeWin({});
+    }
+
+    var vm = new Vue({
+        el: "#vm",
+        data: {
+            list: []
+        }
+    })
+    H.ready(function() {
+        var address = "/Hospital/index.php/api/user/app_feedback";
+        var token = H.getStorage('token');
+        var ajaxData = {
+            token: token,
+        };
+        $base.get(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret));
+            vm.list = ret.data;
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+    })
+</script>
+
+</html>

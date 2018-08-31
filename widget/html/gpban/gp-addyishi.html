@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" type="text/css" href="../../css/iconfont/iconfont.css">
+    <style media="screen">
+        header {
+            position: fixed !important;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        header i {
+            color: #222222;
+            font-size: 1rem !important;
+            font-weight: 600;
+        }
+
+        .pad {
+            padding-top: 3.5rem;
+        }
+
+        .nk {
+            height: 2.5rem;
+            line-height: 2.5rem;
+            background: #fff;
+            margin: 0.8rem;
+        }
+
+        .nk input {
+            width: 60%;
+            line-height: 2.5rem;
+            height: 2.5rem;
+            text-align: right;
+            padding-right: 1rem;
+        }
+
+        .nk p {
+            color: #333333;
+            font-family: PingFang-SC-Medium;
+        }
+
+        .nk select {
+            direction: rtl;
+            width: auto;
+            padding: 0 2%;
+            margin: 0;
+            height: 2.5rem;
+            line-height: 2.5rem;
+            font-size: 0.7rem;
+        }
+
+        option {
+            text-align: right;
+            direction: ltr;
+        }
+
+        .bt {
+            text-align: center;
+            background: #fff;
+            padding: 0.5rem 0 0.5rem 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .bt button {
+            width: 80%;
+            text-align: center;
+            border-radius: 4px;
+            height: 2.5rem;
+            font-size: 0.85rem;
+            outline: none;
+            border: 0;
+            background: #4593de;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">添加住院医师</div>
+    </header>
+    <div class="pad"></div>
+    <div class="addys">
+        <div class="content">
+            <div class="nk">
+                <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">姓名：<span class="clo-hong">*</span></p>
+                <input type="text" name="" value="" placeholder="请输入姓名" class="aui-pull-right" v-model="inp.name">
+            </div>
+            <div class="nk">
+                <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">账号：<span class="clo-hong">*</span></p>
+                <input type="text" name="" value="" placeholder="请输入账号" class="aui-pull-right" v-model="inp.account">
+            </div>
+            <div class="nk">
+                <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">密码：<span class="clo-hong">*</span></p>
+                <input type="text" name="" value="" placeholder="请输入密码" class="aui-pull-right" v-model="inp.password">
+            </div>
+            <div class="nk">
+                <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">专业：<span class="clo-hong">*</span></p>
+                <i class="iconfont icon-arrow-right aui-pull-right aui-font-size-16"></i>
+                <select class="aui-pull-right" v-model="inp.profession">
+        <option value=""  selected="selected">请选择</option>
+        <option v-for="profession in config.professions" :value="profession.id" >{{profession.name}}</option>
+      </select>
+            </div>
+
+            <div class="nk">
+                <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">届数：<span class="clo-hong">*</span></p>
+                <i class="iconfont icon-arrow-right aui-pull-right aui-font-size-16"></i>
+                <select name="" class="aui-pull-right" v-model="inp.grade">
+        <option value="">请选择</option>
+        <option value="2021">2021</option>
+        <option value="2020">2020</option>
+        <option value="2019">2019</option>
+        <option value="2018">2018</option>
+        <option value="2017">2017</option>
+        <option value="2016">2016</option>
+        <option value="2015">2015</option>
+        <option value="2014">2014</option>
+        <option value="2013">2013</option>
+        <option value="2012">2012</option>
+      </select>
+
+            </div>
+
+            <div class="nk">
+                <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">用户类型：<span class="clo-hong">*</span></p>
+                <i class="iconfont icon-arrow-right aui-pull-right aui-font-size-16"></i>
+                <select name="" class="aui-pull-right" v-model="inp.user_type">
+                  <option value=""  selected="selected">请选择</option>
+          <option v-for="user_type in config.user_types" :value="user_type.id">{{user_type.name}}</option>
+      </select>
+
+            </div>
+
+
+            <div class="nk">
+                <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">学历类型：</p>
+                <i class="iconfont icon-arrow-right aui-pull-right aui-font-size-16"></i>
+                <select name="" class="aui-pull-right" v-model="inp.education">
+                  <option value=""  selected="selected">请选择</option>
+                  <option v-for="education in config.educations" :value="education.id">{{education.name}}</option>
+            </select>
+
+            </div>
+            <div class="nk">
+                <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">性别：<span class="clo-hong">*</span></p>
+                <i class="iconfont icon-arrow-right aui-pull-right aui-font-size-16"></i>
+                <select name="" class="aui-pull-right" v-model="inp.sex">
+                  <option value=""  selected="selected">请选择</option>
+                  <option value="男">男</option>
+                  <option value="女">女</option>
+      </select>
+
+            </div>
+
+
+            <div class="nk">
+                <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">毕业院校</p>
+                <i class="iconfont icon-arrow-right aui-pull-right aui-font-size-16"></i>
+                <select name="" class="aui-pull-right" v-model="inp.graduation">
+                  <option value=""  selected="selected">请选择</option>
+        <option v-for="school in config.schools" :value="school.id">{{school.name}}</option>
+
+      </select>
+
+            </div>
+
+            <div class="nk">
+                <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">手机：</p>
+                <input type="text" name="" value="" placeholder="请输入手机号" class="aui-pull-right" v-model="inp.phone">
+            </div>
+
+            <div class="nk">
+                <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">身份证：</p>
+                <input type="text" name="" value="" placeholder="请输入身份证" class="aui-pull-right clo-99" v-model="inp.id_num">
+            </div>
+        </div>
+        <div class=" bt aui-margin-t-15" tapmode v-on:click="submit()">
+            <button>提交</button>
+        </div>
+    </div>
+</body>
+<script src="../../script/jquery.min.js"></script>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/aui-toast.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script src="../../script/index.js"></script>
+<script>
+    var vm = new Vue({
+        el: '.addys',
+        data: {
+            config: {
+                departments: [],
+                educations: [],
+                professions: [],
+                user_types: [],
+                user_titles: [],
+                user_classs: [],
+                schools: [],
+                companys: []
+            },
+            inp: {
+                profession: "",
+                name: "",
+                account: "",
+                password: "",
+                profession: "",
+                grade: "",
+                user_type: "",
+                educatio: "",
+                sex: "",
+                company: "",
+                graduation: "",
+                phone: "",
+                id_num: "",
+                education: ""
+
+            }
+        },
+        methods: {
+            submit: function() {
+                console.log(JSON.stringify(this.inp));
+                var address = "/Hospital/index.php/api/office/user_list";
+                var token = H.getStorage('token');
+                $base.showLoading();
+                var ajaxData = {
+                    token: token,
+                    action: "add",
+                    user_role: '1',
+                    name: this.inp.name,
+                    account: this.inp.account,
+                    password: this.inp.password,
+                    profession: this.inp.profession,
+                    grade: this.inp.grade,
+                    user_type: this.inp.user_type,
+                    education: this.inp.education,
+                    sex: this.inp.sex,
+                    company: this.inp.company,
+                    graduation: this.inp.graduation,
+                    phone: this.inp.phone,
+                    id_num: this.inp.id_num,
+                };
+                $base.submit(address, ajaxData, function(ret) {
+                    console.log(JSON.stringify(ret));
+                    // wr.list = ret.data;
+                    if (ret.status == 1) {
+                        $base.toast(ret.errmsg)
+                        setTimeout(function() {
+                            api.closeWin({});
+                        }, 500)
+                        api.sendEvent({
+                            name: 'gp-addys',
+                            extra: {
+                                key1: true,
+                            }
+                        });
+                    } else {
+                        $base.toast(ret.errmsg)
+                    }
+                    $base.closeLoading();
+                }, function(err) {
+                    console.log(JSON.stringify(err));
+                });
+            }
+        },
+    })
+    H.ready(function() {
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        });
+        addscript();
+    })
+
+    function fh() {
+        api.closeWin({});
+
+    }
+    var toast = new auiToast({})
+
+    function showDefault(type) {
+        switch (type) {
+            case "success":
+                toast.success({
+                    title: "添加成功",
+                    duration: 2000
+                });
+                break;
+        }
+    }
+</script>
+
+</html>

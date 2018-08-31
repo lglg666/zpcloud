@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    body {
+        width: 100%;
+    }
+    .kssm{
+      height: 100%;
+      width: 100%;
+    }
+
+    .ks {}
+
+    .ks p {
+        font-weight: 700;
+    }
+
+    .kd p {
+        color: #666666;
+        font-size: 0.75rem;
+        line-height: 1.5rem;
+    }
+
+    .kj {
+        font-family: ios9SC-Medium;
+        font-size: 0.9rem;
+        height: 100%;
+        margin: auto;
+        width: 100%;
+        margin-top: 40%;
+    }
+    .kj i{
+      font-size: 4rem;
+    }
+
+    .an {
+        position: relative;
+        bottom: 0;
+        width: 45%;
+        margin: 1.5rem auto;
+    }
+
+    .an button {
+        height: 2.2rem;
+        border: 0;
+        width: 100%;
+        background: #ff6655;
+        color: #fff;
+        font-size: 0.9rem;
+        border-radius: 2rem;
+    }
+
+    .exam {
+        background-color: #fff;
+        border-radius: 0.5rem;
+        height: 100%;
+    }
+    .kp{
+      height: 2.5rem;
+      line-height: 2.5rem;
+    }
+</style>
+
+<body>
+    <div class="kssm" id="kssm">
+        <header class="aui-bar aui-bar-nav" id="header">
+            <a class="aui-pull-left" tapmode onclick="fh()">
+                <i class="iconfont icon-arrow-left aui-iconfont"></i>
+            </a>
+            <div class="aui-title">考试说明</div>
+        </header>
+        <div class="pad"></div>
+        <div v-if="apply == 9" class="exam aui-margin-10">
+            <div class="aui-text-center kp clo-lan aui-font-size-18">{{papername}}</div>
+            <div class="aui-hr"></div>
+            <div class="ks aui-text-left aui-padded-l-10 aui-padded-t-15 ">
+                <p class="aui-font-size-18 clo-22">考试说明</p>
+            </div>
+            <div class="kd aui-padded-l-15 aui-margin-t-10  aui-margin-l-10 aui-margin-r-15">
+                <p>考试时间为{{pusetime}}分钟，试卷满分为 {{qscore}}分，{{passcore}}分及格。</p>
+                <p>试卷分为{{qtype_name.join('、')}}。</p>
+                <p>
+                    题目分布情况：
+                </p>
+                <p v-for="(qt_item,index) in qt_list">
+                    {{index+1}}.{{qt_item.title}}{{qt_item.num}}题，每题{{qt_item.score}}分，共{{qt_item.score*qt_item.num}}分。
+                </p>
+                <!-- <p>试题按题型、内容等进行排列，选择题在前，非选择题 在后。</p> -->
+                <p>同一题型中同一学科的试题相对集中，同一学科中的不同题目尽量按由易到难的顺序排列。</p>
+            </div>
+            <div class="an" v-if="apply == 9">
+                <button tapmode onclick="ks()">开始做题</button>
+            </div>
+        </div>
+        <div v-else>
+            <div class="aui-text-center kj">
+              <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+                <p class="aui-font-size-16">没有相应的出科考试</p>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+<script src="../../script/aui-tab.js"></script>
+<script src="../../script/aui-toast.js"></script>
+<script src="../../script/aui-dialog.js"></script>
+<script src="../../script/api.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/index.js"></script>
+<script>
+    function ks() {
+        api.openWin({
+            name: 'ks1',
+            url: '../exam/kaoshi2.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+    }
+    function fh() {
+        api.closeWin({
+            name: 'kssm'
+        });
+
+    }
+    var toast = new auiToast({});
+    H.ready(function() {
+        // Vue 初始化组件
+        var kssm = new Vue({
+            el: "#kssm",
+            data: {
+                apply: 0,
+                papername: '究规培生出科考试卷',
+                pusetime: '150',
+                qscore: '100',
+                passcore: '60',
+                qtype_name: ['单选题', '多选题', '填空', '客观题'],
+                qt_list: [{
+                    title: '单选题',
+                    score: '1',
+                    num: '30',
+                }, {
+                    title: '多选题',
+                    score: '1',
+                    num: '30',
+                }, {
+                    title: '填空',
+                    score: '1',
+                    num: '30',
+                }, {
+                    title: '客观题',
+                    score: '1',
+                    num: '30',
+                }],
+            },
+            methods: {}
+        });
+        //ajax 获取试卷的信息
+        var address = "/Hospital/index.php/api/ys/examination";
+        var ajaxData = {
+            token: H.getStorage('token')
+        };
+
+        $base.get(address, ajaxData, function(ret) {
+
+            if (ret.status == 0) {
+                // api.closeWin({
+                //     name: 'kssm'
+                // });
+                kssm.apply = 0;
+            } else {
+                kssm.apply = 9;
+                console.log(JSON.stringify(ret));
+                H.setStorage('paperinfo', ret.data);
+                H.setStorage('timus', ret.data.all_num);
+                kssm.papername = ret.data.paper_info_all.pname;
+                kssm.pusetime = ret.data.paper_info_all.pusetime;
+                kssm.qscore = ret.data.paper_info_all.qscore;
+                kssm.passcore = ret.data.paper_info_all.qscore * 0.6;
+                var qtype_name = [];
+                for (var i in ret.data.paper_info) {
+                    qtype_name.push(ret.data.paper_info[i].type_name);
+                }
+                kssm.qtype_name = qtype_name;
+                var qt_list = [];
+                for (var i in ret.data.paper_info) {
+                    qt_list.push({
+                        title: ret.data.paper_info[i].type_name,
+                        score: ret.data.paper_info[i].score,
+                        num: ret.data.paper_info[i].count
+                    });
+                }
+                kssm.qt_list = qt_list;
+            }
+        }, function(err) {
+            console.log(err);
+        });
+
+        api.addEventListener({
+            name: 'kaoshi'
+        }, function(ret, err) {
+            var lo = JSON.stringify(ret.value.hong);
+            console.log(lo);
+            if (lo == 'true') {
+                console.log('考完试');
+                location.reload();
+            } else {
+                console.log("未考完");
+            }
+
+            console.log(ret.value);
+        });
+    })
+</script>
+
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .top {
+        line-height: 2.5rem;
+        background: #fff;
+        color: #333;
+        font-family: PingFangSC-Regular;
+    }
+
+    .clo-99 {
+        color: #999999;
+        font-family: PingFangSC-Regular;
+    }
+
+    .clo-459 {
+        color: #4593DE;
+        font-family: PingFangSC-Regular;
+    }
+
+    .clo-33 {
+        color: #333333;
+        font-family: PingFangSC-Regular;
+    }
+
+    .aui-text-right {
+        color: #4593DE;
+    }
+
+    .mm {
+        background: #fff;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        font-family: PingFang-SC-Bold;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .gg {
+        background: #fff;
+        height: 6rem;
+        padding-top: 0.5rem;
+        line-height: 1rem;
+        font-family: PingFang-SC-Bold;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .hh {
+        background: #fff;
+        height: 6rem;
+        font-family: PingFang-SC-Bold;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .hh p {
+        color: #333;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">新建技能工作</div>
+    </header>
+    <div class="pad"></div>
+
+    <div class=" aui-padded-l-10">
+    </div>
+
+    <div class="mm">
+        <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">病种名称</div>
+        <div class="aui-pull-right aui-padded-r-10 aui-font-size-16">心电图检测</div>
+    </div>
+
+    <div class="mm">
+        <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">病人姓名</div>
+        <div class="aui-pull-right aui-padded-r-10 aui-font-size-16">肖大大</div>
+    </div>
+
+    <div class="mm">
+        <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">病例号</div>
+        <div class="aui-pull-right aui-padded-r-10 aui-font-size-16">0115</div>
+    </div>
+
+    <div class="mm">
+        <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">记录日期</div>
+        <i class="aui-iconfont aui-icon-right aui-pull-right aui-padded-r-10"></i>
+        <div class="aui-pull-right aui-padded-r-10 aui-font-size-16">2018-01-08</div>
+    </div>
+
+    <div class="mm aui-margin-t-15">
+        <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">是否成功</div>
+        <i class="aui-iconfont aui-icon-right aui-pull-right aui-padded-r-10"></i>
+        <div class="aui-pull-right aui-padded-r-10 aui-font-size-16">是</div>
+    </div>
+
+    <div class="gg aui-margin-t-15">
+        <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">失败原因：</div><br>
+        <p class="aui-font-size-15 aui-margin-15">失败原因失败原因失败原因失败原因失败原因失败原因失败原因失败原因失败原因失败原因</p>
+    </div>
+
+    <div class="hh aui-margin-t-15">
+        <p class="aui-font-size-15 aui-margin-15">备注备注备注备注备注备注备注备注备注备注备注备 注备注备注备注备注备注备注备注</p>
+    </div>
+
+
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script>
+    function fh() {
+        api.closeWin({
+            name: 'jn3'
+        });
+
+
+    }
+
+    function tj() {
+        api.openWin({
+            name: 'jn2',
+            url: './jineng2.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    H.ready(function () {
+
+    })
+</script>
+
+</html>

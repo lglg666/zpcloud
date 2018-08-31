@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../../css/aui.css">
+    <link rel="stylesheet" href="../../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .top {
+        line-height: 1.8rem;
+        background: #fff;
+    }
+
+    .top1 {
+        line-height: 2.5rem;
+        background: #fff;
+        height: 10rem;
+    }
+
+    .hui {
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .top1 img {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        border: 0.1rem solid #ddd;
+        background: #EFEFF4;
+    }
+
+    .bt {
+        position: relative;
+        width: 80%;
+        margin: 1rem auto;
+    }
+
+    .bt button {
+        width: 100%;
+        margin: 0 auto;
+        border-radius: 4px;
+        height: 2.5rem;
+        font-size: 0.85rem;
+        outline: none;
+        border: 0;
+        background: #4593de;
+        color: #fff;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">出科考试</div>
+    </header>
+    <div class="pad"></div>
+    <div class="top">
+        <p class="clo-33 aui-font-size-16">《住院医师呼吸科出科考试试卷》</p>
+        <p class="clo-99 aui-font-size-14 aui-padded-l-10">试题数量：100题</p>
+        <p class="clo-99 aui-font-size-14 aui-padded-l-10">考试用时：60分钟</p>
+    </div>
+
+    <div class="hui">
+        <p class="aui-font-size-16 clo-99 aui-padded-l-10">设置试题</p>
+    </div>
+
+    <div class="top1">
+        <p class="clo-33 aui-font-size-16 aui-padded-l-10">考试时间 <span class="clo-99">请选择考试时间</span><i class="iconfont icon-arrow-right aui-font-size-20 aui-pull-right"></i></p>
+        <div class="aui-hr"></div>
+        <p class="clo-33 aui-font-size-16 aui-padded-l-10">考试人员 <span class="aui-font-size-14 clo-99">请选择考试人员</span></p>
+        <img src="../../../image/add_photos_btn.png" alt="" class="aui-margin-5">
+    </div>
+
+    <div class="bt">
+        <button>确定</button>
+    </div>
+</body>
+<script src="../../../script/api.js"></script>
+<script src="../../../script/AHelper.js"></script>
+<script>
+    function fh() {
+        api.closeWin({
+            name: 'zr-szst'
+        });
+
+    }
+    H.ready(function () {
+
+    })
+</script>
+
+</html>

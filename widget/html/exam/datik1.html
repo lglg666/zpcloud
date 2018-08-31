@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .sj_top {
+        overflow: hidden;
+        background: #fff;
+        width: 100%;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .black {
+        color: #333333;
+    }
+
+    .hui {
+        color: #999999;
+    }
+
+    .aui-color-l {
+        background: #4593DE;
+        margin: 10px auto;
+        color: #fff;
+    }
+
+    .aui-color-h {
+        background: #FF6655;
+        margin: 10px auto;
+        color: #fff;
+    }
+
+    .aui-color-b {
+        background: #fff;
+        margin: 10px auto;
+        color: #4593DE;
+    }
+
+    .dtk {
+        width: 100%;
+    }
+
+    .dtk_x {
+        width: 12.5%;
+        float: left;
+    }
+
+    .dtk_x a {
+        display: block;
+        width: 1.5rem;
+        height: 1.5rem;
+        line-height: 1.5rem;
+        border: 1px solid #4593DE;
+        border-radius: 50%;
+    }
+
+    .pp {
+        width: 100%;
+        float: left;
+        padding: 0.5rem;
+    }
+
+    .yuan1 {
+        position: relative;
+        width: 7rem;
+        height: 7rem;
+        top: 3rem;
+        margin: 0 auto;
+        border-radius: 50%;
+        background: #F8F8F8;
+    }
+
+    .yuan2 {
+        position: absolute;
+        width: 6rem;
+        height: 6rem;
+        margin: 0.5rem 0.5rem;
+        border-radius: 50%;
+        background: #FFE7DD;
+    }
+
+    .yuan2 p {
+        position: relative;
+        font-size: 1.3rem;
+        color: #FB5C55;
+        top: 1rem;
+        text-align: center;
+        font-family: Jkaton;
+    }
+
+    .tip1 {
+        text-align: center;
+        height: 2rem;
+        line-height: 2rem;
+    }
+
+    .tip1 p {
+        color: #333333;
+    }
+
+    .tip {
+        border: 1px solid #ddd;
+        background: #fff;
+        border-radius: 0.3rem;
+        position: absolute;
+        width: 90%;
+        top: 12rem;
+        left: 1rem;
+        margin: 0 auto;
+    }
+
+    .zz {
+        height: 7.5rem;
+    }
+
+    .bg {
+        background: #fff;
+    }
+
+    header p {
+        color: #222;
+        font-size: 0.9rem;
+        font-family: PingFangSC-Regular;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">答题卡</div>
+        <!-- <p class="aui-pull-right aui-font-size-14 " tapmode onclick="openDialog('text')">提交试卷</p> -->
+    </header>
+    <div class="pad"></div>
+    <div class="dtk">
+        <div v-for="(question,index1) in questions">
+            <div class="sj_top aui-padded-l-10 ">
+                <p class="aui-pull-left aui-font-size-16 black">{{question.num}}、{{question.type_name}}</p>
+                <p href="" class="aui-pull-left aui-padded-l-10 hui aui-font-size-14">{{question.count}}</p>
+            </div>
+            <div class="pp aui-text-center bg aui-margin-b-15">
+                <div class="dtk_x" v-for="(item,index2) in question.question">
+                    <a :style="questions[index1].question[index2].useranswer== '' ?'background:white;color:#4593DE;':''" href="javascript:void(0)" class="aui-text-center aui-color-l aui-font-size-16" v-on:click="toquestion(index1,index2)">
+                    {{index2+1}}
+                  </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../../script/aui-tab.js"></script>
+<script src="../../script/aui-toast.js"></script>
+<script src="../../script/aui-dialog.js"></script>
+<script src="../../script/api.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/index.js"></script>
+<script>
+    var datika = new Vue({
+        el: ".dtk",
+        data: {
+            questions: [{
+                "paper_id": "83",
+                "type_id": "1",
+                "type_name": "单选题",
+                "score": "1",
+                "count": "50",
+                "num": "一",
+            }]
+        },
+        methods: {
+            toquestion: function(index1, index2) {
+                //跳转到相应的题目页面
+                var ind = 0;
+                var sum = 0;
+                if (index1 == 0) {
+                    var index = index1 + index2;
+                    console.log(index);
+                } else {
+                    for (i in datika.questions) {
+                        if (i < index1) {
+                            sum += parseInt(datika.questions[i].count);
+                        } else {}
+                    }
+                    var index = sum + (index2);
+
+                }
+                console.log(index);
+                api.sendEvent({
+                    name: 'showindex',
+                    extra: {
+                        index: index,
+                    }
+                });
+                api.closeWin({});
+
+            }
+        }
+    });
+
+    function fh() {
+        api.closeWin({
+            name: 'dtk1'
+        });
+    }
+
+    var dialog = new auiDialog({})
+
+    function openDialog(type) {
+        switch (type) {
+            case "text":
+                dialog.alert({
+                    title: "提交试卷",
+                    msg: '试卷还没有做完，确认提交试卷？',
+                    buttons: ['继续做题', '确定提交']
+                }, function(ret) {
+                    if (ret.buttonIndex == 2) {
+                        // api.openWin({
+                        //     name: 'dtk',
+                        //     url: './datik.html',
+                        //     pageParam: {
+                        //         name: 'test'
+                        //     }
+                        // });
+                        submit_answer();
+                    }
+                })
+        }
+
+
+
+    }
+    H.ready(function() {
+
+        var paperinfo = H.getStorage('paperinfo');
+        console.log(JSON.stringify(paperinfo));
+        //paper_info
+        datika.questions = paperinfo;
+    })
+</script>
+
+</html>

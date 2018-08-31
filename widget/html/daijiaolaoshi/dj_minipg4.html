@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .title {
+        background-color: #f6f6f6;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .fk {
+        float: left;
+        width: 0.3rem;
+        height: 1.2rem;
+        margin: 0.6rem 0;
+        background-color: #4593de;
+    }
+
+    .mm {
+        background: #fff;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        font-family: PingFang-SC-Bold;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .mm p input {
+        line-height: 2.5rem;
+    }
+
+    .mp {
+        line-height: 1.5rem;
+        background: #fff;
+        font-family: PingFang-SC-Bold;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .hei {
+        height: 100% !important;
+    }
+
+    .mp textarea {
+        height: 5rem;
+        background-color: #fff;
+    }
+
+    .uip {
+        background: #fff;
+        width: 100%;
+        line-height: 3rem;
+        float: left;
+        height: 100%;
+    }
+
+    .dd {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .uip a {
+        display: inline-block;
+        background: #F1F1F1;
+        padding: 0.5rem;
+        height: 2rem;
+        margin: 0 0.6rem;
+        width: 42%;
+        text-align: center;
+        line-height: 1rem;
+        color: #333333;
+    }
+
+    .uip p {
+        display: inline-block;
+        background: #F1F1F1;
+        padding: 0.5rem;
+        height: 2rem;
+        width: 100%;
+        line-height: 1rem;
+        color: #333333;
+    }
+
+    .top {
+        line-height: 2.5rem;
+        background: #fff;
+        color: #333;
+        font-family: PingFangSC-Regular;
+        /*border-bottom: 1px solid #ddd;*/
+    }
+
+    .xx {
+        position: relative;
+    }
+
+    .bg {
+        background: url(../../image/evaluation_btn_s.png)no-repeat !important;
+        width: 1.3rem !important;
+        height: 1.3rem !important;
+        background-size: 100% !important;
+    }
+
+    .xx ul li {
+        float: left;
+        list-style: none;
+        width: 1.3rem;
+        height: 1.3rem;
+        background: url(../../image/evaluation_btn.png) no-repeat;
+        margin: 0 .3rem;
+        margin-top: 0.5rem;
+        background-size: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .bt {
+        text-align: center;
+        float: left;
+        width: 100%;
+        margin-top: 0.5rem;
+        background: #fff;
+        padding: 0.5rem 0 0.5rem 0;
+    }
+
+    .bt button {
+        width: 80%;
+        text-align: center;
+        border-radius: 4px;
+        height: 2.5rem;
+        font-size: 0.85rem;
+        outline: none;
+        border: 0;
+        background: #4593DE;
+        color: #fff;
+    }
+
+    .active {
+        background-color: #FDA832 !important;
+        color: #fff !important;
+    }
+
+    .bg {
+        background: url(../../image/evaluation_btn_s.png)no-repeat !important;
+        width: 1.3rem !important;
+        height: 1.3rem !important;
+        background-size: 100% !important;
+    }
+
+    .ip {
+        float: left;
+        width: 53% !important;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">迷你临床演练评估表</div>
+    </header>
+    <div class="pad "></div>
+    <div class="mini">
+        <div id='ff'>
+            <div class="content ">
+                <div class="title aui-padded-l-15">
+                    <div class="fk"></div>
+                    <p class="aui-font-size-18 clo-22 aui-margin-l-15">教师信息</p>
+                </div>
+                <div class="mm ">
+                    <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">教师姓名：</div>
+                    <i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-18"></i>
+                    <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"><input type="text" value="江泽平" placeholder="请输入带教姓名" class="aui-text-right hei" v-model="inp.teacher_name" /></div>
+                </div>
+                <div class="mm">
+                    <div class="aui-pull-left  aui-font-size-16 aui-padded-l-10">职位：</div>
+                    <i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-18"></i>
+                    <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei">
+                        <select name="" class="aui-pull-right" v-model="inp.teacher_title">
+                     <option value="" >请选择</option>
+                     <option value="主任医师">主任医师</option>
+                     <option value="副主任医师">副主任医师</option>
+                     <option value="主治医师">主治医师</option>
+                     <option value="高年资住院医师">高年资住院医师</option>
+            </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content ">
+                <div class="title aui-padded-l-15">
+                    <div class="fk"></div>
+                    <p class="aui-font-size-18 clo-22 aui-margin-l-15">学员信息</p>
+                </div>
+                <div class="mm ">
+                    <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">学员姓名：</div>
+                    <p class="aui-font-size-16 aui-pull-right clo-22 aui-padded-r-15" id="xm">梁倩婷</p>
+                </div>
+                <div class="mm ">
+                    <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">专业：</div>
+                    <p class="aui-font-size-16 aui-pull-right clo-22 aui-padded-r-15" id="zy">中医-中医学-内科</p>
+                </div>
+                <div class="mm ">
+                    <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">轮转科室：</div>
+                    <p class="aui-font-size-16 aui-pull-right clo-22 aui-padded-r-15" id="ks">皮肤科</p>
+                </div>
+                <div class="mm ">
+                    <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">时间：</div>
+                    <p class="aui-font-size-16 aui-pull-right clo-22 aui-padded-r-15" id="sj"><input type="datetime-local" class="aui-text-center" value="" v-model="inp.create_at"></p>
+                </div>
+                <div class="mm ">
+                    <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">地点：</div>
+                    <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"><input type="text" value="" placeholder="请输入地点" class="aui-text-right hei" v-model="inp.place" /></div>
+                </div>
+            </div>
+
+            <div class="content ">
+                <div class="title aui-padded-l-15">
+                    <div class="fk"></div>
+                    <p class="aui-font-size-18 clo-22 aui-margin-l-15">病人信息</p>
+                </div>
+                <div class="mm ">
+                    <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">病人姓名：</div>
+                    <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"><input type="text" value="李丹丹" placeholder="请输入病人姓名" class="aui-text-right hei" v-model="inp.patient_name" /></div>
+                </div>
+                <div class="mm ">
+                    <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">病人性别：</div>
+                    <i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-18"></i>
+                    <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei">
+                        <select name="" class="aui-pull-right" v-model="inp.patient_sex">
+                    <option value="" >请选择</option>
+                     <option value="0">男</option>
+                     <option value="1">女</option>
+                      </select>
+                    </div>
+                </div>
+
+                <div class="mm ">
+                    <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">病人年龄：</div>
+                    <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"><input type="text" value="" placeholder="请输入病人年龄" class="aui-text-right hei" v-model="inp.patient_age" /></div>
+                </div>
+                <div class="mm ">
+                    <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">病历号：</div>
+                    <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"><input type="text" value="" placeholder="请输入病历号" class="aui-text-right hei" v-model="inp.patient_medicode" /></div>
+                </div>
+                <div class="mm ">
+                    <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10"> 初诊/复诊：</div>
+                    <i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-18"></i>
+                    <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"> <select name="" class="aui-pull-right" v-model="inp.patient_isfirst">
+                      <option value="">请选择</option>
+                       <option value="0">初诊</option>
+                       <option value="1">复诊</option>
+                      </select>
+                    </div>
+                </div>
+                <div class="mp aui-margin-t-15">
+                    <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">主要诊断：</div>
+                    <textarea name="a" class="aui-padded-l-10 aui-padded-t-10" placeholder="请输入内容" value="" v-model="inp.principal_diagnosis"></textarea>
+                </div>
+
+                <div class="mm ">
+                    <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10"> 病情严重程度：</div>
+                    <i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-18"></i>
+                    <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"> <select name="" class="aui-pull-right" v-model="inp.patient_level">
+                    <option value="">请选择</option>
+                         <option value="0">轻</option>
+                         <option value="1">中</option>
+                         <option value="2">重</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <template v-for="item in list">
+    <div class="content ">
+        <div class="title aui-padded-l-15">
+            <div class="fk"></div>
+            <p class="aui-font-size-18 clo-22 aui-margin-l-15" >{{item.title}}</p>
+        </div>
+        <div class="uip  aui-font-size-12">
+            <div class="d1 dd  aui-col-xs-12 ">
+                <a :class="item1.kk == 1?'active':''" v-for="item1 in item.list" v-on:click="item1.kk = 1">{{item1.nav}}</a>
+            </div>
+        </div>
+    </div>
+  </template>
+        <template v-for="item in list1">
+  <div>
+    <div class="uip  aui-font-size-12 ">
+        <div class="top aui-padded-l-10 aui-font-size-16">
+            {{item.title}}
+        </div>
+        <div class="d1 dd  aui-col-xs-12 ">
+            <p :class="item1.kk == 1?'active':''" v-for="item1 in item.list" v-on:click="item1.kk = 1">{{item1.nav}}</p>
+        </div>
+    </div>
+    <!-- <div class="aui-hr"></div> -->
+    <div class="xx" id="star">
+        <ul id="ul">
+            <li v-for="i in [1,2,3,4,5,6,7,8,9]" v-on:click="item.score=i" v-bind:class="item.score>=i?'bg':''"></li>
+        </ul>
+    </div>
+  </div>
+</template>
+
+        <div class="bt">
+            <p class="aui-font-size-18 clo-22 aui-margin-l-15 aui-text-left">总结</p>
+            <div class="mm ">
+                <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">观察时间（分钟）：</div>
+                <input type="text" value="" placeholder="请输入观察时间" class="aui-text-right hei ip" v-model="inp.ob_time" />
+            </div>
+            <div class="mm ">
+                <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">反馈时间（分钟）：</div>
+                <input type="text" value="" placeholder="请输入观察时间" class="aui-text-right hei ip " v-model="inp.reply_time" />
+            </div>
+
+            <div class="aui-text-left aui-margin-t-15 aui-col-xs-12" style="background:#fff; margin-bottom:2rem;">
+                <p class="aui-font-size-16 aui-padded-l-10">教师评语</p>
+                <textarea class="aui-padded-l-10" placeholder="内容包括优缺点以及建议" v-model="inp.adv"></textarea>
+            </div>
+            <div class="mm ">
+                <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">教师签名：</div>
+                <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"><input type="text" value="" placeholder="请输入教师签名" class="aui-text-right hei"  v-model="inp.teacher_name"/></div>
+            </div>
+            <div class="mm ">
+                <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">学员签名：</div>
+                <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"><input type="text" value="梁倩婷" placeholder="请输入学员签名" class="aui-text-right hei" id="qm"/></div>
+            </div>
+        </div>
+
+        <div class="bt" tapmode v-on:click="submit()">
+            <button type="button" name="button">提交</button>
+        </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script>
+    var vm = new Vue({
+        el: ".mini",
+        data: {
+            inp: {
+                teacher_name: "",
+                create_at: "",
+                teacher_title: "",
+                place: "",
+                patient_name: "",
+                patient_sex: "",
+                patient_age: "",
+                patient_medicode: "",
+                patient_isfirst: "",
+                principal_diagnosis: "",
+                patient_level: "",
+                ob_time: "",
+                reply_time: "",
+                adv: "",
+            },
+            list: [{
+                title: "演练及评估重点",
+                list: [{
+                    id: 0,
+                    nav: "病史采集(医疗面谈) ",
+                    kk: 0,
+                }, {
+                    id: 1,
+                    nav: "体格检查 ",
+                    kk: 0,
+                }, {
+                    id: 2,
+                    nav: "人文关怀（医德医风） ",
+                    kk: 0,
+                }, {
+                    id: 3,
+                    nav: "临床判断 ",
+                    kk: 0,
+                }, {
+                    id: 4,
+                    nav: "卫教咨询（医患沟通） ",
+                    kk: 0,
+                }, {
+                    id: 5,
+                    nav: "组织效能 ",
+                    kk: 0,
+                }, {
+                    id: 6,
+                    nav: "整体表现（临床胜任） ",
+                    kk: 0,
+                }]
+            }],
+            list1: [{
+                score: 0,
+                title: "1.病史采集",
+                list: [{
+                    id: 0,
+                    nav: "招呼病人",
+                    kk: 0,
+                }, {
+                    id: 1,
+                    nav: "自我介绍",
+                    kk: 0,
+                }, {
+                    id: 2,
+                    nav: "鼓励病人叙述病史",
+                    kk: 0,
+                }, {
+                    id: 3,
+                    nav: "适当的提问及引导以获得正确及足够的信息",
+                    kk: 0,
+                }, {
+                    id: 4,
+                    nav: "对病人的情绪及肢体语言能有适当的回应",
+                    kk: 0,
+                }]
+            }, {
+                score: 0,
+                title: "2.体格检查",
+                list: [{
+                    id: 0,
+                    nav: "告知病人检查目的及范围",
+                    kk: 0,
+                }, {
+                    id: 1,
+                    nav: "注意检查场所隐蔽性",
+                    kk: 0,
+                }, {
+                    id: 2,
+                    nav: "根据病情进行全面有重点的检查",
+                    kk: 0,
+                }, {
+                    id: 3,
+                    nav: "正确的操作及实施步骤",
+                    kk: 0,
+                }, {
+                    id: 4,
+                    nav: "适当且谨慎处理病人的不适",
+                    kk: 0,
+                }]
+            }, {
+                score: 0,
+                title: "3.人文关怀",
+                list: [{
+                    id: 0,
+                    nav: "表现尊重及关心",
+                    kk: 0,
+                }, {
+                    id: 1,
+                    nav: "建立良好关系及互相信赖",
+                    kk: 0,
+                }, {
+                    id: 2,
+                    nav: "能注意并处理病人是否舒适",
+                    kk: 0,
+                }, {
+                    id: 3,
+                    nav: "尊重病人隐私",
+                    kk: 0,
+                }, {
+                    id: 4,
+                    nav: "适当满足病人寻求相关信息的需求",
+                    kk: 0,
+                }]
+            }, {
+                score: 0,
+                title: "4.临床判断",
+                list: [{
+                    id: 0,
+                    nav: "能归纳病史及体检资料",
+                    kk: 0,
+                }, {
+                    id: 1,
+                    nav: "能判读相关检查结果",
+                    kk: 0,
+                }, {
+                    id: 2,
+                    nav: "鉴别诊断的能力",
+                    kk: 0,
+                }, {
+                    id: 3,
+                    nav: "临床判断的合理性及逻辑性",
+                    kk: 0,
+                }, {
+                    id: 4,
+                    nav: "临床判断的合理性及逻辑性",
+                    kk: 0,
+                }]
+            }, {
+                score: 0,
+                title: "5.卫教咨询",
+                list: [{
+                    id: 0,
+                    nav: "解释所做检查或治疗的理由、方法、利弊及注意事项",
+                    kk: 0,
+                }, {
+                    id: 1,
+                    nav: "解释病情，解释检查结果的临床意义",
+                    kk: 0,
+                }, {
+                    id: 2,
+                    nav: "给予相关治疗的健康宣教和咨询 □让患者参与决策",
+                    kk: 0,
+                }]
+            }, {
+                score: 0,
+                title: "6.组织效能",
+                list: [{
+                    id: 0,
+                    nav: "能按合理的顺序处理",
+                    kk: 0,
+                }, {
+                    id: 1,
+                    nav: "及时且适时",
+                    kk: 0,
+                }, {
+                    id: 2,
+                    nav: "历练而简洁",
+                    kk: 0,
+                }]
+            }, {
+                score: 0,
+                title: "7.整体表现(临床胜任力)",
+            }]
+        },
+        methods: {
+            submit: function() {
+                var main_point = [];
+                var points = [];
+                console.log(points);
+                console.log(JSON.stringify(this.inp));
+                //评估重点
+                for (zd in vm.list) {
+                    for (df in vm.list[zd].list) {
+                        if (vm.list[zd].list[df].kk == 1) {
+                            main_point.push(vm.list[zd].list[df].id);
+                        } else {
+
+                        }
+                    }
+                }
+            //考核项目
+                var itemarr       =    [];
+                for (item in vm.list1) {
+                    // console.log(JSON.stringify(vm.list1[item]));
+                    var choices       =    [];
+                    for (item1 in vm.list1[item].list) {
+                        if(vm.list1[item].list[item1].kk == 1){
+                            choices.push(item1);
+                        }
+                    }
+                    itemarr.push([choices,vm.list1[item].score]);
+                }
+                var address = "/Hospital/index.php/api/teacher/mini_cex";
+                var token = H.getStorage('token');
+                var id = H.getStorage("dj_minipg1_id");
+                var ajaxData = {
+                    token: token,
+                    id:id,
+                    action:"update",
+                    teacher_name:this.inp.teacher_name,
+                    teacher_title:this.inp.teacher_title,
+                    create_at:this.inp.create_at,
+                    place:this.inp.place,
+                    patient_name:this.inp.patient_name,
+                    patient_sex:this.inp.patient_sex,
+                    patient_age:this.inp.patient_age,
+                    patient_medicode:this.inp.patient_medicode,
+                    patient_isfirst:this.inp.patient_isfirst,
+                    principal_diagnosis:this.inp.principal_diagnosis,
+                    patient_level:this.inp.patient_level,
+                    main_point:main_point,
+                    points:itemarr,
+                    ob_time:this.inp.ob_time,
+                    reply_time:this.inp.reply_time,
+                    adv:this.inp.adv,
+                };
+                console.log(JSON.stringify(ajaxData));
+                $base.submit(address, ajaxData, function(ret) {
+                    console.log(JSON.stringify(ret));
+                    if(ret.status == 1){
+                      $base.toast(ret.errmsg);
+                      setTimeout(function () {
+                        api.closeWin({});
+                      },500)
+                    }else{
+                      $base.toast(ret.errmsg);
+                    }
+                }, function(err) {
+                    console.log(JSON.stringify(err));
+                });
+            }
+        },
+
+    })
+
+
+    function fh() {
+        api.closeWin({});
+    }
+
+    H.ready(function() {
+      var token = H.getStorage('token');
+      var id = H.getStorage('dj_minipg1_id');
+      console.log(id);
+      var address = "/Hospital/index.php/api/teacher/mini_cex";
+      var ajaxData = {
+          token: token,
+          action: "detail",
+          id: id,
+      };
+      $base.showLoading();
+      $base.get(address, ajaxData, function(ret) {
+        console.log(JSON.stringify(ret));
+          var points = JSON.parse(ret.data.points);
+          var main_point = JSON.parse(ret.data.main_point);
+          //演练及评估重点
+          for (var q in main_point) {
+              vm.list[0].list[main_point[q]].kk       =    1;
+          }
+          // //考核项目
+          for (var i = 0; i < points.length; i++) {
+              for(var j in points[i][0]){
+                  vm.list1[i].list[points[i][0][j]].kk       =    1;
+              }
+              vm.list1[i].score = points[i][1];
+
+          }
+          vm.inp = ret.data
+
+          $base.closeLoading();
+      }, function(err) {
+          console.log(err);
+      });
+      $("#xm").html(H.getStorage('dj_mnname'));
+      $("#qm").val(H.getStorage('dj_mnname'));
+      $("#ks").html(H.getStorage('dj_mndep'));
+      $("#zy").html(H.getStorage('dj_mnpro'));
+      //处理点击延迟
+      $(function() {
+          FastClick.attach(document.body);
+      })
+    })
+</script>
+
+</html>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .ki {
+        padding-top: 0.3rem;
+        height: 3rem;
+        line-height: 1.5rem;
+        background: #fff;
+    }
+
+    ul {
+        padding-left: 0;
+        overflow: hidden;
+    }
+
+    ul li a {
+        display: block;
+        width: 100%;
+        padding-top: 27px;
+        overflow: hidden;
+        /*background: url(../image/evaluation_btn_s.png);*/
+    }
+
+    ul li.light {
+        background-position: 0 -29px;
+        /*background: url(../image/evaluation_btn.png);*/
+    }
+
+    .zw {
+        background: #fff;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .g1 {
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .zw ul {
+        height: 3rem;
+        line-height: 3rem;
+    }
+
+    .bt {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .col-33 {
+        color: #333333;
+    }
+
+    .col-99 {
+        color: #999999;
+    }
+
+    .col-22 {
+        color: #222222;
+    }
+
+    .col-66 {
+        color: #666666;
+    }
+
+    .lin {
+        line-height: 1.5rem;
+    }
+
+    .mi {
+        height: 3rem;
+        line-height: 3rem;
+    }
+
+    textarea {
+        height: 6rem;
+        padding-top: 0.5rem;
+        color: #999;
+        font-size: 0.7rem;
+    }
+
+    .bg-lan {
+        background: #4593DE;
+        color: #fff;
+    }
+
+    .bg-bai {
+        background: #fff;
+    }
+
+    .col-h {
+        color: #FFBC2D;
+    }
+
+    .xx {
+        position: relative;
+    }
+
+    .bg {
+        background: url(../../image/evaluation_btn_s.png)no-repeat !important;
+        width: 1.3rem !important;
+        height: 1.3rem !important;
+        background-size: 100% !important;
+    }
+
+    .xx ul li {
+        float: left;
+        list-style: none;
+        width: 1.3rem;
+        height: 1.3rem;
+        background: url(../../image/evaluation_btn.png) no-repeat;
+        margin: 0 0.3rem;
+        margin-top: 0.5rem;
+        background-size: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .xx p {
+        position: absolute;
+        right: 5rem;
+        top: 0.7rem;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+    .wid{
+      width: 100% !important;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">医师对带教</div>
+    </header>
+    <div class="pad"></div>
+    <div class="aui-text-left  aui-padded-l-10 aui-font-size-16 ki">
+        <p class="aui-col-xs-6 aui-font-size-16 col-33 ">带教老师：<span id="t_name"></span></p>
+        <p class="aui-col-xs-6 aui-font-size-16 col-33">轮转科室:<span id="Now_Department"></span></p>
+        <p class="aui-font-size-14 col-99 lin">轮转时间:<span id="lzk_time"></span>--<span id="lzj_time"></span></p>
+    </div>
+    <div id="vue">
+        <div v-for="item in list">
+            <div class="aui-text-left  aui-padded-l-10 aui-font-size-16 mi">
+                {{item.name}}
+            </div>
+            <div v-for="item1 in item.list" class="zw">
+                <p class="g1 aui-font-size-14 aui-padded-l-10 col-66">{{item1.name}}</p>
+                <div class="xx" id="star">
+                    <ul id="ul">
+                        <li v-for="i in [1,2,3,4,5]" v-on:click="item1.score=i" v-bind:class="item1.score>=i?'bg':''"></li>
+                    </ul>
+                    <p id="dd">{{item1.score>0?(item1.score+'分'):''}}</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="aui-text-left aui-margin-t-15 " style="background:#fff; margin-bottom:2rem;">
+            <textarea v-model="content" class="aui-padded-l-10" placeholder="对带教老师的建议或意见"></textarea>
+        </div>
+
+        <div class="bt aui-text-center">
+            <div class="aui-col-xs-8 bg-bai"v-bind:class="did==true?'wid':''">
+                <p class="aui-font-size-18 col-22"> 总得分：<span class="aui-font-size-20 col-h" id="defen">{{sum_score}}</span></p>
+            </div>
+            <div class="aui-col-xs-4 aui-font-size-18 bg-lan" tapmode v-if=" did == false"  v-on:click="submit()">提交</div>
+        </div>
+    </div>
+
+
+
+</body>
+<script type="text/javascript" src="../../script/aui-toast.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/AHelper.js"></script>
+<script type="text/javascript" src="../../script/base.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/vue/vue.min.js"></script>
+<script type="text/javascript" src="../../script/vue/vue.tap.js"></script>
+<script type="text/javascript" src="../../script/fastclick.js"></script>
+<script>
+    var _name = "对学员严格要求，全面关心学员成长（5分）";
+    var _list = [],
+        eNum = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+    nnum = ['1', '2', '3', '4', '5']
+
+    _list = [{
+        name: "A.带教态度（25分）",
+        list: [{
+            id: 0,
+            name: '1.对学员严格要求，全面关心学员成长（5分）',
+            score: 0
+        }, {
+            id: 0,
+            name: '2.言传身教，为人师表（5分）',
+            score: 0
+        }, {
+            id: 0,
+            name: '3.工作责任心强，精益求精（5分）',
+            score: 0
+        }, {
+            id: 0,
+            name: '4.教风严谨踏实，按时不随意调、停课（5分）',
+            score: 0
+        }, {
+            id: 0,
+            name: '5.带教态度认真，做到有问必答（5分）',
+            score: 0
+        }]
+    }, {
+        name: "B.带教内容（25分）",
+        list: [{
+            id: 0,
+            name: '1.自身知识渊博，专业理论扎实（5分）',
+            score: 0
+        }, {
+            id: 0,
+            name: '2.能按照培养手册认真确定培养计划（5分）',
+            score: 0
+        }, {
+            id: 0,
+            name: '3.针对学员特长，分阶段实施培养内容（5分）',
+            score: 0
+        }, {
+            id: 0,
+            name: '4.自编或选用教材恰当，教学有教案或大纲（5分）',
+            score: 0
+        }, {
+            id: 0,
+            name: '5.及时检查并指导病历书写，修改病历并评定（5分）',
+            score: 0
+        }]
+    }, {
+        name: "C.教学方法（25分）",
+        list: [{
+            id: 0,
+            name: '1.采用教学方法、手段和形式与内容和谐统一（5分）',
+            score: 0
+        }, {
+            id: 0,
+            name: '2.语言准确、精炼、生动，板书工整简明（5分）',
+            score: 0
+        }, {
+            id: 0,
+            name: '3.注重启发学员思维和能力培养（5分）',
+            score: 0
+        }, {
+            id: 0,
+            name: '4.理论联系实际，注意学员信息反馈（5分）',
+            score: 0
+        }, {
+            id: 0,
+            name: '5.培养学员临床思维和独立工作能力（5分）',
+            score: 0
+        }]
+    }, {
+        name: "D.教学效果（25分）",
+        list: [{
+            id: 0,
+            name: '1.能吸引学员注意力，指导氛围活跃（5分）',
+            score: 0
+        }, {
+            id: 0,
+            name: '2.在培养学员专业技能同时，注重医德建设（5分）',
+            score: 0
+        }, {
+            id: 0,
+            name: '3.学员的分析问题和解决问题的能力得到提高（5分）',
+            score: 0
+        }, {
+            id: 0,
+            name: '4.学员的科研和论文写作能力得到提高（5分）',
+            score: 0
+        }, {
+            id: 0,
+            name: '5.符合培养手册要求，完成培养计划（5分）',
+            score: 0
+        }]
+    }];
+    var vm = new Vue({
+        el: "#vue",
+        data: {
+            list: _list,
+            content: "",
+            sum: "",
+            did: false,
+        },
+        computed: {
+            sum_score: function() {
+                var sum = 0;
+                this.list.forEach(function(t) {
+                    t.list.forEach(function(v) {
+                        sum += v.score;
+                    })
+                })
+                console.log(sum);
+                return sum + "分";
+            }
+        },
+        methods: {
+            submit: function() {
+                console.log(this.list[0].list[0].score);
+                var ids = [];
+                var scores = [];
+                var content = "";
+                var projects = [];
+                var sum = 0;
+                var _this = this;
+                this.list.forEach(function(t) {
+                    t.list.forEach(function(v) {
+                        sum += v.score;
+                    })
+                });
+                for (var item in vm.list) {
+                    for (var item2 in vm.list[item].list) {
+                        var scitem = vm.list[item].list[item2];
+                        projects.push(vm.list[item].list[item2].score);
+                    }
+                }
+                projects.push(vm.content);
+                var token = H.getStorage('token');
+                var data = {
+                    'token': token,
+                    'action': 'ytt',
+                    'projects': projects,
+                }
+                console.log(JSON.stringify(data));
+                var url = '/Hospital/index.php/api/ys/evaluate';
+                $base.ajax(url, data, function(ret) {
+                    if (ret.status == 1) {
+                        //输出成功信息
+                        $base.toast(ret.errmsg);
+                        setTimeout(function() {
+                            api.closeWin({});
+                        },500)
+
+                    } else {
+                        //输出错误信息
+                        $base.toast(ret.errmsg);
+                    }
+                })
+            }
+        }
+    })
+
+    H.ready(function() {
+        var address = "/Hospital/index.php/api/office/teacher_evalute_list";
+        var token = H.getStorage('token');
+        var id = H.getStorage('gp-yspjdj1_id');
+        var ajaxData = {
+            token: token,
+            action:"detail",
+            id:id
+        };
+        $base.get(address, ajaxData, function(ret) {
+          console.log(JSON.stringify(ret));
+            if (ret.data.id > 0) {
+                //已评价
+                //一维数组
+                var scoreitems = ret.data.options;
+                var scoreitems_index = 0;
+                for (var item in vm.list) {
+                    for (var item2 in vm.list[item].list) {
+                        var scitem = vm.list[item].list[item2];
+                        vm.list[item].list[item2].score = scoreitems[scoreitems_index++];
+                    }
+                }
+                // vm.content = ret.data.ys_to_teacher.eval_e;
+                vm.did = true;
+                $("#defen").html(ret.data.total+"分");
+                // vm.sum_score = ret.data.ys_to_teacher.totalnum;
+                //vm._list
+            } else {
+                //未评价
+            }
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+        console.log(H.getStorage("t_name"));
+      $("#Now_Department").html(H.getStorage("gp-yspjdj_ks"));
+      $("#t_name").html(H.getStorage("gp-yspjdj_name"));
+      $("#lzk_time").html(H.getStorage("gp-yspjdj1_start"));
+      $("#lzj_time").html(H.getStorage("gp-yspjdj1_end"));
+    })
+
+    function fh() {
+        api.closeWin({});
+    }
+</script>
+
+</html>

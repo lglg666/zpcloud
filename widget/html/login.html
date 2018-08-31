@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/aui.css">
+    <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+    <title>Document</title>
+</head>
+<style media="screen">
+    body,
+    html {
+        background: url(../image/login_bg.png) no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        background-color: #4c4c4c;
+        position: relative;
+        overflow: hidden;
+    }
+
+    html {
+        height: 100%;
+    }
+
+    .top {
+        padding: 7rem 0 0 0
+    }
+
+    .top p {
+        margin-left: 2rem;
+        font-size: 1.7rem;
+        color: #fff;
+    }
+
+    .dl {
+        position: relative;
+        width: 80%;
+        margin: 2rem auto;
+    }
+
+    .zh {
+        padding-bottom: 0.2rem;
+        border-bottom: 1px solid #BCC3C7;
+        font-size: 0.8rem;
+        color: #fff;
+        margin: 1.5rem auto;
+    }
+
+    .zh input {
+        border: 0;
+        height: 1rem;
+        font-size: 0.8rem;
+        color: #fff;
+        filter: alpha(opacity=50);
+        -moz-opacity: 0.5;
+        -khtml-opacity: 0.5;
+        /*opacity: 0.5;*/
+        outline: none;
+        padding-left: 1rem;
+        display: inline;
+        width: auto;
+    }
+
+    .bt {
+        position: relative;
+        width: 80%;
+        margin: 3rem auto;
+    }
+
+    .bt button {
+        width: 100%;
+        border-radius: 4px;
+        height: 2.5rem;
+        font-size: 0.85rem;
+        outline: none;
+        border: 0;
+        background: #5d5d5d;
+        color: #9e9e9e;
+    }
+
+    .bq {
+        width: 100%;
+        text-align: center;
+        color: #A4AFB4;
+        padding-top: 1.5rem;
+        font-size: 0.6rem;
+    }
+
+    .login {
+        position: relative;
+        height: 100%;
+    }
+
+    .aui-pull-right img {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    .pp {
+        padding-top: 1rem !important;
+    }
+
+    .pp i {
+        font-size: 1.6rem;
+        color: #fff;
+    }
+</style>
+
+<body>
+    <header id="header"></header>
+    <div class="login">
+
+        <div class="aui-pull-right aui-padded-10 pp" tapmode onclick="fwq()">
+            <i class="iconfont icon-set"></i>
+        </div>
+        <div class="top aui-text-left">
+            <p>住院医师</p>
+            <p>规培管理平台</p>
+        </div>
+        <div class="dl" onsubmit="return myFunction()">
+            <div class="zh">
+                账号 <input type="text" placeholder="请输入账号" class="add1" value="" id="user" />
+            </div>
+            <div class="zh" id="mm">
+                密码 <input type="password" placeholder="请输入密码" value="" class="add2" id="password" />
+            </div>
+        </div>
+        <div class="bt" tapmode onclick="dj()">
+            <button>登录</button>
+        </div>
+        <div class="bq"> <span>
+              <input style="vertical-align: middle;" type="checkbox"  value="" id="xy" checked="checked">
+              <span class="font12">
+                  <label tapmode  >我同意并阅读</label>
+                  <span open-win="ucenter/user_agreement" tapmode onclick="yhxy()">
+                      《用户协议》
+                  </span>
+            </span>
+            </span>
+        </div>
+        <div class="bq">
+            广州炬海科技有限公司版权所有
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript" src="../script/zepto.min.js"></script>
+<script type="text/javascript" src="../script/AHelper.js"></script>
+<script type="text/javascript" src="../script/base.js"></script>
+<script type="text/javascript" src="../script/fastclick.js"></script>
+<script src="../script/api.js"></script>
+<script>
+    H.ready(function() {
+        //判断两个input的val不为空变按钮颜色
+        $(function() {
+            $('input').on('input propertychange', function() {
+                if (($.trim($('.add1').val()) !== "") && ($.trim($('.add2').val()) !== "")) {
+                    $('.bt button').css({
+                        'background-color': '#00AAFA',
+                        'color': '#ffffff'
+                    });
+                } else {
+                    $('.bt button').css({
+                        'background-color': '00AAFA',
+                        'color': '#fff'
+                    });
+                }
+            });
+        });
+
+        var hospital_ip = "" + H.getStorage("hospital_ip");
+        console.log(H.getStorage("hospital_ip"));
+        var address = "/Hospital/index.php/api/login/verlogin";
+
+        function _baseUrl() {
+            return H.$getStorage("hospital_ip");
+            console.log(H.$getStorage("hospital_ip"))
+        }
+
+
+        H.$dblclickToCloseApp();
+
+        console.log(window.innerWidth);
+        console.log(api.systemType);
+
+
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        });
+    });
+
+
+    function fwq() {
+        api.openWin({
+            name: 'fwq',
+            url: './fuwuqi.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+    }
+
+    function dj() {
+        if (!document.getElementById("xy").checked) {
+            $base.toast("请您查看并同意用户协议")
+        } else {
+            var x = document.getElementById("user").value;
+            var y = document.getElementById("password").value;
+            if (x == "" || y == "") {
+                $base.toast("账号或密码不能为空！！")
+            } else {
+                var address = "/Hospital/index.php/api/login/verlogin";
+                var ajaxData = {
+                    login_name: x,
+                    password: y
+                };
+
+                $base.submit(address, ajaxData, function(ret) {
+                    var denglu = ret.status;
+                    var msg = ret.errmsg;
+                    console.log(JSON.stringify(ret));
+                    if (denglu == 1) {
+
+                        H.$showProgress("正在登录中.....")
+                        var role = ret.data.user_role;
+                        //console.log(ret.data.user_id);
+                        H.setStorage("hid", ret.data.hid);
+                        H.setStorage("token", ret.data.token);
+                        H.setStorage("user_role", ret.data.user_role);
+                        H.setStorage("user_id", ret.data.user_id);
+                        H.setStorage("Now_Department", ret.data.d_name);
+
+
+                        if (role == 1) {
+                            api.openWin({
+                                name: 'main',
+                                url: './main.html',
+                                reload: "true",
+                                slidBackEnabled: 'false',
+                                pageParam: {
+                                    name: 'test'
+                                }
+                            });
+                            H.setStorage("t_name", ret.data.t_name);
+                             H.setStorage("lzk_time", ret.data.start);
+                             H.setStorage("lzj_time", ret.data.end);
+                            setTimeout(function() {
+                                H.$hideProgress();
+                            }, 500)
+
+                        } else if (role == 2) {
+                            api.openWin({
+                                name: 'main1',
+                                url: './dj-main.html',
+                                reload: "true",
+                                slidBackEnabled: 'false',
+                                pageParam: {
+                                    name: 'test'
+                                }
+                            });
+                            setTimeout(function() {
+                                H.$hideProgress();
+                            }, 500)
+                        } else if (role == 3) {
+                            api.openWin({
+                                name: 'main2',
+                                url: './zr-main.html',
+                                reload: "true",
+                                slidBackEnabled: 'false',
+                                pageParam: {
+                                    name: 'test'
+                                }
+                            });
+                            setTimeout(function() {
+                                H.$hideProgress();
+                            }, 500)
+                        } else if (role == 4) {
+                            api.openWin({
+                                name: 'main3',
+                                url: './gp-main.html',
+                                reload: "true",
+                                slidBackEnabled: 'false',
+                                pageParam: {
+                                    name: 'test'
+                                }
+                            });
+                            setTimeout(function() {
+                                H.$hideProgress();
+                            }, 500)
+                        }
+                    } else if (denglu == -1) {
+                        $base.toast(msg)
+                    } else if (denglu == -2) {
+                        $base.toast(msg)
+                    } else if (denglu == 2) {
+                        $base.toast(msg)
+                    } else if (denglu == 3) {
+                        var userlist   =  ret.userlist;
+                        H.setStorage("userlist",userlist);
+                        api.openWin({
+                            name: 'select',
+                            url: './qiehuanks.html',
+                            slidBackEnabled: 'false',
+                            pageParam: {
+                                name: 'test'
+                            }
+                        });
+                        setTimeout(function() {
+                            H.$hideProgress();
+                        }, 500)
+                    }
+                }, function(err) {
+                    console.log(err);
+                });
+            }
+        }
+
+    }
+
+    function yhxy() {
+        api.openWin({
+            name: 'yhxy',
+            url: './yhxy.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+</script>
+
+</html>

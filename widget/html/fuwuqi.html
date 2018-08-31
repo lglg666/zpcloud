@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/aui.css">
+    <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        height: 3rem;
+        position: fixed;
+        width: 100%;
+    }
+
+    .top {
+        position: relative;
+        background: #fff;
+        width: 100%;
+        line-height: 3rem;
+        height: 3rem;
+    }
+
+    .top i {
+        position: absolute;
+        font-size: 0.8rem;
+        left: 1rem;
+        color: #999;
+        top: 0.2rem;
+    }
+
+    .top input {
+        width: 82%;
+        color: #999;
+        background: #F2F2F2;
+        border-radius: 1rem;
+        height: 1.8rem;
+        line-height: 1.8rem;
+        margin: 0.75rem 0;
+        padding-left: 1.7rem;
+        float: left;
+        font-size: 0.7rem;
+        margin-left: 0.5rem;
+    }
+
+    .top p {
+        float: right;
+        width: 15%;
+        color: #4593DE;
+        font-family: PingFangSC-Regular;
+    }
+
+    .ma {
+        border-bottom: 1px solid #ddd;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        background: #fff;
+    }
+
+    .ma p {
+        color: #333;
+    }
+
+    .pad {
+        padding-top: 4rem;
+    }
+</style>
+
+<body>
+
+    <header id="header">
+        <div class="top">
+            <i class="iconfont icon-search"></i>
+            <input type="search" placeholder="搜索服务器" id="search-input">
+            <p class="aui-text-center aui-font-size-16">搜索</p>
+        </div>
+    </header>
+    <div class="pad">
+
+    </div>
+
+    <div class="ma">
+        <p class="aui-font-size-16 aui-padded-l-10">默认</p>
+    </div>
+    <div class="yiyuan">
+        <div v-for="item in list" id="ada" v-on:click="select(item.ip,item.name)">
+            <div class="ma">
+                <p class="aui-font-size-16 aui-padded-l-10" v-text="item.name" :tetx="item.id"></p>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/vue/vue.min.js"></script>
+<script type="text/javascript" src="../script/AHelper.js"></script>
+<script type="text/javascript" src="../script/zepto.min.js"></script>
+<script type="text/javascript" src="../script/base.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: ".yiyuan",
+        data: {
+            list: []
+        },
+        methods: {
+            select: function(_ip ,name) {
+                //  alert(_ip);
+                H.setStorage('ip',_ip)
+                 $base.toast("您已选择"+name)
+                utils.setBaseUrl(_ip);
+                setTimeout(function() {
+                    api.closeWin({
+                        name: 'fwq'
+                    });
+                }, 800)
+            }
+
+        }
+    })
+
+    H.ready(function() {
+        $base.showLoading();
+        api.parseTapmode();
+        api.ajax({
+            url: 'http://lzgryy.juhaisoft.com/Hospital/index.php/Train/api/hospital_list',
+            method: 'post',
+            data: {
+                values: {
+
+                },
+            }
+        }, function(ret, err) {
+            if (ret) {
+                // alert( JSON.stringify( ret ) );
+                vm.list = ret.data;
+                // console.log(ret.data[0].ip);
+                console.log(JSON.stringify(ret.data));
+
+                vm.$nextTick(function() {
+                    $base.closeLoading();
+                })
+
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+    })
+</script>
+
+</html>

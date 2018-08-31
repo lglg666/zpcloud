@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/aui.css">
+    <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .aui-text-center p {
+        color: #999;
+        font-size: 0.75rem;
+    }
+
+    .dl {
+        position: relative;
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .zh {
+        padding-bottom: 0.2rem;
+        border-bottom: 1px solid #BCC3C7;
+        font-size: 0.8rem;
+        color: #333333;
+        font-weight: 600;
+        margin: 1.5rem auto;
+    }
+
+    .zh input {
+        border: 0;
+        height: 1rem;
+        font-size: 0.7rem;
+        color: #BCC3C7;
+        filter: alpha(opacity=50);
+        -moz-opacity: 0.5;
+        -khtml-opacity: 0.5;
+        opacity: 0.5;
+        outline: none;
+        padding-left: 1rem;
+        display: inline;
+        width: auto;
+    }
+
+    .bt {
+        position: absolute;
+        right: 0;
+        top: 2.9rem;
+    }
+
+    .bt input {
+        background: #4593DE;
+        color: #fff;
+        font-size: 0.6rem;
+        width: 4.5rem;
+        height: 1.3rem;
+        border-radius: .2rem;
+    }
+
+    .aui-iconfont {
+        font-size: 0.9rem !important;
+    }
+
+    .btn {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .btn button {
+        width: 100%;
+        border-radius: 4px;
+        height: 2.5rem;
+        color: #fff;
+        font-size: 0.85rem;
+        outline: none;
+        border: 0;
+        background: #4593DE;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+</style>
+
+<body>
+    <div class="ghsj">
+        <header class="aui-bar aui-bar-nav" id="header">
+            <a class="aui-pull-left" tapmode onclick="fh()">
+                <i class="iconfont icon-arrow-left aui-iconfont"></i>
+            </a>
+            <div class="aui-title">更换手机</div>
+        </header>
+        <div class="pad"></div>
+        <div class="aui-text-center aui-margin-t-15 aui-margin-b-15">
+            <p>您当前的手机号：188****4021 </p>
+            <p>更换手机后下次登录可使用新手机号登录。</p>
+        </div>
+
+        <div class="dl">
+            <div class="zh ">
+                <i class="aui-iconfont aui-icon-mobile"></i>
+                <input type="text" placeholder="请输入手机号" style="color:black;" class="add1" value="" id="phone" />
+
+            </div>
+            <div class="zh" id="mm">
+                <i class="aui-iconfont aui-icon-mail"></i>
+                <input type="text" placeholder="请输入验证码" style="color:black;" class="add2" value="" id="code" />
+
+            </div>
+            <div class="bt aui-text-center" tapmode onclick="fs()">
+                <input type="button" id="btn" value="发送验证码" />
+            </div>
+        </div>
+
+        <div class="btn" tapmode onclick="submit()">
+            <button>确定</button>
+        </div>
+</body>
+<script src="../script/api.js"></script>
+<script src="../script/AHelper.js"></script>
+<script>
+    window.onload = function() {
+        var wait = 30;
+
+        function time(o) {
+            if (wait == 0) {
+                o.removeAttribute("disabled");
+                o.value = "再次获取";
+                wait = 30;
+            } else {
+
+                o.setAttribute("disabled", true);
+                o.value = "" + wait + "秒后再次获取";
+                wait--;
+                setTimeout(function() {
+                        time(o)
+                    },
+                    1000)
+            }
+        }
+        document.getElementById("btn").onclick = function() {
+            time(this);
+        }
+
+    }
+
+    function fs() {
+        var phone = document.getElementById("phone").value;
+        var smsVerify = api.require('smsVerify');
+        smsVerify.sms({
+            phone: phone,
+        }, function(ret, err) {
+            if (ret.status) {
+                if (ret.smart == true) { // 安卓版特有功能 智能验证
+                    api.alert({
+                        msg: '智能验证成功：开发者可以在这里直接执行手机号验证成功之后的相关操作'
+                    });
+                } else {
+                    api.alert({
+                        msg: '短信发送成功'
+                    });
+                }
+            } else {
+                api.alert({
+                    msg: err.code + ' ' + err.msg
+                });
+            }
+        });
+    }
+
+
+    function fh() {
+        api.closeWin({
+            name: 'ghsj'
+        });
+
+
+    }
+
+    apiready = function() {
+        var smsVerify = api.require('smsVerify');
+        smsVerify.register(function(ret, err) {
+            if (ret.status) {
+                console.log({
+                    msg: '注册成功'
+                });
+            } else {
+                api.alert({
+                    msg: err.code + ' 注册失败'
+                });
+            }
+        });
+    }
+
+    function submit() {
+        var phone = document.getElementById("phone").value;
+        var code = document.getElementById("code").value;
+        var smsVerify = api.require('smsVerify');
+        smsVerify.verify({
+            phone: phone,
+            code: code,
+        }, function(ret, err) {
+            if (ret.status) {
+                api.alert({
+                    msg: '验证成功'
+                });
+                setTimeout(function() {
+                    document.getElementById("phone").value = "";
+                    document.getElementById("code").value = "";
+                }, 1000)
+            } else {
+                api.alert({
+                    msg: err.code + ' 验证失败'
+                });
+            }
+        });
+    }
+
+    H.ready(function () {
+
+    })
+</script>
+
+</html>

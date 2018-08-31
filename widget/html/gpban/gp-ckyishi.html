@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="../../css/aui.css">
+  <link rel="stylesheet" type="text/css" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+header {
+    position: fixed !important;
+    width: 100%;
+    font-size: 1rem;
+}
+
+header i {
+    color: #222222;
+    font-size: 1rem !important;
+    font-weight: 600;
+}
+
+.pad {
+    padding-top: 3.5rem;
+}
+
+.con{
+  background-color: #fff;
+}
+.con_tent p{
+  height: 1.5rem;
+  line-height: 1.5rem;
+}
+</style>
+<body>
+  <header class="aui-bar aui-bar-nav" id="header">
+      <a class="aui-pull-left" tapmode onclick="fh()">
+          <i class="iconfont icon-arrow-left aui-iconfont"></i>
+      </a>
+      <div class="aui-title">医师查看</div>
+      <p class="aui-pull-right clo-lan aui-font-size-16 aui-padded-r-15" tapmode onclick="addys()">添加医师</p>
+  </header>
+  <div class="pad"></div>
+<div class="ys">
+  <div v-for="item in list">
+
+
+  <div class="con aui-margin-15">
+    <div class="con_tent aui-padded-10">
+      <p class="aui-font-size-16 clo-33">住院医师：<span>{{item.username}}</span></p>
+      <p class="aui-font-size-16 clo-33">账号：<span>{{item.useraccount}}</span></p>
+      <p class="aui-font-size-16 clo-33">密码：<span>{{item.pwd}}</span></p>
+      <p class="aui-font-size-16 clo-33">医院：<span>{{item.hospital_name}}</span></p>
+      <p class="aui-font-size-16 clo-33">对应专业：<span>{{item.professionname}}</span></p>
+      <p class="aui-font-size-16 clo-33">开始时间：<span>{{item.start}}</span></p>
+      <p class="aui-font-size-16 clo-33">结束时间：<span>{{item.end}}</span></p>
+      <p class="aui-font-size-16 clo-33">带教老师：<span>{{item.teacher_name}}</span></p>
+    </div>
+  </div>
+</div>
+</div>
+</body>
+
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/aui-toast.js"></script>
+<script>
+var ys = new Vue({
+  el:".ys",
+  data:{
+    list:[]
+  }
+})
+  H.ready(function () {
+    var address = "/Hospital/index.php/api/office/user_list";
+    var token = H.getStorage('token');
+    $base.showLoading();
+    var ajaxData = {
+        token: token,
+        user_role:"1",
+    };
+    $base.get(address, ajaxData, function(ret) {
+        console.log(JSON.stringify(ret.data));
+        ys.list = ret.data;
+            $base.closeLoading();
+    }, function(err) {
+        console.log(JSON.stringify(err));
+    });
+    api.addEventListener({
+        name: 'gp-addys'
+    }, function(ret, err) {
+        if (ret) {
+            location.reload();
+        } else {
+            alert(JSON.stringify(err));
+        }
+    });
+  })
+function fh() {
+  api.closeWin({});
+
+}
+  function addys(){
+    api.openWin({
+        name: 'addys',
+        url: '../gpban/gp-addyishi.html',
+        pageParam: {
+            name: 'test'
+        }
+    });
+
+  }
+</script>
+</html>

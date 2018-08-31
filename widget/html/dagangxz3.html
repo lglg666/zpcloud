@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/aui.css">
+    <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .nk {
+        background: #fff;
+    }
+
+    .pad {
+        padding-top: 3.5rem
+    }
+
+    .nk img {
+        width: 1.5rem;
+        height: 1.5rem;
+        margin: 0.5rem;
+    }
+
+    .nk .biaoti {
+        height: 3rem;
+        line-height: 3rem;
+        color: #000;
+        font-weight: 600;
+        font-family: PingFang-SC-Medium;
+    }
+
+    .wenzi {
+        margin: 0 0.5rem;
+        color: #333;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title" id="title">中医内科科室</div>
+    </header>
+    <div class="pad"></div>
+</body>
+<script src="../script/api.js"></script>
+<script src="../script/AHelper.js"></script>
+<script src="../script/zepto.min.js"></script>
+<script>
+    function fh() {
+        api.closeWin({});
+    }
+    H.ready(function() {
+        $('#title').html(H.getStorage('dgxz2_title'));
+        var url = H.getStorage('dgxz_url')
+        api.openFrame({
+            name: 'page2',
+            url: url,
+            rect: {
+                x: 0,
+                y: $api.offset(header).h,
+                w: 'auto',
+                h: "auto"
+            },
+            pageParam: {
+                name: 'test'
+            },
+            bounces: true,
+            bgColor: 'rgba(0,0,0,0)',
+            vScrollBarEnabled: true,
+            hScrollBarEnabled: false
+        });
+
+    })
+</script>
+
+</html>

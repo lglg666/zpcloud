@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/aui.css">
+    <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .nk {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        background: #fff;
+        margin: 0.8rem;
+    }
+
+    .nk i {
+        font-size: 1.3rem;
+        padding-right: 0.5rem;
+    }
+
+    .nk p {
+        color: #333333;
+        font-family: PingFang-SC-Medium;
+    }
+</style>
+
+<header class="aui-bar aui-bar-nav" id="header">
+    <a class="aui-pull-left" tapmode onclick="fh()">
+        <i class="iconfont icon-arrow-left aui-iconfont"></i>
+    </a>
+    <div class="aui-title">大纲细则</div>
+</header>
+<div class="pad"></div>
+<div class="content">
+    <div class=" nk " tapmode v-on:click="dgxz2(item.subitems,item.title)" v-for="item in list">
+        <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">{{item.title}}</p>
+        <i :class="item.class"></i>
+    </div>
+</div>
+
+</body>
+<script src="../script/api.js"></script>
+<script src="../script/AHelper.js"></script>
+<script src="../script/vue/vue.min.js"></script>
+<script src="../script/zepto.min.js"></script>
+<script src="../script/outline.js"></script>
+<script src="../script/fastclick.js"></script>
+<script>
+    var dgxz = new Vue({
+        el: ".content",
+        data: {
+            list: []
+        },
+        methods: {
+            dgxz2: (subitems, title) => {
+                console.log(JSON.stringify(subitems));
+                H.setStorage('dgxz_list', subitems);
+                H.setStorage('dgxz_title', title);
+                api.openWin({
+                    name: 'dgxz2',
+                    url: './dagangxz2.html',
+                    pageParam: {
+                        name: 'test'
+                    }
+                });
+
+            }
+        }
+    })
+
+    function fh() {
+        api.closeWin({});
+
+
+    }
+
+    function dgxz2() {
+
+    }
+    H.ready(function() {
+        dgxz.list = window.outline;
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        });
+    })
+</script>
+
+</html>

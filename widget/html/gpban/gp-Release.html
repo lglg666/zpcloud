@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href="../../css/aui.css">
+<link rel="stylesheet" type="text/css" href="../../css/iconfont/iconfont.css">
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .Title {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        background-color: #fff;
+    }
+
+    .Title input {
+        width: 80%;
+        height: 100%;
+        text-align: right;
+        padding-right: 0.5rem;
+    }
+
+    .content {
+        background-color: #fff;
+        height: 12rem;
+    }
+
+    .content textarea {
+        line-height: 1.5rem;
+        height: 100%;
+    }
+
+    .upload {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        background-color: #fff;
+    }
+
+    .Notice {
+        background-color: #fff;
+    }
+
+    .Notice_t {
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .bt {
+        text-align: center;
+        background: #fff;
+        padding: 0.5rem 0 0.5rem 0;
+        position: relative;
+        ;
+        ;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .bt button {
+        width: 80%;
+        text-align: center;
+        border-radius: 4px;
+        height: 2.5rem;
+        font-size: 0.85rem;
+        outline: none;
+        border: 0;
+        background: #4593de;
+        color: #fff;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">发布公告</div>
+    </header>
+    <div class="pad"></div>
+    <div id="fb">
+        <div class="Title">
+            <p class="clo-33 aui-pull-left aui-font-size-18 aui-padded-l-10">标题</p>
+            <input type="text" placeholder="请输入标题" class="aui-pull-right clo-99" value="" v-model="inputtext.title">
+        </div>
+        <div class="content">
+            <textarea name="name" rows="8" cols="80" placeholder="请输入公告内容" value="" class="aui-padded-t-10 aui-padded-l-10" v-model="inputtext.content"></textarea>
+        </div>
+
+        <div class="upload aui-margin-t-15 aui-padded-l-10" tapmode onclick="fj()">
+            <p class="aui-font-size-16 clo-33 aui-pull-left">添加附件<span class=" aui-font-size-16 clo-99 aui-padded-l-10" id="fujian"> 点击添加附件</span></p>
+            <i class="iconfont icon-upload aui-pull-right aui-padded-r-15 aui-font-size-18 clo-33"></i>
+        </div>
+
+        <div class="Notice aui-margin-t-15">
+            <div class="Notice_t">
+                <p class="aui-font-size-16 clo-33 aui-padded-l-10">公告对象</p>
+                <div class="aui-hr"></div>
+            </div>
+            <div class="role">
+                <div class="aui-content aui-margin-b-15">
+                    <ul class="aui-list aui-list-in">
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-inner">
+                                <div class="aui-list-item-title">住院医师</div>
+                                <div class="aui-list-item-right">
+                                    <input type="checkbox" class="aui-checkbox" :value="1" v-model="objk" @click="xz">
+                                </div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-inner">
+                                <div class="aui-list-item-title">带教老师</div>
+                                <div class="aui-list-item-right">
+                                    <input type="checkbox" class="aui-checkbox" :value="2" v-model="objk" @click="xz">
+                                </div>
+                            </div>
+                        </li>
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-inner">
+                                <div class="aui-list-item-title">科室主任</div>
+                                <div class="aui-list-item-right">
+                                    <input type="checkbox" class="aui-checkbox" :value="3" v-model="objk" @click="xz">
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class=" bt aui-margin-t-15" tapmode v-on:click="submit()">
+            <button>发布</button>
+        </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#fb',
+        data: {
+            wenjian: "",
+            inputtext: {},
+            objk: [],
+        },
+        methods: {
+            submit: function() {
+                console.log(JSON.stringify(this.inputtext));
+                var address = '/Hospital/index.php/api/office/notice';
+                var token = H.getStorage('token');
+                var ajaxData = {
+                    token: token,
+                    action: "pub",
+                    title: this.inputtext.title,
+                    content: this.inputtext.content,
+                    senden: this.objk,
+                    file_import: this.wenjian
+                };
+                console.log(JSON.stringify(ajaxData));
+                $base.submit(address, ajaxData, function(ret) {
+                    console.log(JSON.stringify(ret));
+                    if (ret.status == 1) {
+                        $base.toast(ret.errmsg);
+                        setTimeout(function() {
+                            api.closeWin({});
+                        }, 500)
+                        api.sendEvent({
+                            name: 'fbgg',
+                            extra: {
+                                key1: 'value1', 
+                            }
+                        });
+
+                    }
+                }, function(err) {
+                    console.log(JSON.stringify(err));
+                });
+            },
+
+            xz: function() {
+                var self = this;
+                setTimeout(function() {
+                    console.log(self.objk);
+                }, 0)
+            }
+        },
+    })
+
+
+    H.ready(function() {
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        });
+    })
+
+
+    function fj() {
+  if(api.systemType == 'android'){
+    //比较好用 但不支持苹果
+      var selectFile = api.require('selectFile');
+      selectFile.open(function(ret, err) {
+          if (ret.status) {
+              alert(JSON.stringify(ret.path));
+              vm.wenjian = ret.path;
+              $("#fujian").html("已选择附件")
+              $("#fujian").addClass("clo-lan")
+          } else {
+              alert('选择文件不存在');
+          }
+      });
+  }else{
+    //支持苹果系统选择文件
+    var fileBrowser = api.require('fileBrowser');
+    fileBrowser.open(function(ret, err) {
+        fileBrowser.close();
+        if (ret.status) {
+            alert(JSON.stringify(ret.url));
+            vm.wenjian = ret.url;
+            $("#fujian").html("已选择附件")
+            $("#fujian").addClass("clo-lan")
+        } else {
+            alert(JSON.stringify(err));
+        }
+    });
+  }
+    }
+
+    function fh() {
+        api.closeWin({});
+
+    }
+</script>
+
+</html>

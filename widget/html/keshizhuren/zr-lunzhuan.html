@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+    <link rel="stylesheet" href="../../css/style/style.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100% !important;
+        top: 0;
+        background: #fff!important;
+        color: #222!important;
+        height: 3rem;
+        line-height: 3rem;
+    }
+
+    header span {
+        color: #222!important;
+    }
+
+    header p {
+        color: #4593de;
+        font-size: 0.7rem;
+    }
+
+    .aui-bar-nav {
+        line-height: 3rem;
+    }
+
+    .aui-searchbar {
+        float: left;
+        width: 85% !important;
+        background-color: #fff !important;
+    }
+
+    .aui-searchbar-input {
+        background: #F2F2F2;
+        border-radius: 1.25rem;
+        height: 1.6rem;
+        line-height: 1.6rem;
+    }
+
+    .aui-bar-nav .aui-btn {
+        height: 3rem;
+        line-height: 3rem;
+    }
+
+    .aui-bar-nav .aui-btn .aui-iconfont {
+        font-size: 1rem;
+    }
+
+    .aui-searchbar {
+        height: 3rem;
+    }
+
+    .top {
+        color: #222222;
+        background: #fff;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        border-bottom: 1px solid #ddd;
+        font-family: PingFang-SC-Medium;
+    }
+
+    .top i {
+        font-size: 0.8rem !important;
+        font-weight: 600 !important;
+        color: #333333 !important;
+    }
+
+    .aui-tab-item {
+        color: #666666;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .aui-tab {
+        width: 100% !important;
+    }
+
+    .db {
+        border-radius: 0.2rem;
+        position: relative;
+        background: #fff;
+        line-height: 1.5rem;
+    }
+
+    .main_2 i {
+        color: #222222;
+        float: right;
+        padding-right: 0.5rem;
+        font-size: 0.8rem !important;
+    }
+
+    .main_2 p {
+        color: #222;
+        font-size: 0.75rem;
+    }
+
+    .main_2 {
+        font-size: 0.8rem;
+        height: 2rem;
+        line-height: 2rem;
+    }
+
+    .padd {
+        padding-top: 2.5rem;
+    }
+
+    .btn button {
+        font-size: 0.6rem;
+        width: 3.8rem;
+        border-radius: 0.1rem;
+        padding: 0;
+    }
+
+    .btn_lan {
+        background: #fff;
+        border: 1px solid #4593DE;
+        color: #4593DE;
+    }
+
+    .btn_hong {
+        background: #fff;
+        border: 1px solid #FF6655;
+        color: #FF6655;
+    }
+
+    .btn_lv {
+        background: #fff;
+        border: 1px solid #76D166;
+        color: #76D166;
+    }
+
+    .btn p {
+        width: 40%;
+        float: left;
+    }
+
+    .po {
+        height: 1.5rem;
+        line-height: 1.5rem;
+        width: 100%;
+    }
+
+    .po i {
+        margin: 0 auto;
+        float: left;
+        font-size: 1.2rem;
+        padding: 0 1rem;
+    }
+
+    .percent {
+        width: 25%;
+        margin: 0 auto;
+    }
+
+    .mar {
+        height: 5.5rem;
+    }
+
+    .p3 {
+        font-size: 0.7rem;
+        color: #333333;
+        line-height: 1.8rem;
+    }
+
+    .ds p {
+        font-weight: 700;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <div class="aui-searchbar" id="search">
+            <div class="aui-searchbar-input aui-border-radius">
+                <i class="aui-iconfont  iconfont icon-search"></i>
+                <form action="javascript:search();">
+                    <input type="search" placeholder="搜索住院医师" id="search-input">
+                </form>
+            </div>
+        </div>
+        <p>搜索</p>
+
+        <!-- <div class="top aui-text-center aui-font-size-18">
+            当前科室：心血管内科
+            <i class="aui-iconfont aui-icon-right"></i>
+        </div> -->
+        <div class="aui-tab" id="tab">
+            <div class="aui-tab-item aui-active aui-font-size-16 percent">未出科</div>
+            <div class="aui-tab-item aui-font-size-16 percent">未接收</div>
+            <div class="aui-tab-item aui-font-size-16 percent">已出科</div>
+        </div>
+    </header>
+    <div class="mar"></div>
+    <div class="nr">
+
+
+        <div id="yc" style="display:none">
+            <!-- 无数据 -->
+            <template v-if="list == false">
+            <div class="aui-text-center "id="wsj">
+                <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+                <p class="aui-font-size-16">暂无数据</p>
+            </div>
+          </template>
+
+            <div v-for="(item, index) in list" v-else>
+                <div class="db aui-margin-15 ">
+                    <div style="line-height:2.5rem;" class="ds">
+                        <p class="aui-font-size-16 clo-22 aui-padded-l-15 ">住院医师：<span class="color-33"> {{item.username}}</span></p>
+                        <div class="aui-hr"></div>
+                    </div>
+                    <div class="aui-padded-l-15 aui-padded-t-15 aui-padded-b-15">
+                        <p class="aui-font-size-16 clo-33">账号：<span class="clo-33">{{item.useraccount}}</span></p>
+                        <div class="aui-text-center po ">
+                            <p class="clo-33  aui-font-size-16 aui-pull-left">起止时间：<span class=" aui-font-size-16">{{item.start}}</span></p> <i class="iconfont icon-get-to color-99"></i>
+                            <p class="clo-33 aui-pull-left"><span class=" aui-font-size-16">{{item.end}}</span></p>
+                        </div>
+                        <p class="aui-font-size-16 clo-33">专业：<span class="clo-33">{{item.professioname}}</span></p>
+                        <p class="aui-font-size-16 clo-33">类型:<span class="clo-33"> {{item.utname}}</span></p>
+                        <!-- <p class="aui-font-size-16 clo-33">学历:<span class="clo-33"> {{item.end}}</span></p> -->
+                        <p class="aui-font-size-16 clo-33">年级:<span class="clo-33"> {{item.grade}}</span></p>
+                        <p class="aui-font-size-16 clo-33">当前科室: <span class="color-22"> {{item.departmentname}}</span></p>
+                        <div class="aui-hr" style="width:95%; text-align:left"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="wc">
+            <!-- 无数据 -->
+            <template v-if="list == false">
+            <div class="aui-text-center "id="wsj">
+                <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+                <p class="aui-font-size-16">暂无数据</p>
+            </div>
+          </template>
+
+            <div v-for="(item,index) in list" v-else>
+                <div class="db aui-margin-15 ">
+                    <div style="line-height:2.5rem;" class="ds">
+                        <p class="aui-font-size-16 clo-22 aui-padded-l-15">住院医师：<span class="color-33"> {{item.username}}</span></p>
+                        <div class="aui-hr"></div>
+                    </div>
+                    <div class="aui-padded-l-15 aui-padded-t-15 aui-padded-b-15">
+                        <p class="aui-font-size-16 clo-33">账号：<span class="clo-33"> {{item.useraccount}}</span></p>
+                        <div class="aui-text-center po ">
+                            <p class="clo-33  aui-font-size-16 aui-pull-left">起止时间：<span class=" aui-font-size-16"> {{item.start}}</span></p> <i class="iconfont icon-get-to color-99"></i>
+                            <p class="clo-33 aui-pull-left"><span class=" aui-font-size-16"> {{item.end}}</span></p>
+                        </div>
+                        <p class="aui-font-size-16 clo-33">专业：<span class="clo-33">{{item.professioname}}</span></p>
+                        <p class="aui-font-size-16 clo-33">类型:<span class="clo-33"> {{item.utname}}</span></p>
+                        <!-- <p class="aui-font-size-16 clo-33">学历:<span class="clo-33"> 本科</span></p> -->
+                        <p class="aui-font-size-16 clo-33">年级:<span class="clo-33"> {{item.grade}}</span></p>
+                        <p class="aui-font-size-16 clo-33">当前科室: <span class="color-22">  {{item.departmentname}}</span></p>
+                        <!-- <p class="aui-font-size-16 clo-33">带教: <span class="color-22"> 华家爱</span></p> -->
+                        <div class="aui-hr" style="width:95%; text-align:left"></div>
+                        <div style="line-height:2rem;" v-if="item.tid == null">
+                            <p class="clo-hong  aui-pull-left aui-font-size-16">
+                                状态：<span class="">未设置带教</span>
+                            </p>
+                            <div class="btn aui-text-right aui-padded-r-10">
+                                <button class="btn_lan aui-font-size-14" tapmode v-on:click="sz(index)">设置带教</button>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <div style="line-height:2rem;" v-if="item.apply == 0">
+                                <p class="clo-hong  aui-pull-left aui-font-size-16">
+                                    状态：<span class="">培训中</span>
+                                </p>
+                                <div class="btn aui-text-right aui-padded-r-10">&nbsp;</div>
+                            </div>
+                            <div style="line-height:2rem;" v-if="item.apply == 1">
+                                <p class="clo-hong  aui-pull-left aui-font-size-16">
+                                    状态：<span class="">等待带教同意</span>
+                                </p>
+                                <div class="btn aui-text-right aui-padded-r-10">&nbsp;</div>
+                            </div>
+                            <div style="line-height:2rem;" v-if="item.apply ==2">
+                                <p class="clo-hong  aui-pull-left aui-font-size-16">
+                                    状态：<span class="">带教老师已同意</span>
+                                </p>
+                                <div class="btn aui-text-right aui-padded-r-10" v-on:click="choosepaper(index)">
+                                    <button class="btn_lan aui-font-size-14" tapmode>选择试卷</button>
+                                </div>
+                            </div>
+                            <div style="line-height:2rem;" v-if="item.apply ==9">
+                                <p class="clo-hong  aui-pull-left aui-font-size-16">
+                                    状态：<span class="">等待考试</span>
+                                </p>
+                                <div class="btn aui-text-right aui-padded-r-10">
+                                    &nbsp;
+                                </div>
+                            </div>
+                            <div style="line-height:2rem;" v-if="item.apply ==10">
+                                <p class="clo-hong  aui-pull-left aui-font-size-16">
+                                    状态：<span class="">考试完成</span>
+                                </p>
+                                <div class="btn aui-text-right aui-padded-r-10">
+                                    <button class="btn_lan aui-font-size-14" v-on:click="agreetoout(index)">
+                                      同意出科
+                                  </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="wj" style="display:none">
+            <!-- 无数据 -->
+            <template v-if="list == false">
+            <div class="aui-text-center "id="wsj">
+                <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+                <p class="aui-font-size-16">暂无数据</p>
+            </div>
+          </template>
+
+            <div v-for="(item,index) in list" v-else>
+                <div class="db aui-margin-15 ">
+                    <div style="line-height:2.5rem;" class="ds">
+                        <p class="aui-font-size-16 clo-22 aui-padded-l-15">住院医师：<span class="color-33"> {{item.username}}</span></p>
+                        <div class="aui-hr"></div>
+                    </div>
+                    <div class="aui-padded-l-15 aui-padded-t-15 aui-padded-b-15">
+                        <p class="aui-font-size-16 clo-33">账号：<span class="clo-33">  {{item.useraccount}}</span></p>
+                        <div class="aui-text-center po ">
+                            <p class="clo-33  aui-font-size-16 aui-pull-left">起止时间：<span class=" aui-font-size-16"> {{item.start}}</span></p> <i class="iconfont icon-get-to color-99"></i>
+                            <p class="clo-33 aui-pull-left"><span class=" aui-font-size-16"> {{item.end}}</span></p>
+                        </div>
+                        <p class="aui-font-size-16 clo-33">专业：<span class="clo-33">{{item.professioname}}</span></p>
+                        <p class="aui-font-size-16 clo-33">类型:<span class="clo-33"> {{item.utname}}</span></p>
+                        <!-- <p class="aui-font-size-16 clo-33">学历:<span class="clo-33"> 本科</span></p> -->
+                        <p class="aui-font-size-16 clo-33">年级:<span class="clo-33">  {{item.grade}}</span></p>
+                        <p class="aui-font-size-16 clo-33">当前科室: <span class="color-22">  {{item.departmentname}}</span></p>
+                        <!-- <p class="aui-font-size-16 clo-33">带教: <span class="color-22"> 华家爱</span></p> -->
+                        <div class="aui-hr" style="width:95%; text-align:left"></div>
+                        <div style="line-height:2rem;">
+                            <p class="clo-hong  aui-pull-left aui-font-size-16">状态：<span class="">未接收</span></p>
+                            <div class="btn aui-text-right aui-padded-r-10">
+                                <button class="btn_hong aui-font-size-14 aui-margin-r-10" tapmode v-on:click="doaccept(item.rid,index)">接收学员</button>
+                                <!-- <button class="btn_lan aui-font-size-14" tapmode onclick="sz(index)">设置带教</button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../../script/aui-tab.js"></script>
+<script src="../../script/aui-toast.js"></script>
+<script src="../../script/aui-dialog.js"></script>
+<script src="../../script/api.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script type="text/javascript">
+    var wc = new Vue({
+        el: "#wc",
+        data: {
+            list: []
+        },
+        methods: {
+            agreetoout: function(index = 0) {
+                var rid = this.list[index].rid;
+                var token = H.getStorage('token');
+                var address = "/Hospital/index.php/api/department/rotate_message";
+                var ajaxData = {
+                    token: token,
+                    action: "doout",
+                    rid: rid,
+                };
+                $base.get(address, ajaxData, function(ret) {
+                    if (ret.status == 1) {
+                        wj.list.splice(index, 1);
+                        toast.success({
+                            title: "成功出科",
+                            duration: 2000
+                        });
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1000)
+                    } else {
+                        toast.success({
+                            title: "出科失败",
+                            duration: 2000
+                        });
+                    }
+                    $base.closeLoading();
+                }.bind(this), function(err) {
+                    console.log(JSON.stringify(err));
+                });
+            },
+            sz: function(index) {
+                H.setStorage('rid', this.list[index].rid);
+                H.setStorage('ysid', this.list[index].uid);
+                H.setStorage('username', this.list[index].username);
+                H.setStorage('useraccount', this.list[index].useraccount);
+                H.setStorage('departmentname', this.list[index].departmentname);
+                //departmentname
+                api.openWin({
+                    name: 'zr-szdj',
+                    url: './../keshizhuren/zr-szdaijiao.html',
+                    pageParam: {
+                        name: 'test'
+                    }
+                });
+            },
+            choosepaper: function(index = 0) {
+                H.setStorage('rid', this.list[index].rid);
+                H.setStorage('ysid', this.list[index].uid);
+                api.openWin({
+                    name: 'zr-xzsj',
+                    url: './../keshizhuren/zr-szkaoshi.html',
+                    pageParam: {
+                        name: 'test'
+                    }
+                });
+            }
+        }
+    });
+
+    var wj = new Vue({
+        el: "#wj",
+        data: {
+            list: []
+        },
+        methods: {
+            doaccept: function(rid, index = 0) {
+                var token = H.getStorage('token');
+                var address = "/Hospital/index.php/api/department/rotate_message";
+                var ajaxData = {
+                    token: token,
+                    action: "doaccept",
+                    rid: rid,
+                };
+                $base.get(address, ajaxData, function(ret) {
+                    if (ret.status == 1) {
+                        $base.showLoading();
+                        $base.toast(ret.errmsg);
+                        wj.list.splice(index, 1);
+                        setTimeout(function() {
+                            location.reload();
+                            $base.closeLoading();
+                        }, 500)
+
+                    } else {
+
+                    }
+                    $base.closeLoading();
+                }.bind(this), function(err) {
+                    console.log(JSON.stringify(err));
+                });
+            }
+        }
+    })
+
+    var yc = new Vue({
+        el: "#yc",
+        data: {
+            list: []
+        }
+    })
+
+
+    apiready = function() {
+        var address = "/Hospital/index.php/api/department/rotate_message";
+        var token = H.getStorage('token');
+        var ajaxData = {
+            token: token,
+            action: "",
+        };
+        var ajaxData1 = {
+            token: token,
+            action: "accepted",
+        };
+        var ajaxData2 = {
+            token: token,
+            action: "outlist",
+        };
+        $base.get(address, ajaxData, function(ret) {
+            // console.log(JSON.stringify(ret));
+            wj.list = ret.data;
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+
+        $base.get(address, ajaxData1, function(ret) {
+            console.log(JSON.stringify(ret));
+            wc.list = ret.data;
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+
+        $base.get(address, ajaxData2, function(ret) {
+            // console.log(JSON.stringify(ret));
+            yc.list = ret.data;
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+        console.log(H.getStorage("Now_Department"));
+
+        api.addEventListener({
+            name: 'szdj'
+        }, function(ret, err) {
+            if (ret) {
+                console.log(JSON.stringify(ret));
+                location.reload();
+            } else {
+                console.log(JSON.stringify(err));
+            }
+        });
+
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        });
+    }
+
+    //导航栏
+    var tab = new auiTab({
+        element: document.getElementById("tab"),
+        index: 1,
+        repeatClick: false
+    }, function(ret) {
+        if (ret.index == 1) {
+            $("#wc").show().siblings().hide();
+        } else if (ret.index == 2) {
+            $("#wj").show().siblings().hide();
+        } else if (ret.index == 3) {
+            $("#yc").show().siblings().hide();
+        }
+    });
+
+
+    var toast = new auiToast({})
+
+    function showDefault(type) {
+        switch (type) {
+            case "js":
+                toast.success({
+                    title: "接收成功",
+                    duration: 2000
+                });
+                break;
+        }
+    }
+
+    var dialog = new auiDialog({})
+
+    function openDialog(type) {
+        switch (type) {
+            case "sp":
+                dialog.prompt({
+                    title: "出科申请",
+                    text: '输入审批意见',
+                    buttons: ['不同意出科', '出科考试']
+                }, function(ret) {
+
+                    console.log(ret)
+                    if (ret.buttonIndex == 2) {
+                        api.openWin({
+                            name: 'zr-ckks',
+                            url: '../keshizhuren/zr-ckkaoshi.html',
+                            pageParam: {
+                                name: 'test'
+                            }
+                        });
+
+                    }
+                })
+                break;
+        }
+    }
+
+    function sz() {
+        api.openWin({
+            name: 'zr-szdj',
+            url: './../keshizhuren/zr-szdaijiao.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+    }
+</script>
+
+</html>

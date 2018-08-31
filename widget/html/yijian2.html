@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="../css/aui.css">
+  <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+header {
+    position: fixed !important;
+    width: 100%;
+    font-size: 1rem;
+    padding-top: 1rem;
+}
+
+header i {
+    color: #222222;
+    font-size: 1rem !important;
+    font-weight: 600;
+}
+
+.pad {
+    padding-top: 4.25rem;
+}
+
+.con{
+  background-color: #fff;
+}
+.con_content p{
+  text-indent: 1rem;
+}
+.con_title{
+  height: 2.5rem;
+  line-height: 2.5rem;
+}
+.kuai{
+  height: 1rem;
+  width: 0.3rem;
+  top: .7rem;
+  position: relative;
+  background: #4593de;
+}
+
+.bt {
+    text-align: center;
+    background: #fff;
+    padding: 0.5rem 0 0.5rem 0;
+    position: fixed;;
+    bottom: 0;
+    width: 100%;
+}
+
+.bt button {
+    width: 80%;
+    text-align: center;
+    border-radius: 4px;
+    height: 2.5rem;
+    font-size: 0.85rem;
+    outline: none;
+    border: 0;
+    background: #4593de;
+    color: #fff;
+}
+.con_content{
+  line-height: 2rem;
+}
+.con_content textarea {
+    padding-top: 0.5rem;
+    font-size: 0.7rem;
+    color: #999999;
+    height: 10rem;
+}
+</style>
+<body>
+  <header class="aui-bar aui-bar-nav" id="header">
+      <a class="aui-pull-left" tapmode onclick="fh()">
+          <i class="iconfont icon-arrow-left aui-iconfont"></i>
+      </a>
+      <div class="aui-title">提交反馈</div>
+  </header>
+  <div class="pad"></div>
+
+  <div class="con">
+    <div class="con_title">
+      <div class="kuai aui-pull-left aui-margin-l-10 aui-margin-r-10"></div>
+      <p class="clo-22 aui-font-size-18 ">您的反馈</p>
+      <div class="aui-hr"></div>
+    </div>
+    <div class="con_content">
+      <textarea name="a" placeholder="请输入反馈内容" class="aui-padded-l-10" value="" id="fk"></textarea>
+  </div>
+    </div>
+  </div>
+
+  <div class=" bt aui-margin-t-15" tapmode onclick="showDefault('success')">
+      <button>提交</button>
+  </div>
+</body>
+<script src="../script/api.js"></script>
+<script src="../script/AHelper.js"></script>
+<script src="../script/zepto.min.js"></script>
+<script src="../script/biaoqing.js"></script>
+<script src="../script/base.js"></script>
+<script src="../script/aui-toast.js"></script>
+<script>
+  H.ready(function () {
+
+
+  })
+
+  var toast = new auiToast({})
+
+  function showDefault(type) {
+    var msg = $("#fk").val();
+if(msg !=""){
+  var address = "/Hospital/index.php/api/user/mailbox";
+  var token = H.getStorage('token');
+  var userid = H.getStorage("user_id");
+  var user_role = H.getStorage("user_role");
+  var hid = H.getStorage("hid");
+  console.log(hid);
+  var ajaxData = {
+      token: token,
+      userid: userid,
+      user_role: user_role,
+      action:"commit",
+      msg:msg,
+      hid:hid,
+  };
+  $base.submit(address, ajaxData, function(ret) {
+      console.log(JSON.stringify(ret));
+
+  }, function(ret) {
+      console.log(JSON.stringify(ret));
+  });
+    switch (type) {
+        case "success":
+            toast.success({
+                title: "提交成功",
+                duration: 2000
+            });
+setTimeout(function () {
+  fh();
+},800)
+    }
+    api.sendEvent({
+        name: 'yijian',
+        extra: {
+            yijian: true
+        }
+    });
+    $("#fk").val("");
+}else{
+  $base.toast("内容不能为空");
+}
+
+  }
+
+  function fh() {
+      api.closeWin({});
+  }
+</script>
+</html>

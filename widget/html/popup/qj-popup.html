@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <style media="screen">
+        /*.aui-content {
+            width: 10rem;
+            height: 21rem;
+            background: #fff;
+            overflow: hidden;
+            position: relative;
+        }*/
+
+        html,
+        body {
+            height: 98%;
+            background: transparent;
+            -webkit-touch-callout: none;
+            font-family: Tahoma, Geneva, sans-serif;
+            font-style: normal;
+        }
+
+        #dialog {
+            background-color: #e7e7e7;
+            border-radius: 6px;
+            position: absolute;
+            margin: auto;
+            left: 0;
+            right: 0;
+            top: 5rem;
+            /*bottom: 0;*/
+            width: 12rem;
+            height: 20rem;
+            -webkit-transition: all .1s;
+            transition: all .1s;
+            -webkit-transform: scale(0);
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        #dialog.in {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="aui-content aui-margin-b-15" id="dialog">
+        <ul class="aui-list aui-select-list">
+            <li class="aui-list-item" v-for="item in list">
+                <div class="aui-list-item-inner">
+                    <label><input onclick="setVal(this)" class="aui-radio aui-margin-r-10" type="radio" name="radio" :value="item.id">{{item.name}}</label>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script type="text/javascript">
+    new Vue({
+        el: ".aui-content",
+        data: {
+            list: [{
+                id: 0,
+                name: "请选择"
+            }, {
+                id: 1,
+                name: "婚假"
+            }, {
+                id: 2,
+                name: "产假"
+            }, {
+                id: 3,
+                name: "事假"
+            }, {
+                id: 4,
+                name: "年假"
+            }, {
+                id: 5,
+                name: "调休"
+            }, {
+                id: 6,
+                name: "陪产假"
+            }, {
+                id: 7,
+                name: "路途假"
+            }, {
+                id: 8,
+                name: "其他"
+            }]
+        }
+
+    })
+
+    $('#dialog').addClass('in');
+    apiready = function() {
+        $(document.body).on('touchend', function(e) {
+            var dialog = $("#dialog")[0];
+            if (!$.contains(dialog, e.target)) {
+                $('#dialog').removeClass('in');
+                setTimeout(function() {
+                    api.closeFrame();
+                }, 200);
+            }
+        });
+
+
+    };
+function setVal(t){
+ H.$execScript(null,null,"select("+$(t).val()+")");
+  setTimeout(function () {
+    api.closeFrame({
+        name: api.frameName
+    });
+  },100)
+}
+
+</script>
+
+</html>

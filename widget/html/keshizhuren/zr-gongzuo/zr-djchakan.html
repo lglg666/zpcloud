@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../../css/aui.css">
+    <link rel="stylesheet" href="../../../css/iconfont/iconfont.css">
+    <title>Document</title>
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .content {
+        border-radius: 0.2rem;
+        line-height: 1.5rem;
+        font-family: PingFang-SC-Medium;
+    }
+
+    .co {
+        background: #fff;
+    }
+
+    .btn button {
+        border-radius: 0.1rem;
+    }
+
+    .btn_lan {
+        background: #fff;
+        border: 1px solid #4593DE;
+        color: #4593DE;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">带教查看</div>
+    </header>
+    <div class="pad"></div>
+    <div class="content ">
+        <div v-for="item in list" class="aui-margin-15 co">
+            <div class="aui-padded-10">
+                <p class="aui-font-size-16 clo-99">带教姓名：<span class="clo-33">{{item.username}}</span></p>
+                <p class="aui-font-size-16 clo-99">账号：<span class="clo-33">{{item.useraccount}}</span></p>
+                <p class="aui-font-size-16 clo-99">专业：<span class="clo-33">{{item.professioname}}</span></p>
+                <p class="aui-font-size-16 clo-99">学历：<span class="clo-33">{{item.educationame}}</span></p>
+                <p class="aui-font-size-16 clo-99">账号状态：<span class="clo-33">{{item.status}}</span></p>
+                <p class="aui-font-size-16 clo-99">所属科室：<span class="clo-33">{{item.departmentname}}</span></p>
+                <p class="aui-font-size-16 clo-99">带教学员：<span class="clo-33">{{item.student}}</span></p>
+            </div>
+            <div class="btn aui-text-right aui-padded-10">
+                <button class="btn_lan aui-margin-r-10" tapmode v-on:click="submit(item.id)">带教学员</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="../../../script/api.js"></script>
+<script src="../../../script/AHelper.js"></script>
+<script src="../../../script/base.js"></script>
+<script src="../../../script/vue/vue.min.js"></script>
+<script src="../../../script/fastclick.js"></script>
+<script src="../../../script/zepto.min.js"></script>
+<script>
+var cheack=   new Vue({
+        el: ".content",
+        data: {
+            list: []
+        },
+        methods:{
+          submit:function (id) {
+          // alert(id);
+          H.setStorage("dj_id",id);
+          api.openWin({
+              name: 'zr-ckxy',
+              url: '../../keshizhuren/zr-gongzuo/zr-ckxueyuan.html',
+              pageParam: {
+                  name: 'test'
+              }
+          });
+
+          }
+        }
+    })
+
+    function fh() {
+        api.closeWin({});
+
+    }
+    H.ready(function () {
+      var address = "/Hospital/index.php/api/department/teacher";
+      var token = H.getStorage('token');
+      $base.showLoading();
+      var ajaxData = {
+          token: token,
+      };
+      $base.get(address, ajaxData, function(ret) {
+          console.log(JSON.stringify(ret));
+          cheack.list = ret.data;
+          $base.closeLoading();
+      }, function(err) {
+          console.log(JSON.stringify(err));
+      });
+      //处理点击延迟
+      $(function() {
+          FastClick.attach(document.body);
+      });
+    })
+</script>
+
+</html>

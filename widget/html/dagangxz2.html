@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/aui.css">
+    <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .nk {
+      text-align: center;
+        height: 3rem;
+        background: #fff;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .nk img {
+        width: 1.5rem;
+        height: 1.5rem;
+        margin: 0.5rem;
+    }
+
+    .nk p {
+        height: 3rem;
+        line-height: 3rem;
+        color: #333333;
+        font-family: PingFang-SC-Medium;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title" id="title">中医内科科室</div>
+    </header>
+    <div class="pad"></div>
+    <div class="content">
+        <div v-for="item in list">
+            <div class=" nk " tapmode v-on:click="dgxz3(item.title,item.link)">
+                <p class=" aui-font-size-16 aui-padded-l-10">{{item.title}}</p>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../script/api.js"></script>
+<script src="../script/AHelper.js"></script>
+<script src="../script/vue/vue.min.js"></script>
+<script src="../script/zepto.min.js"></script>
+<script src="../script/fastclick.js"></script>
+<script>
+    var dgxz2 = new Vue({
+        el: ".content",
+        data: {
+            list: []
+        },
+        methods:{
+          dgxz3:(title,link)=>{
+            H.setStorage('dgxz2_title',title);
+            H.setStorage('dgxz_url',link);
+            api.openWin({
+                name: 'dgxz3',
+                url: './dagangxz3.html',
+                type: "flip",
+                pageParam: {
+                    name: 'test'
+                }
+            });
+
+          }
+        }
+    })
+
+    function fh() {
+        api.closeWin({});
+    }
+
+    H.ready(function() {
+        var json = H.getStorage('dgxz_list');
+        dgxz2.list = json;
+
+        $("#title").html(H.getStorage('dgxz_title'))
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        });
+    })
+</script>
+
+</html>

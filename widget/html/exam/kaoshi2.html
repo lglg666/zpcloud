@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+    <link rel="stylesheet" href="../../css/aui-slide.css">
+    <link rel="stylesheet" href="../../css/swiper/swiper.css">
+    <link rel="stylesheet" href="../../css/swiper/swiper.min.css">
+</head>
+<style>
+    body {
+        background: #fff;
+    }
+
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    header p {
+        color: #222;
+        font-size: 0.9rem;
+        font-family: PingFangSC-Regular;
+    }
+
+    .sj_top {
+        overflow: hidden;
+        background: #fff;
+        width: 100%;
+    }
+
+    .aui-pull-left {
+        font-size: 1rem;
+        padding-left: 10px;
+        /*text-align: center;*/
+    }
+
+    .aui-pull-right {
+        font-size: 1rem;
+        padding-right: 10px;
+        text-align: center;
+    }
+
+    .sj_main {
+        width: 100%;
+        height: 100%;
+        background: #fff;
+    }
+
+    .sj_main p {
+        margin: 0 1rem 0 1rem;
+        color: #333333;
+        font-weight: 700;
+    }
+
+    .x {
+        width: 100%;
+        margin: 1.2rem;
+        font-size: 0.8rem;
+        color: #333;
+    }
+
+    .l {
+        color: #4593DE;
+    }
+
+    .x a {
+        float: left;
+        display: block;
+        width: 1.2rem;
+        font-size: 0.75rem;
+        border: 1px solid #4593DE;
+        /*border-radius: 50%;*/
+        text-align: center;
+        margin-right: 1.4rem;
+        /*color: #4593DE;*/
+    }
+
+    #sj_footer {
+        height: 4rem;
+        position: fixed;
+        ;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .aui-h {
+        color: #FF6655;
+    }
+
+    .aui-color-l {
+        background: #4593DE;
+        color: #fff;
+    }
+
+    .aui-color-h {
+        background: #FF6655;
+        color: #fff;
+    }
+
+    .aui-color-b {
+        background: #fff;
+        color: #4593DE;
+    }
+
+    .clo-33 {
+        color: #333333;
+    }
+
+    .aui-bg {
+        background: #fff;
+    }
+
+    .aui-lin-hei {
+        line-height: 1.5rem;
+    }
+
+    .ys {
+        color: #333333;
+    }
+
+    .aui-grid {
+        background: #EBEBEB;
+    }
+
+    .tip {
+        padding-top: 2rem;
+    }
+
+    .aui-col-xs-4 i img {
+        margin: 0 auto;
+        width: 1.2rem;
+        height: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .col-lan {
+        color: #4593DE;
+    }
+
+    .aui-pull-left a {
+        color: #4593DE;
+    }
+
+    .aui-content-padded {
+        margin: 0 !important;
+    }
+
+    .aui-collapse-item {
+        line-height: 1.5rem;
+    }
+
+    .col-33 {
+        color: #333333;
+    }
+
+    .shuru textarea {
+        height: 10rem;
+        font-size: 0.7rem;
+    }
+
+    .vm-body {
+        position: relative;
+        height: 20rem;
+    }
+
+    html,
+    body {
+        position: relative;
+        height: 100%;
+    }
+
+    body {
+        background: #eee;
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color: #000;
+        margin: 0;
+        padding: 0;
+    }
+
+    .swiper-container {
+        width: 100%;
+        height: 25rem;
+    }
+
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+    }
+
+    .top {
+        width: auto;
+        height: 2rem;
+        line-height: 2rem;
+        background: #fff;
+        position: relative;
+        font-size: 0.5rem !important;
+    }
+
+    .type {
+        height: 1.3rem;
+        line-height: 1.3rem;
+        background: #4593de;
+        color: #fff !important;
+        border-radius: 0.5rem;
+        width: auto;
+    }
+</style>
+
+<body>
+    <div class="kaoshi2">
+        <header class="aui-bar aui-bar-nav" id="header">
+            <a class="aui-pull-left" tapmode onclick="fh()">
+                <i class="iconfont icon-arrow-left aui-iconfont"></i>
+            </a>
+            <div class="aui-title">{{ksname}}</div>
+            <p class="aui-pull-right aui-col-xs-2 aui-font-size-16" tapmode onclick="jc()">纠错</p>
+        </header>
+        <div class="pad"></div>
+        <div class="sj_top ">
+        </div>
+
+        <div class="vm-body">
+            <div class="swiper-container aui-margin-t-15">
+                <div class="swiper-wrapper">
+                    <template v-for="(type,typeindex) in list">
+
+                      <div class="swiper-slide  aui-text-left" v-for="(item,index) in type.question" >
+
+                        <div class="sj_main " >
+                          <div class="aui-text-center top aui-margin-t-10">
+                              <p class="clo-bai type ">{{type.type_name}}</p>
+                          </div>
+                            <p class="clo-22 aui-font-size-16 " v-on:click="console.log(JSON.stringify(index +1 ))">{{index +1}}.{{item.stem}}</p>
+                            <div v-for="(option,opIndex) in item.new_option" class="x gg" v-if="item.type_id ==1 || item.type_id ==11 ">
+                                <input  class="aui-radio " type="radio" v-model="item.useranswer" v-bind:value="enNum[opIndex]" @change="getindex(index)"/>
+                                <span v-html="option"></span>
+                            </div>
+                            <div v-for="(option,opIndex) in item.new_option" class="x" v-if=" item.type_id == 4 " v-on:click="multichose(typeindex,index,opIndex)" @change="getindex(index)">
+                                <input class="aui-checkbox" type="checkbox" v-bind:value="enNum[opIndex]"/>
+                                <span v-html="option"></span>
+                            </div>
+                            <div  class="shuru"  v-if="item.type_id == 6||item.type_id == 5||item.type_id == 8||item.type_id ==10">
+                                <textarea name="name" rows="8" cols="80" placeholder="请输入你的答案" class="aui-border-t aui-padded-l-10 aui-padded-t-15" v-model="item.useranswer" @click="getindex(index)"></textarea>
+                            </div>
+                        </div>
+                      </div>
+                    </template>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+            <div id="sj_footer">
+                <secton class="aui-grid">
+                    <div class="row aui-text-center">
+                        <div class="aui-col-xs-4" tapmode onclick="dtk()">
+                            <i class="aui-iconfont"><img src="../../image/answer_sheet_btn.png" alt=""></i>
+                            <p class="aui-font-size-12  col-lan">答题卡</p>
+                        </div>
+                        <div class="aui-col-xs-4" tapmode v-on:click="openDialog('text')">
+                            <i class="aui-iconfont "> <img src="../../image/submit_btn.png" alt=""></i>
+                            <p class="aui-font-size-12 col-lan">提交试卷</p>
+                        </div>
+                        <div class="aui-col-xs-4">
+                            <i class="aui-iconfont "><img src="../../image/time_btn.png" alt=""></i>
+                            <p class="aui-font-size-12 col-lan">{{hour}}:{{minute}}:{{second}}</p>
+                        </div>
+                </secton>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+<script type="text/javascript" src="../../script/aui-collapse.js"></script>
+<script type="text/javascript" src="../../script/AHelper.js"></script>
+<script type="text/javascript" src="../../script/vue/vue.min.js"></script>
+<script type="text/javascript" src="../../script/base.js"></script>
+<script type="text/javascript" src="../../script/aui-dialog.js"></script>
+<script type="text/javascript" src="../../script/aui-slide.js"></script>
+<script type="text/javascript" src="../../script/swiper/swiper.js"></script>
+<script type="text/javascript" src="../../script/swiper/swiper.min.js"></script>
+<script src="../../script/index.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+
+<script>
+    function unique(arr) {
+        let newArr = [arr[0]];
+        for (let i = 1; i < arr.length; i++) {
+            let flag = false;
+            for (var j = 0; j < newArr.length; j++) {
+                if (arr[i] == newArr[j]) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) {
+                newArr.push(arr[i]);
+            }
+        }
+        return newArr;
+    }
+
+    function fh() {
+        api.closeWin({});
+
+    }
+
+    function dtk() {
+        H.setStorage('paperinfo', vm.list);
+        console.log(JSON.stringify(vm.list));
+        api.openWin({
+            name: 'dtk1',
+            url: './datik1.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+
+    }
+
+    var vm = new Vue({
+        el: ".kaoshi2",
+        data: {
+            ksname: '',
+            hours: 0,
+            minutes: 60,
+            seconds: 0,
+            timus: 0,
+            info: [],
+            Answer: [],
+            list: [],
+            enNum: ['A', 'B', 'C', 'D', 'E', 'F']
+
+        },
+        mounted() {
+            this.add()
+        },
+        methods: {
+
+            getindex: function(index) {
+                console.log(index + 1);
+                vm.timuindex = index + 1;
+            },
+            openDialog: function(type) {
+                var notfilled = false;
+                for (var i in paperinfo.paper_info) {
+                    for (var j in paperinfo.paper_info[i].question) {
+                        if (paperinfo.paper_info[i].question[j].useranswer == '') {
+                            notfilled = true;
+                            break;
+                        }
+                    }
+                }
+                if (!notfilled) {
+                    submit_answer2();
+                } else {
+                    switch (type) {
+                        case "text":
+                            dialog.alert({
+                                title: "提交试卷",
+                                msg: '试卷还没有做完，确认提交试卷？',
+                                buttons: ['继续做题', '确定提交']
+                            }, function(ret) {
+                                vm.Answer = [];
+                                if (ret.buttonIndex == 2) {
+                                    for (da in vm.list) {
+                                        for (item in vm.list[da].question) {
+                                            // console.log(JSON.stringify(vm.list[da].question[item]));
+                                            var temp = {
+                                                paper_id: vm.list[da].question[item].paper_id,
+                                                paperquestion_id: vm.list[da].question[item].id,
+                                                user_answer: vm.list[da].question[item].useranswer,
+                                                //是选择题就判断得分，不是选择题就默认零分
+                                                score: ["5", "6", "8", "10"].indexOf > -1 ? 0 : (vm.list[da].question[item].useranswer == vm.list[da].question[item].answer ? vm.list[da].question[item].score : 0),
+                                            };
+                                            console.log(JSON.stringify(temp));
+                                            // console.log(JSON.stringify(this.Answer));
+                                            vm.Answer.push(temp);
+                                        }
+                                    }
+                                    console.log(JSON.stringify(vm.Answer));
+                                    var address = "/Hospital/index.php/api/ys/examination";
+                                    var token = H.getStorage('token');
+                                    var ajaxData = {
+                                        token: token,
+                                        action: 'submit',
+                                        data: vm.Answer,
+                                    };
+                                    $base.submit(address, ajaxData, function(ret) {
+                                        if (ret.status == 1) {
+                                            $base.toast(ret.errmsg);
+                                            setTimeout(function() {
+                                                api.closeWin({});
+                                                api.sendEvent({
+                                                    name: 'kaoshi',
+                                                    extra: {
+                                                        hong: true
+                                                    }
+                                                });
+                                            }, 800)
+                                        } else {
+                                            $base.toast(ret.errmsg);
+                                        }
+                                    }, function(err) {
+                                        console.log(JSON.stringify(err));
+                                    });
+
+                                }
+                            })
+                    }
+                }
+
+
+
+            },
+            //定时器
+            num: function(n) {
+                return n < 10 ? "0" + n : "" + n
+            },
+            //监听时间
+            watch: {
+                second: {
+                    handler(newVal) {
+                        this.num(newVal)
+                    }
+                },
+                minute: {
+                    handler(newVal) {
+                        this.num(newVal)
+                    }
+                }
+            },
+            add: function() {
+                var _this = this;
+                var time = window.setInterval(function() {
+                    if (_this.seconds == 00 && _this.minutes != 00) {
+                        _this.seconds = 59;
+                        _this.minutes -= 1;
+                    } else if (_this.minutes == 00 && _this.seconds == 00) {
+                        _this.seconds = 0;
+                        window.clearInterval(time);
+                        alert('时间到考试结束')
+                        submit_answer2();
+                    } else {
+                        _this.seconds -= 1
+                    }
+
+                }, 1000);
+            }
+        },
+        computed: {
+            timuindex: function() {
+                for (var i = 0; i <= vm.timus; i++) {
+                    console.log(i);
+                    return ++i;
+                }
+            },
+            hour: function() {
+                return this.num(this.hours)
+            },
+            second: function() {
+                return this.num(this.seconds)
+            },
+            minute: function() {
+                return this.num(this.minutes)
+            }
+        },
+
+    })
+    var paperinfo = H.getStorage('paperinfo');
+    vm.list = paperinfo.paper_info;
+    vm.timus = paperinfo.all_num;
+    vm.ksname = paperinfo.paper_info_all.pname;
+    vm.minutes = paperinfo.paper_info_all.pusetime
+    vm.$nextTick(function() {
+        var slide2 = new auiSlide({
+            container: document.querySelector(".vm-body"),
+            // "width":300,
+            //  "height":'auto',
+            "speed": 500,
+            "autoPlay": 0, //自动播放
+            "pageShow": false,
+            "loop": false,
+            "pageStyle": 'dot',
+            'dotPosition': 'center'
+        })
+    })
+    H.ready(function() {
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        })
+
+        //swiper初始化
+        var swiper = new Swiper('.swiper-container', {
+            pagination: {
+                el: '.swiper-pagination',
+                type: 'fraction',
+            },
+            navigation: {
+                nextEl: '.gg',
+                prevEl: '.swiper-button-prev',
+            },
+            speed: 800,
+        });
+//接收index索引跳转到对应题目
+        api.addEventListener({
+            name: 'showindex'
+        }, function(ret, err){
+            if( ret ){
+              console.log(ret.value.index);
+              var i = ret.value.index;
+                swiper.slideTo(i, 500, false);//切换到第一个slide，速度为1秒
+            }else{
+                 alert( JSON.stringify( err ) );
+            }
+        });
+
+    })
+
+
+    var dialog = new auiDialog({})
+
+
+
+    function jc() {
+        api.openWin({
+            name: 'jc',
+            url: './jiucuo.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function multichose(typeindex, index, opIndex) {
+        vm.list[typeindex].question[index].useranswer += vm.enNum[opIndex];
+        var useranswer = vm.list[typeindex].question[index].useranswer;
+        var arr = useranswer.split('');
+        arr = unique(arr);
+        arr = arr.sort();
+        arr = arr.join('');
+        vm.list[typeindex].question[index].useranswer = arr;
+    }
+</script>
+
+</html>

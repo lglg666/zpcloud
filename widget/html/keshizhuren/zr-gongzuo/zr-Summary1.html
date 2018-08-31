@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../../css/aui.css">
+    <link rel="stylesheet" href="../../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .sun_con {
+        background-color: #fff;
+    }
+
+    .sum_top {
+        height: 5rem;
+    }
+
+    .sum_top2 {
+        line-height: 1.5rem;
+    }
+
+    .btn {
+        position: relative;
+        text-align: right;
+        right: .5rem;
+        line-height: 1.5rem
+    }
+
+    .btn button {
+        border-radius: 0.1rem;
+        padding: 0 1rem;
+        width: 4.5rem;
+    }
+
+    .btn_lan {
+        background: #fff;
+        border: 1px solid #4593DE;
+        color: #4593DE;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfonst"></i>
+        </a>
+        <div class="aui-title">出科小结内容</div>
+    </header>
+    <div class="pad"></div>
+    <div class="sum aui-margin-15">
+        <div class="sun_con aui-padded-10">
+            <div class="sum_top">
+                <div class="top1 aui-col-xs-3 ">
+                    <p class="aui-font-size-16 clo-33">科室小结:</p>
+                </div>
+                <div class="top2 aui-col-xs-9 ">
+                    <p class="aui-font-size-16 clo-99">在本科室的学习中，我能认真遵守科室的制度，工作积极主动，严格遵照上级医师指示</p>
+                </div>
+            </div>
+            <div class="sum_top2">
+                <p class="aui-font-size-16 clo-33">科室评语：<span></span></p>
+                <p class="aui-font-size-16 clo-33">科室主任签名：<span></span></p>
+                <p class="aui-font-size-16 clo-33">记录日期：<span>2017-10-31</span></p>
+                  <p class="aui-font-size-16 clo-33">教师审批：<span class="clo-lan">已审核</span></p>
+            </div>
+            <div class="aui-hr aui-margin-t-10 aui-margin-b-15"></div>
+            <div class="btn">
+                <button class="btn_lan aui-font-size-14" tapmode onclick="Sum2()">评语</button>
+            </div>
+        </div>
+    </div>
+    <div class="sum aui-margin-15">
+        <div class="sun_con aui-padded-10">
+            <div class="sum_top">
+                <div class="top1 aui-col-xs-3 ">
+                    <p class="aui-font-size-16 clo-33">科室小结:</p>
+                </div>
+                <div class="top2 aui-col-xs-9 ">
+                    <p class="aui-font-size-16 clo-99">在本科室的学习中，我能认真遵守科室的制度，工作积极主动，严格遵照上级医师指示</p>
+                </div>
+            </div>
+            <div class="sum_top2">
+                <p class="aui-font-size-16 clo-33">科室评语：<span></span></p>
+                <p class="aui-font-size-16 clo-33">科室主任签名：<span></span></p>
+                <p class="aui-font-size-16 clo-33">记录日期：<span>2017-10-31</span></p>
+                  <p class="aui-font-size-16 clo-33">教师审批：<span class="clo-hong">已审核</span></p>
+            </div>
+            <div class="aui-hr aui-margin-t-10 aui-margin-b-15"></div>
+            <div class="btn">
+                <button class="btn_lan aui-font-size-14" tapmode>评语</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../../../script/api.js"></script>
+<script src="../../../script/AHelper.js"></script>
+<script src="../../../script/base.js"></script>
+<script src="../../../script/vue/vue.min.js"></script>
+<script src="../../../script/zepto.min.js"></script>
+<script>
+    H.ready(function() {
+
+    })
+    function fh() {
+      api.closeWin({});
+
+    }
+    function Sum2() {
+      api.openWin({
+          name: 'zr-Sum2',
+          url: '../../keshizhuren/zr-gongzuo/zr-Summary2.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+
+    }
+</script>
+
+</html>

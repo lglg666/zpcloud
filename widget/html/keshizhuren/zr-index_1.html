@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont.css">
+</head>
+<style>
+    .aui-row {
+        background: #fff;
+        height: 2rem;
+        line-height: 2rem;
+        position: relative;
+    }
+
+    .aui-col-xs-12 input {
+        height: 1.5rem;
+        background: #E5EAEE;
+        border-radius: 1rem;
+        color: #999999;
+    }
+
+    .inp {
+        width: 96% !important;
+        margin: 0 auto;
+    }
+
+    .aui-col-xs-12 i {
+        font-size: 0.9rem;
+        position: absolute;
+        top: 0;
+        left: 35%;
+        color: #999999;
+    }
+
+    .g2 {
+        position: relative;
+        height: 4rem;
+        background: #fff;
+    }
+
+    .xia {
+        width: 75%;
+        float: left;
+        height: 100%;
+    }
+
+    .ww {
+        position: absolute;
+        right: 7px;
+        top: 10px;
+        color: #999999;
+    }
+
+    .col-hei {
+        color: #222222;
+        font-size: 0.9rem;
+        line-height: 1.8rem;
+        position: relative;
+        top: 0.4rem;
+    }
+
+    .col-hui {
+        color: #969AA1;
+        font-size: 0.8rem;
+        padding-top: 0.3rem;
+        padding-bottom: 0.5rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .tu {
+        width: 2.5rem;
+        height: 2.5rem;
+        float: left;
+        margin: 0.65rem 0.5rem;
+    }
+
+    .aui-bad {
+        background: #FF4141;
+        display: inline-block;
+        width: auto;
+        text-align: center;
+        min-width: 0.8rem;
+        height: 0.8rem;
+        line-height: 0.8rem;
+        padding: 0 0.2rem;
+        font-size: 0.6rem;
+        color: #ffffff;
+        border-radius: 0.4rem;
+        position: absolute;
+        top: 2.2rem;
+        right: 0.8rem;
+        z-index: 99;
+    }
+
+    input {
+        color: #999999;
+        font-size: 0.8rem;
+    }
+
+    .radius {
+        border-radius: 1rem;
+        height: 1.7rem !important;
+        line-height: 1.7rem !important;
+    }
+
+    .aui-searchbar {
+        height: 3rem !important;
+        background-color: #fff;
+    }
+
+    .aui-searchbar-input input {
+        height: 1.7rem !important;
+    }
+
+    .aui-searchbar-input {
+        background-color: #E5EAEE !important;
+    }
+
+    .aui-searchbar form {
+        width: 55%;
+        margin: 0 auto;
+    }
+
+    .aui-searchbar form input {
+        text-align: center;
+    }
+
+    .aui-searchbar-input i {
+        position: absolute;
+        left: 7rem;
+
+    }
+    .aui-searchbar-input input{
+      width: auto !important;
+    }
+</style>
+
+<body>
+
+    <div class="aui-searchbar" id="search">
+        <div class="aui-searchbar-input radius">
+            <i class="iconfont icon-search aui-font-size-16"></i>
+            <form>
+                <input type="search" placeholder="住院医师" id="search-input">
+            </form>
+        </div>
+    </div>
+    <div class="g2" tapmode onclick="tz()">
+        <div class="tu ">
+            <img src="../../image/notice_icon.png" alt="">
+        </div>
+        <div class=" xia">
+            <p class="col-hei">通知公告</p>
+            <p class="ww" id="time">11:41</p>
+            <p class="col-hui" id="title">住院医师系统科室主任出题操作手...</p>
+            <div class="aui-bad" id="notice_num" style="display:none">2</div>
+            <div class="aui-hr"></div>
+        </div>
+    </div>
+    <!-- <div class="g2" tapmode onclick="db()">
+        <div class="tu">
+            <img src="../../image/upcoming_icon.png" alt="">
+        </div>
+        <div class="xia ">
+            <p class="col-hei">待办信息</p>
+            <p class="ww">11:41</p>
+            <p class="col-hui">待办信息内容待办信息内容</p>
+            <div class="aui-bad">2</div>
+            <div class="aui-hr"></div>
+        </div>
+    </div> -->
+    <div class="g2" tapmode onclick="jx()">
+        <div class="tu">
+            <img src="../../image/activity_icon.png" alt="">
+        </div>
+        <div class="xia ">
+            <p class="col-hei">教学活动</p>
+            <p class="ww">1月5日</p>
+            <p class="col-hui">教学活动信息内容教学活动信息内…</p>
+            <div class="aui-hr"></div>
+        </div>
+    </div>
+    <div class="g2" tapmode onclick="kc()">
+        <div class="tu">
+            <img src="../../image/courseware_icon.png" alt="">
+        </div>
+        <div class="xia ">
+            <p class="col-hei">课程消息</p>
+            <p class="ww">1月5日</p>
+            <p class="col-hui">课程消息内容课程消息内容</p>
+            <div class="aui-hr"></div>
+        </div>
+    </div>
+    <div class="g2" tapmode onclick="yj()">
+        <div class="tu">
+            <img src="../../image/feedback_icon.png" alt="">
+        </div>
+        <div class="xia ">
+            <p class="col-hei">意见反馈</p>
+            <p class="ww">1月5日</p>
+            <p class="col-hui">意见反馈内容意见反馈内容</p>
+            <!-- <div class="aui-bad">2</div> -->
+        </div>
+    </div>
+
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/iconfont.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/base.js"></script>
+<script>
+    H.ready(function() {
+        var address = "/Hospital/index.php/api/user/index_info";
+        var token = H.getStorage('token');
+        var userid = H.getStorage("user_id");
+        var user_role = H.getStorage("user_role");
+        // $base.showLoading();
+        var ajaxData = {
+            token: token,
+            userid: userid,
+            user_role: user_role
+        };
+        $base.get(address, ajaxData, function(ret) {
+            console.log(ret.notice_num);
+            $("#rotate_type").html(ret.rotate_type);
+            $("#time").html(ret.notice_info.time);
+            $("#title").html(ret.notice_info.title);
+            if (ret.notice_num > 0) {
+                $("#notice_num").show();
+                $("#notice_num").html(ret.notice_num);
+            } else {
+
+            }
+
+
+            // $base.closeLoading();
+        }, function(ret) {
+            console.log(JSON.stringify(ret));
+        });
+
+
+        api.addEventListener({
+            name: 'hongdian'
+        }, function(ret, err) {
+            var lo = JSON.stringify(ret.value.hong);
+            console.log(lo);
+            if (lo == 'true') {
+                console.log('修改了东西');
+                location.reload();
+            } else {
+                console.log("没改");
+            }
+
+            console.log(ret.value);
+        });
+    });
+
+
+    function tz() {
+        var userid = H.getStorage("user_id");
+
+        var address = "/Hospital/index.php/api/user/update_user_time";
+        var ajaxData = {
+            userid: userid,
+            key: "notice_time"
+        };
+
+        $base.submit(address, ajaxData, function(ret) {
+
+        }, function(err) {
+            console.log(err);
+        });
+        api.openWin({
+            name: 'dj_tz',
+            url: '../../html/daijiaolaoshi/dj_tongzhi.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+
+    }
+
+    function db() {
+        api.openWin({
+            name: 'zr-db',
+            url: '../../html/keshizhuren/zr-daiban.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+
+    }
+
+    function jx() {
+        var user_role = H.getStorage("user_role");
+        if (user_role == 2) {
+            api.openWin({
+                name: 'dj_jx',
+                url: '../../html/daijiaolaoshi/dj_jiaoxue.html',
+                pageParam: {
+                    name: 'test'
+                }
+            });
+        } else {
+            api.openWin({
+                name: 'jx',
+                url: '../../html/keshizhuren/zr-jiaoxue.html',
+                pageParam: {
+                    name: 'test'
+                }
+            });
+        }
+
+
+
+    }
+
+    function kc() {
+        api.openWin({
+            name: 'kc',
+            url: '../kecheng.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function yj() {
+        var role = H.getStorage("user_role");
+        console.log(role);
+        if (role == 1 || role == 2 || role == 3) {
+            api.openWin({
+                name: 'yj',
+                url: '../../html/yijian.html',
+                pageParam: {
+                    name: 'test'
+                }
+            });
+        } else {
+            api.openWin({
+                name: 'yj',
+                url: '../../html/gpban/gp-yjOpinion.html',
+                pageParam: {
+                    name: 'test'
+                }
+            });
+        }
+
+
+    }
+</script>
+
+</html>

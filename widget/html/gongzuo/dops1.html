@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .title {
+        background-color: #f6f6f6;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .fk {
+        float: left;
+        width: 0.3rem;
+        height: 1.2rem;
+        margin: 0.6rem 0;
+        background-color: #4593de;
+    }
+
+    .mm {
+        background: #fff;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        font-family: PingFang-SC-Bold;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .mp {
+        line-height: 1.5rem;
+        background: #fff;
+        font-family: PingFang-SC-Bold;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .hei {
+        height: 100% !important;
+    }
+
+    .mp textarea {
+        height: 5rem;
+        background-color: #fff;
+    }
+
+    .uip {
+        background: #fff;
+        width: 100%;
+        line-height: 3rem;
+        float: left;
+        height: 100%;
+    }
+
+    .dd {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .uip a {
+        display: inline-block;
+        background: #F1F1F1;
+        padding: 0.5rem;
+        height: 2rem;
+        margin: 0 0.6rem;
+        width: 42%;
+        text-align: center;
+        line-height: 1rem;
+        color: #333333;
+    }
+
+    .uip p {
+        display: inline-block;
+        background: #F1F1F1;
+        padding: 0.5rem;
+        height: 2rem;
+        width: 100%;
+        line-height: 1rem;
+        color: #333333;
+    }
+
+    .top {
+        line-height: 2.5rem;
+        background: #fff;
+        color: #333;
+        font-family: PingFangSC-Regular;
+        /*border-bottom: 1px solid #ddd;*/
+    }
+
+    .xx {
+        position: relative;
+    }
+
+    .bg {
+        background: url(../../image/evaluation_btn_s.png)no-repeat !important;
+        width: 1.3rem !important;
+        height: 1.3rem !important;
+        background-size: 100% !important;
+    }
+
+    .xx ul li {
+        float: left;
+        list-style: none;
+        width: 1.3rem;
+        height: 1.3rem;
+        background: url(../../image/evaluation_btn.png) no-repeat;
+        margin: 0 .3rem;
+        margin-top: 0.5rem;
+        background-size: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .bt {
+        text-align: center;
+        float: left;
+        width: 100%;
+        margin-top: 0.5rem;
+        background: #fff;
+        padding: 0.5rem 0 0.5rem 0;
+    }
+
+    .bt button {
+        width: 80%;
+        text-align: center;
+        border-radius: 4px;
+        height: 2.5rem;
+        font-size: 0.85rem;
+        outline: none;
+        border: 0;
+        background: #4593DE;
+        color: #fff;
+    }
+
+    .active {
+        background-color: #FDA832 !important;
+        color: #fff !important;
+    }
+
+    .bg {
+        background: url(../../image/evaluation_btn_s.png)no-repeat !important;
+        width: 1.3rem !important;
+        height: 1.3rem !important;
+        background-size: 100% !important;
+    }
+
+    .ip {
+        float: left;
+        width: 53% !important;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">迷你临床操作评估表</div>
+    </header>
+    <div class="pad "></div>
+    <div class="dops">
+      <div id='ff'>
+          <div class="content ">
+              <div class="title aui-padded-l-15">
+                  <div class="fk"></div>
+                  <p class="aui-font-size-18 clo-22 aui-margin-l-15">教师信息</p>
+              </div>
+              <div class="mm ">
+                  <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">教师姓名：</div>
+                  <i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-18"></i>
+                  <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"><input type="text" value="江泽平" placeholder="请输入带教姓名" class="aui-text-right hei" id="djxm" /></div>
+              </div>
+              <div class="mm">
+                  <div class="aui-pull-left  aui-font-size-16 aui-padded-l-10">职位：</div>
+                  <i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-18"></i>
+                  <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"> <select name="" class="aui-pull-right">
+                    <option value=""  selected="selected">请选择</option>
+             <option value="29" selected="selected">主任医师</option>
+             <option value="30">副主任医师</option>
+             <option value="31">主治医师</option>
+             <option value="32">高年资住院医师</option>
+            </select>
+                  </div>
+              </div>
+          </div>
+
+          <div class="content ">
+              <div class="title aui-padded-l-15">
+                  <div class="fk"></div>
+                  <p class="aui-font-size-18 clo-22 aui-margin-l-15">学员信息</p>
+              </div>
+              <div class="mm ">
+                  <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">学员姓名：</div>
+                  <p class="aui-font-size-16 aui-pull-right clo-22 aui-padded-r-15" id="xm">梁倩婷</p>
+              </div>
+              <div class="mm ">
+                  <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">专业：</div>
+                  <p class="aui-font-size-16 aui-pull-right clo-22 aui-padded-r-15">中医-中医学-内科</p>
+              </div>
+              <div class="mm ">
+                  <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">轮转科室：</div>
+                  <p class="aui-font-size-16 aui-pull-right clo-22 aui-padded-r-15">皮肤科</p>
+              </div>
+              <div class="mm ">
+                  <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">时间：</div>
+                  <p class="aui-font-size-16 aui-pull-right clo-22 aui-padded-r-15" id="sj">2018-06-19 10:20</p>
+              </div>
+              <div class="mm ">
+                  <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">地点：</div>
+                  <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"><input type="text" value="我的家" placeholder="请输入地点" class="aui-text-right hei" /></div>
+              </div>
+          </div>
+
+          <div class="content ">
+              <div class="title aui-padded-l-15">
+                  <div class="fk"></div>
+                  <p class="aui-font-size-18 clo-22 aui-margin-l-15">病人信息</p>
+              </div>
+              <div class="mm ">
+                  <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">病人姓名：</div>
+                  <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"><input type="text" value="李丹丹" placeholder="请输入病人姓名" class="aui-text-right hei" id="patient_name" /></div>
+              </div>
+              <div class="mm ">
+                  <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">病人性别：</div>
+                  <i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-18"></i>
+                  <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei">
+                      <select name="" class="aui-pull-right" id="patient_sex">
+                    <option value=""  selected="selected">请选择</option>
+             <option value="0">男</option>
+             <option value="1">女</option>
+            </select>
+                  </div>
+              </div>
+
+              <div class="mm ">
+                  <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">病人年龄：</div>
+                  <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"><input type="text" value="60" placeholder="请输入病人年龄" class="aui-text-right hei" id="patient_age" /></div>
+              </div>
+              <div class="mm ">
+                  <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">病历号：</div>
+                  <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"><input type="text" value="5658444" placeholder="请输入病历号" class="aui-text-right hei" id="patient_medicode" /></div>
+              </div>
+              <div class="mm ">
+                  <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10"> 初诊/复诊：</div>
+                  <i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-18"></i>
+                  <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"> <select name="" class="aui-pull-right" id="patient_isfirst">
+                    <option value=""  >请选择</option>
+             <option value="0">初诊</option>
+             <option value="1">复诊</option>
+            </select>
+                  </div>
+              </div>
+              <div class="mp aui-margin-t-15">
+                  <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">主要诊断：</div>
+                  <textarea name="a" class="aui-padded-l-10 aui-padded-t-10" placeholder="请输入内容" value="" id="principal_diagnosis"></textarea>
+              </div>
+
+              <div class="mm ">
+                <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">操作技能名称：</div>
+                <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"><input type="text" value="胸腔穿刺" placeholder="请输入技能名称" class="aui-text-right hei" /></div>
+            </div>
+            <div class="mm ">
+                <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10"> 操作复杂程度：</div>
+                <i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-18"></i>
+                <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"> <select name="" class="aui-pull-right">
+                      <option value=""  selected="selected">请选择</option>
+               <option value="29">低</option>
+               <option value="30">中</option>
+               <option value="30">高</option>
+              </select>
+                </div>
+            </div>
+            <div class="mm ">
+                <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10"> 病人配合度：</div>
+                <i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-18"></i>
+                <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"> <select name="" class="aui-pull-right">
+                      <option value=""  selected="selected">请选择</option>
+               <option value="29">差</option>
+               <option value="30">中</option>
+               <option value="30">好</option>
+              </select>
+                </div>
+            </div>
+            <div class="mm ">
+                <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10"> 学员执行临床技能次数：</div>
+                <i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-18"></i>
+                <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"> <select name="" class="aui-pull-right">
+                      <option value=""  selected="selected">请选择</option>
+               <option value="29">0</option>
+               <option value="30">1-3</option>
+               <option value="30">4</option>
+              </select>
+                </div>
+            </div>
+          </div>
+      </div>
+
+      <template v-for="item in list">
+      <div>
+        <div class="uip  aui-font-size-12 ">
+            <div class="top aui-padded-l-10 aui-font-size-16">
+                {{item.title}}
+            </div>
+            <div class="d1 dd  aui-col-xs-12 ">
+                <p :class="item1.kk == 1?'active':''" v-for="item1 in item.list" v-on:click="item1.kk = 1">{{item1.nav}}</p>
+            </div>
+        </div>
+        <!-- <div class="aui-hr"></div> -->
+        <div class="xx" id="star">
+            <ul id="ul">
+                <li v-for="i in [1,2,3,4,5,6,7,8,9]" v-on:click="item.score=i" v-bind:class="item.score>=i?'bg':''"></li>
+            </ul>
+        </div>
+      </div>
+    </template>
+
+
+<div class="bt">
+    <p class="aui-font-size-18 clo-22 aui-margin-l-15 aui-text-left">总结</p>
+    <div class="mm ">
+        <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">观察时间（分钟）：</div>
+        <input type="text" value="" placeholder="请输入观察时间" class="aui-text-right hei ip" id="ob_time" />
+    </div>
+    <div class="mm ">
+        <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">反馈时间（分钟）：</div>
+        <input type="text" value="" placeholder="请输入观察时间" class="aui-text-right hei ip " id="reply_time" />
+    </div>
+
+    <div class="aui-text-left aui-margin-t-15 aui-col-xs-12" style="background:#fff; margin-bottom:2rem;">
+        <p class="aui-font-size-16 aui-padded-l-10 clo-22">教师评语：</p>
+        <textarea class="aui-padded-l-10" placeholder="内容包括优缺点以及建议" id="adv"></textarea>
+    </div>
+    <div class="mm ">
+        <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">教师签名：</div>
+        <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"><input type="text" value="" placeholder="请输入教师签名" class="aui-text-right hei" id="teacher_name" /></div>
+    </div>
+    <div class="mm ">
+        <div class="aui-pull-left  aui-font-size-16  aui-padded-l-10">学员签名：</div>
+        <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"><input type="text" value="梁倩婷" placeholder="请输入学员签名" class="aui-text-right hei" /></div>
+    </div>
+</div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script>
+var dops = new Vue({
+   el:".dops",
+   data:{
+     list:[{
+         score: 0,
+         title: "1.对该临床技能的适应症，",
+         list: [{
+             nav: "有待改进",
+             kk: 0,
+         }, {
+             nav: "合乎标准",
+             kk: 0,
+         }, {
+             nav: "优良",
+             kk: 0,
+         }]
+     },{
+         score: 0,
+         title: "2.详细告知病人并取得同意书",
+         list: [{
+             nav: "有待改进",
+             kk: 0,
+         }, {
+             nav: "合乎标准",
+             kk: 0,
+         }, {
+             nav: "优良",
+             kk: 0,
+         }]
+     },{
+         score: 0,
+         title: "3.执行临床操作技能前的准备工作",
+         list: [{
+             nav: "有待改进",
+             kk: 0,
+         }, {
+             nav: "合乎标准",
+             kk: 0,
+         }, {
+             nav: "优良",
+             kk: 0,
+         }]
+     },{
+         score: 0,
+         title: "4.做适当的止痛或安全的镇定",
+         list: [{
+             nav: "有待改进",
+             kk: 0,
+         }, {
+             nav: "合乎标准",
+             kk: 0,
+         }, {
+             nav: "优良",
+             kk: 0,
+         }]
+     },{
+         score: 0,
+         title: " 5.临床技能的实际操作能力",
+         list: [{
+             nav: "有待改进",
+             kk: 0,
+         }, {
+             nav: "合乎标准",
+             kk: 0,
+         }, {
+             nav: "优良",
+             kk: 0,
+         }]
+     },{
+         score: 0,
+         title: "6.无菌操作",
+         list: [{
+             nav: "有待改进",
+             kk: 0,
+         }, {
+             nav: "合乎标准",
+             kk: 0,
+         }, {
+             nav: "优良",
+             kk: 0,
+         }]
+     },{
+         score: 0,
+         title: "7.需要时及时寻求帮助",
+         list: [{
+             nav: "有待改进",
+             kk: 0,
+         }, {
+             nav: "合乎标准",
+             kk: 0,
+         }, {
+             nav: "优良",
+             kk: 0,
+         }]
+     },{
+         score: 0,
+         title: "8.执行临床技能后的相关处置",
+         list: [{
+             nav: "有待改进",
+             kk: 0,
+         }, {
+             nav: "合乎标准",
+             kk: 0,
+         }, {
+             nav: "优良",
+             kk: 0,
+         }]
+     },{
+         score: 0,
+         title: "  9.与病人沟通的技巧",
+         list: [{
+             nav: "有待改进",
+             kk: 0,
+         }, {
+             nav: "合乎标准",
+             kk: 0,
+         }, {
+             nav: "优良",
+             kk: 0,
+         }]
+     },{
+         score: 0,
+         title: "  10.是否顾及病人的感受并具有专业素养",
+         list: [{
+             nav: "有待改进",
+             kk: 0,
+         }, {
+             nav: "合乎标准",
+             kk: 0,
+         }, {
+             nav: "优良",
+             kk: 0,
+         }]
+     },{
+         score: 0,
+         title: "11.总体表现评价",
+         list: [{
+             nav: "有待改进",
+             kk: 0,
+         }, {
+             nav: "合乎标准",
+             kk: 0,
+         }, {
+             nav: "优良",
+             kk: 0,
+         }]
+     },]
+   }
+ })
+
+    function fh() {
+        api.closeWin({});
+    }
+
+    H.ready(function() {
+        var token = H.getStorage('token');
+        var id = H.getStorage('ys_dops_id');
+        console.log(id);
+        var address = "/Hospital/index.php/api/ys/dops";
+        var ajaxData = {
+            token: token,
+            action: "detail",
+            id: id,
+        };
+        $base.showLoading();
+        $base.get(address, ajaxData, function(ret) {
+          console.log(JSON.stringify(ret));
+            var points = JSON.parse(ret.data.points);
+            // //考核项目
+            for (var i = 0; i < points.length; i++) {
+              dops.list[i].list[0].kk = 1;
+                for (item in dops.list) {
+                    var start = dops.list[item].score = points[i][1];
+                }
+
+            }
+            // vm.list = ret.data
+            $('#sj').html(ret.data.create_at)
+            $('#djxm').val(ret.data.teacher_name)
+            $('#ob_time').val(ret.data.ob_time)
+            $('#reply_time').val(ret.data.reply_time)
+            $('#patient_sex').val(ret.data.patient_sex)
+            $('#patient_isfirst').val(ret.data.patient_isfirst)
+            $('#patient_medicode').val(ret.data.patient_medicode)
+            $('#patient_age').val(ret.data.patient_age)
+            $('#principal_diagnosis').val(ret.data.principal_diagnosis)
+            $('#patient_level').val(ret.data.patient_level)
+            $('#teacher_name').val(ret.data.teacher_name)
+            $('#patient_name').val(ret.data.patient_name)
+              $('#adv').val(ret.data.adv)
+            $base.closeLoading();
+        }, function(err) {
+            console.log(err);
+        });
+
+    })
+</script>
+
+</html>

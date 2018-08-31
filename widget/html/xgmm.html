@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/aui.css">
+    <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .dl {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .zh {
+        padding-bottom: 0.2rem;
+        border-bottom: 1px solid #BCC3C7;
+        font-size: 0.7rem;
+        color: #333333;
+        font-weight: 600;
+        margin: 1.5rem auto;
+    }
+
+    .zh input {
+        border: 0;
+        height: 1rem;
+        font-size: 0.7rem;
+        color: #BCC3C7;
+        filter: alpha(opacity=50);
+        -moz-opacity: 0.5;
+        -khtml-opacity: 0.5;
+        opacity: 0.5;
+        outline: none;
+        padding-left: 1rem;
+        display: inline;
+        width: auto;
+    }
+
+    .bt {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .bt button {
+        width: 100%;
+        margin: 0 auto;
+        border-radius: 4px;
+        height: 2.5rem;
+        color: #fff;
+        font-size: 0.85rem;
+        outline: none;
+        border: 0;
+        background-color: #4593de;
+    }
+
+    .zh p {
+        color: #333;
+        font-size: 0.8rem;
+        float: left;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+</style>
+
+<body>
+    <div class="xgmm">
+        <header class="aui-bar aui-bar-nav" id="header">
+            <a class="aui-pull-left" tapmode onclick="fh()">
+                <i class="iconfont icon-arrow-left aui-iconfont"></i>
+            </a>
+            <div class="aui-title">修改密码</div>
+        </header>
+
+    </div>
+    <div class="pad"></div>
+
+    <div class="dl ">
+        <div class="zh ">
+            <i class="aui-iconfont aui-icon-edit"></i>
+            <!-- <p>原密码</p> -->
+            <input type="password" placeholder="请输入原密码" style="color:black;" id="yuan" />
+            <input type="hidden" id="pwd" />
+
+        </div>
+        <div class="zh" id="mm">
+            <i class="aui-iconfont aui-icon-edit"></i>
+            <!-- <p>新密码</p> -->
+            <input type="password" placeholder="请输入新密码" style="color:black;" id="xin" />
+
+        </div>
+        <div class="zh" id="mm">
+            <i class="aui-iconfont aui-icon-edit"></i>
+            <!-- <p>新密码</p> -->
+            <input type="password" placeholder="请再次输入新密码" style="color:black;" id="xin1" />
+
+        </div>
+    </div>
+
+    <div class="bt" tapmode onclick="showDefault('success')">
+        <button>确定</button>
+    </div>
+</body>
+<script src="../script/api.js"></script>
+<script src="../script/base.js"></script>
+<script type="text/javascript" src="../script/AHelper.js"></script>
+<script type="text/javascript" src="../script/aui-toast.js"></script>
+<script src="../script/zepto.min.js"></script>
+<script>
+    function fh() {
+        api.closeWin({
+            name: 'xgmm'
+        });
+    }
+    H.ready(function() {
+        var address = "/Hospital/index.php/api/user/user_info";
+        var token = H.getStorage('token');
+        var userid = H.getStorage("user_id");
+
+        var ajaxData = {
+            token: token,
+            userid: userid
+        };
+        $base.get(address, ajaxData, function(ret) {
+            $("#pwd").val(ret.data.pwd);
+        }, function(ret) {
+            console.log(JSON.stringify(ret));
+        });
+    })
+
+    var toast = new auiToast({})
+
+    function showDefault(type) {
+        var m1 = document.getElementById('yuan').value;
+        var m2 = document.getElementById('xin').value;
+        var m3 = document.getElementById('xin1').value;
+        var pwd = document.getElementById('pwd').value;
+
+        console.log(pwd);
+
+        if (m1 == "" || m2 == "" || m3 == "") {
+            $base.toast('密码不能为空')
+            return false;
+        } else {
+            if (m1 == pwd) {
+                if (m2 != m3) {
+                    $base.toast("两次密码输入不一致,请重新输入")
+                } else {
+
+                    var token = H.getStorage('token');
+                    var userid = H.getStorage("user_id");
+
+                    var address = "/Hospital/index.php/api/user/update_user_info";
+                    var ajaxData = {
+                        token: token,
+                        userid: userid,
+                        value: m2,
+                        table: "users",
+                        key: "pwd"
+                    };
+
+                    $base.submit(address, ajaxData, function(ret) {
+                        var status = ret.status;
+                        if (status == 1) {
+                          api.closeToWin({
+                              name: 'login'
+                          });
+                        } else {
+
+                        }
+                    }, function(err) {
+                        console.log(err);
+                    });
+
+                    switch (type) {
+                        case "success":
+                            toast.success({
+                                title: "修改成功",
+                                duration: 2000
+                            });
+                            break;
+                    }
+                    setTimeout(function() {
+                      api.openWin({
+                          name: 'login',
+                          url: './login.html',
+                          slidBackEnabled: 'false',
+                          pageParam: {
+                              name: 'test'
+                          }
+                      });
+                    }, 2000)
+
+                }
+            } else {
+                $base.toast("原密码错误,请重新输入")
+            }
+        }
+    }
+</script>
+
+</html>

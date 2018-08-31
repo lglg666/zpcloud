@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href="../../css/aui.css">
+<link rel="stylesheet" type="text/css" href="../../css/iconfont/iconfont.css">
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .con,
+    .reply {
+        background-color: #fff;
+    }
+
+    .con_content p {
+        text-indent: 1rem;
+    }
+
+    .con_title {
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .kuai {
+        height: 1rem;
+        width: 0.3rem;
+        top: .7rem;
+        position: relative;
+        background: #4593de;
+    }
+
+    .bt {
+        text-align: center;
+        background: #fff;
+        padding: 0.5rem 0 0.5rem 0;
+        position: fixed;
+        ;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .bt button {
+        width: 80%;
+        text-align: center;
+        border-radius: 4px;
+        height: 2.5rem;
+        font-size: 0.85rem;
+        outline: none;
+        border: 0;
+        background: #4593de;
+        color: #fff;
+    }
+
+    .reply_content textarea {
+        height: 10rem;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">反馈内容</div>
+    </header>
+    <div class="pad"></div>
+    <div id="vm">
+        <template v-for="item in list">
+    <div class="con">
+        <div class="con_title">
+            <div class="kuai aui-pull-left aui-margin-l-10 aui-margin-r-10"></div>
+            <p class="clo-22 aui-font-size-18 "> 反馈内容</p>
+            <div class="aui-hr"></div>
+        </div>
+        <div class="con_content">
+            <p class="aui-font-size-16 clo-22 aui-padded-10" id="content">{{item.content}}</p>
+        </div>
+    </div>
+
+    <div class="reply aui-margin-t-15">
+        <div class="con_title">
+            <div class="kuai aui-pull-left aui-margin-l-10 aui-margin-r-10"></div>
+            <p class="clo-22 aui-font-size-18 "> 您的回复</p>
+            <div class="aui-hr"></div>
+        </div>
+        <div class="reply_content">
+          <textarea name="name" rows="8" cols="80" placeholder="请输入回复内容" class="aui-padded-t-10 aui-padded-l-10" v-model="item.back_content"></textarea>
+        </div>
+
+    </div>
+
+
+    <div class=" bt aui-margin-t-15" tapmode v-on:click="submit(item.back_content)">
+        <button>提交</button>
+    </div>
+  </template>
+    </div>
+
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/aui-toast.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#vm",
+        data: {
+            list: [],
+        },
+        methods: {
+            submit: (msg) => {
+                var address = "/Hospital/index.php/api/office/feedback";
+                var token = H.getStorage('token');
+                var id = H.getStorage('gp_yjfk_id');
+                var ajaxData = {
+                    token: token,
+                    action: "reply",
+                    fid: id,
+                    msg: msg
+                };
+                $base.submit(address, ajaxData, function(ret) {
+                    console.log(JSON.stringify(ret));
+                    if (status == 1) {
+                        $base.toast(ret.errmsg);
+                        fh();
+                    } else {
+                        $base.toast(ret.errmsg);
+                    }
+                }, function(err) {
+                    console.log(JSON.stringify(err));
+                });
+            }
+        }
+    })
+    H.ready(function() {
+        var address = "/Hospital/index.php/api/office/feedback";
+        var token = H.getStorage('token');
+        var id = H.getStorage('gp_yjfk_id');
+        $base.showLoading();
+        var ajaxData = {
+            token: token,
+            action: "detail",
+            fid: id
+        };
+        $base.get(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret));
+            vm.list = ret.data;
+            $base.closeLoading();
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        });
+    })
+
+    function fh() {
+        api.closeWin({});
+
+    }
+</script>
+
+</html>

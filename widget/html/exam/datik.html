@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        /*position: fixed;*/
+        width: 100%;
+        background: #FF6655;
+        height: 15rem;
+        font-size: 1rem;
+    }
+
+    header i {
+        padding-top: 0.5rem;
+        padding-left: 0.5rem;
+        color: #fff;
+        float: left;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    header p {
+        color: #222;
+        font-size: 0.9rem;
+        font-family: PingFangSC-Regular;
+    }
+
+    .sj_top {
+        overflow: hidden;
+        background: #fff;
+        width: 100%;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .black {
+        color: #333333;
+    }
+
+    .hui {
+        color: #999999;
+    }
+
+    .aui-color-l {
+        background: #4593DE;
+        margin: 10px auto;
+        color: #fff;
+    }
+
+    .aui-color-h {
+        background: #FF6655;
+        margin: 10px auto;
+        color: #fff;
+    }
+
+    .aui-color-b {
+        background: #fff;
+        margin: 10px auto;
+        color: #4593DE;
+    }
+
+    .dtk {
+        /*margin-tsop: 1.5rem;*/
+        position: relative;
+        top: -2rem;
+        width: 100%;
+    }
+
+    .dtk_x {
+        width: 12.5%;
+        float: left;
+    }
+
+    .dtk_x a {
+        display: block;
+        width: 1.5rem;
+        height: 1.5rem;
+        line-height: 1.5rem;
+        border: 1px solid #4593DE;
+        border-radius: 50%;
+    }
+
+    .pp {
+        width: 100%;
+        float: left;
+    }
+
+    .yuan1 {
+        position: relative;
+        width: 7rem;
+        height: 8rem;
+        top: 2rem;
+        margin: 0 auto;
+        background: url(../../image/answer_icon.png) no-repeat;
+        background-size: 100%;
+    }
+
+    .yuan1 p {
+        position: relative;
+        font-size: 1.3rem;
+        color: #FB5C55;
+        top: 1.5rem;
+        text-align: center;
+        font-family: Jkaton;
+    }
+    .yuan1 p span{
+      font-size: 1.5rem;
+    }
+
+    .tip1 {
+        text-align: center;
+        height: 2rem;
+        line-height: 2rem;
+    }
+
+    .tip1 p {
+        color: #333333;
+        overflow: hidden;
+    }
+
+    .tip {
+        box-shadow: 0 0 .3rem #ffeeec;
+        background: #fff;
+        border-radius: 0.3rem;
+        position: relative;;
+        width: 90%;
+        top: -3rem;
+        /*left: 1rem;*/
+        margin: 0 auto;
+    }
+
+    .zz {
+        /*height: 7.5rem;*/
+    }
+
+    .bg {
+        background: #fff;
+    }
+</style>
+
+<body>
+    <header id="header">
+        <a href="" tapmode ><i class="iconfont icon-arrow-left"onclick="fh()"></i></a>
+        <div class="yuan1">
+            <p class="">恭喜你</p>
+            <p class="aui-font-size-14"><span class="" id="fen">82</span>分</p>
+        </div>
+    </header>
+    <div class="zz"></div>
+    <div class="datika">
+        <div class="tip">
+            <div class="tip1 aui-row " style="line-height:2.5rem; height:2.5rem; font-weight:700;">
+                <p class="aui-col-xs-2 aui-font-size-14">题型</p>
+                <p class="aui-col-xs-2 aui-font-size-14">试题数</p>
+                <p class="aui-col-xs-2 aui-font-size-14">答对数</p>
+                <p class="aui-col-xs-2 aui-font-size-14">答错数</p>
+                <p class="aui-col-xs-2 aui-font-size-14">得分</p>
+                <p class="aui-col-xs-2 aui-font-size-14">正确率</p>
+            </div>
+            <div class="tip1 aui-row" v-for="(item,index1) in list">
+                <p class="aui-col-xs-2 aui-font-size-14">{{item.type_name}}</p>
+                <p class="aui-col-xs-2 aui-font-size-14">{{item.count}}</p>
+                <p class="aui-col-xs-2 aui-font-size-14">{{item.correct}}</p>
+                <p class="aui-col-xs-2 aui-font-size-14">{{item.incorrect}}</p>
+                <p class="aui-col-xs-2 aui-font-size-14">{{item.totalscore}}</p>
+                <p class="aui-col-xs-2 aui-font-size-14">{{item.rate}}%</p>
+                <div class="aui-hr"></div>
+            </div>
+        </div>
+        <div class="dtk "v-for="(item,index1) in list">
+        <div class="sj_top  aui-border-b aui-padded-l-10 ">
+            <p class="aui-pull-left aui-font-size-16 black">{{num[index1]}},{{item.type_name}}</p>
+            <p href="" class="aui-pull-left aui-padded-l-10 hui aui-font-size-14">{{item.count}}</p>
+        </div>
+        <div class="pp aui-text-center bg aui-margin-b-15">
+            <div class="dtk_x " v-for="(item1,index2) in item.useranswer">
+                <a href="##" class="aui-text-center aui-font-size-1" v-bind:class="list[index1].useranswer[index2].score > 0? 'aui-color-l':'aui-color-h'"> {{index2+1}}</a>
+            </div>
+        </div>
+        </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/index.js"></script>
+<script src="../../script/base.js"></script>
+<script>
+    var vm = new Vue({
+        el: ".datika",
+        data: {
+            list: [],
+            num:['一','二','三','四','五','六','七','八','九','十']
+        }
+    })
+
+    function fh() {
+        api.closeWin({});
+
+    }
+    H.ready(function() {
+      console.log(H.getStorage('user_role'));
+      var role = H.getStorage('user_role');
+      if(role == 1){
+        var address = "/Hospital/index.php/api/ys/exam";
+        var token = H.getStorage('token');
+        var rid = H.getStorage('ys_ksrid');
+        var ajaxData = {
+            token: token,
+            action: "detail",
+            rid: rid,
+        };
+        $base.showLoading();
+        $base.get2(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret));
+            vm.list = ret.data
+      $('#fen').text(ret.totalscore);
+      $base.closeLoading();
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+      }else if(role == 3){
+        var address = "/Hospital/index.php/api/department/exam";
+        var token = H.getStorage('token');
+        var rid = H.getStorage('zr_ksrid');
+        var ajaxData = {
+            token: token,
+            action: "detail",
+            rid: rid,
+        };
+        $base.showLoading();
+        $base.get2(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret));
+            vm.list = ret.data
+      $('#fen').text(ret.totalscore);
+      $base.closeLoading();
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+      } else if(role == 4){
+        var address = "/Hospital/index.php/api/office/exam";
+        var token = H.getStorage('token');
+        var rid = H.getStorage('gp-ckksrid');
+        var ajaxData = {
+            token: token,
+            action: "detail",
+            rid: rid,
+        };
+        $base.showLoading();
+        $base.get2(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret));
+            vm.list = ret.data
+      $('#fen').text(ret.totalscore);
+      $base.closeLoading();
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+      }
+
+    })
+</script>
+
+</html>

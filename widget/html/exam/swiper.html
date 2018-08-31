@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<style>
+			body {
+			}
+			/*右侧索引大容器*/
+			.indexBox {
+				width: 30px;
+				position: fixed;
+				color: blue;
+				height: 100%;
+				z-index: 9999;
+				right: 0;
+				/*设为弹性盒子*/
+				display: -webkit-box;
+				display: box;
+				/*盒子内子元素纵向显示*/
+				-webkit-box-orient: vertical;
+				box-orient: vertical;
+			}
+			/*右侧共分三部分，竖向排列，第一，三部分高度一致，实现字母索引上下居中效果*/
+			.items {
+				-webkit-box-flex: 1;
+				box-flex: 1;
+			}
+			/*当前字母提示窗*/
+			#views {
+				width: 90px;
+				height: 90px;
+				position: fixed;
+				display: none;
+				z-index: 9999;
+				font-size: 50px;
+				background: rgba(0,0,0,.5);
+				border-radius: 8px;
+				text-align: center;
+				line-height: 90px;
+				color: white;
+				margin: auto;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+			}
+			/*右侧索引字母*/
+			#mainWord li {
+				line-height: 17px;
+				text-align: center;
+				font-size: 13px;
+			}
+			/*头像*/
+			img {
+				width: 48px;
+				height: 48px;
+				float: left;
+				border-radius: 50%;
+			}
+			#mainList {
+				padding-bottom: 30px;
+			}
+			#mainList li {
+				padding: 10px;
+				position: relative;
+			}
+			/*伪类处理边框，保证和原生的一样都是1px，不会变粗，直接写border会变粗的*/
+			#mainList li:after {
+				width: 200%;
+				height: 200%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				content: "";
+				-webkit-transform: scale(0.5);
+				-webkit-transform-origin: 0 0;
+				transform: scale(0.5);
+				border-bottom: solid 1px rgb(238,238,238);
+			}
+			span {
+				line-height: 48px;
+				margin-left: 10px;
+			}
+			/*分组标记*/
+			.titles {
+				background: rgb(238,238,238);
+				padding: 5px 0 5px 15px !important;
+			}
+			.titles:after {
+				border: none !important;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="views"></div>
+		<div class="indexBox">
+			<ul class="items" id="startMark"></ul>
+			<ul id="mainWord"></ul>
+			<ul class="items"></ul>
+		</div>
+		<ul id="mainList">
+			<li id="A" class="titles">
+				A
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li id="B" class="titles">
+				B
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li id="C" class="titles">
+				C
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li id="D" class="titles">
+				D
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li id="F" class="titles">
+				F
+			</li>
+			<li   >
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li id="H" class="titles">
+				H
+			</li>
+			<li   >
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li id="Y" class="titles">
+				Y
+			</li>
+			<li   >
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li id="Z" class="titles">
+				Z
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+			<li>
+				<img src="../../image/3.png">
+				<span>姓名</span>
+			</li>
+		</ul>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery.min.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+		};
+		//右侧索引数组
+		var marks = [];
+		var mainWord = "";
+		$(".titles").each(function() {
+			//循环读取标题字母，添加至数组和界面上的容器
+			marks.push($.trim($(this).text()));
+			mainWord += "<li>" + $(this).text() + "</li>"
+		});
+		$("#mainWord").html(mainWord);
+		//		获取第一个字母相对于屏幕的高度
+		var startMark = document.getElementById('startMark').offsetHeight;
+		//	获取单个字母的高度
+		var aWordH = document.getElementById('mainWord').offsetHeight / marks.length;
+		$(document).ready(function() {
+			$("#mainWord").on("touchstart", function(e) {
+				//手指接触屏幕了，获得相对位置，就是手指距离第一个字母的位置
+				event.preventDefault();
+				var innerSy = e.originalEvent.targetTouches[0].clientY;
+				//去另一个函数里进行判断，得到目前手指覆盖了哪个字母
+				//下面的move事件一样的原理
+				goMark(innerSy - startMark);
+			});
+			//			监听手指在索引字母上的滑动位置，判断字母
+			$("#mainWord").on("touchmove", function(e) {
+				var innerMy = e.originalEvent.targetTouches[0].clientY;
+				goMark(innerMy - startMark);
+			});
+			$("body").on("touchend", function() {
+				$("body").css("overflow", "visible");
+				$("#views").hide();
+			});
+			$("body").on("touchstart", function() {
+				$("body").css("overflow", "visible");
+				$("#views").hide();
+			});
+			//判断字母的方法
+			function goMark(nums) {
+				//				先锁定页面
+				$("body").css("overflow", "hidden");
+				//				显示字母提示窗
+				$("#views").show();
+				//当前手指距离第一个字母的位置除以单个字母的高度，取整数，这个数字就是当前手指覆盖了的字母在数组中的索引
+				//字母放入提示窗
+				$("#views").html(marks[parseInt(nums / aWordH)]);
+				//锚标记定位
+				location.hash = "#" + marks[parseInt(nums / aWordH)];
+				location.hash = "#clear";
+			}
+		})
+	</script>
+</html>

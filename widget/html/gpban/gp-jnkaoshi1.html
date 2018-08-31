@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .top {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        font-family: PingFang-SC-Medium;
+    }
+
+    .content {
+        line-height: 2.5rem;
+        background: #fff;
+    }
+
+    .bt {
+        position: relative;
+        width: 80%;
+        margin: 1rem auto;
+    }
+
+    .bt button {
+        width: 100%;
+        margin: 0 auto;
+        border-radius: 4px;
+        height: 2.5rem;
+        font-size: 0.85rem;
+        outline: none;
+        border: 0;
+        background: #4593de;
+        color: #fff;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">技能考试打分</div>
+    </header>
+    <div class="pad"></div>
+    <div class="top">
+        <p class="aui-font-size-16 clo-33 aui-padded-l-10">学生信息</p>
+    </div>
+    <div class="content">
+        <div class="c1 aui-padded-l-10">
+            <p class="clo-99 aui-font-size-16"> 姓名：<span class="clo-33 aui-font-size-16" id="name"></span></p>
+        </div>
+        <div class="aui-hr"></div>
+        <div class="c2 aui-padded-l-10">
+            <p class="clo-99 aui-font-size-16"> 账号：<span class="clo-33 aui-font-size-16" id="account"></span></p>
+        </div>
+        <div class="aui-hr"></div>
+        <div class="c3 aui-padded-l-10">
+            <p class="clo-99 aui-font-size-16"> 科室：<span class="clo-33 aui-font-size-16" id="departmentname"></span></p>
+        </div>
+    </div>
+
+    <div class="top">
+        <p class="aui-font-size-16 clo-33 aui-padded-l-10">技能打分</p>
+    </div>
+
+    <div class="content">
+        <div class="c1 aui-padded-l-10">
+            <p class="clo-33 aui-font-size-16">技能名称：</p>
+            <input type="text" placeholder="请输入技能名称 " class="aui-pull-left" id="Skill_name">
+            <!-- <p class="clo-99 aui-font-size-16"><span>技能名称：</span><i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 clo-33 aui-font-size-18"></i></p> -->
+        </div>
+
+        <div class="c2 aui-padded-l-10">
+            <p class="clo-33 aui-font-size-16"> 分数：</p>
+            <input type="text" placeholder="请输入技能分数 " id="Skill_score">
+        </div>
+        <div class="aui-hr"></div>
+    </div>
+
+    <div class="bt" tapmode onclick="tj()">
+        <button>确定</button>
+    </div>
+</body>
+<script type="text/javascript" src="../../script/aui-toast.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/base.js"></script>
+<script type="text/javascript" src="../../script/AHelper.js"></script>
+<script>
+    function tj() {
+        var name = document.getElementById('Skill_name').value;
+        console.log(name);
+        var score = document.getElementById('Skill_score').value;
+        console.log(score);
+        var sz = /^([1-9]\d?|100)$/;
+        if (sz.test(score)) {
+            var address = "/Hospital/index.php/api/office/skill_exam";
+            var token = H.getStorage('token');
+            var id = H.getStorage('gpks_id');
+            var ajaxData = {
+                token: token,
+                action: "input",
+                id: id,
+                skill_exam: name,
+                skill_exam_score: score,
+
+            };
+            $base.submit(address, ajaxData, function(ret) {
+                console.log(JSON.stringify(ret));
+                if (ret.status == 1) {
+                    $base.toast(ret.errmsg);
+                    setTimeout(function() {
+                        api.closeWin({});
+                    },500)
+                    api.sendEvent({
+                        name: 'gp-jnks',
+                        extra: {
+                            key1: true,
+                        }
+                    });
+                } else {
+                    $base.toast(ret.errmsg)
+                }
+            }, function(err) {
+                console.log(JSON.stringify(err));
+            });
+        } else {
+            $base.toast("请输入正确的分数")
+        }
+
+    }
+
+    function fh() {
+        api.closeWin({});
+
+    }
+    H.ready(function() {
+        var acc = H.getStorage("gpks_acc");
+        var name = H.getStorage("gpks_name");
+        var depar = H.getStorage("gpks_depar");
+        document.getElementById('name').innerHTML = name;
+        document.getElementById('account').innerHTML = acc;
+        document.getElementById('departmentname').innerHTML = depar;
+
+    })
+</script>
+
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../../css/aui.css">
+    <link rel="stylesheet" href="../../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .main {
+        background: #fff;
+    }
+
+    .main p {
+        font-family: PingFang-SC-Medium;
+    }
+
+    .btn button {
+        border-radius: 0.1rem;
+    }
+
+    .btn_lan {
+        background: #fff;
+        border: 1px solid #4593DE;
+        color: #4593DE;
+    }
+    .lin{
+      line-height: 1.5rem;
+    }
+</style>
+
+<body>
+
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">评价学员</div>
+    </header>
+    <div class="pad"></div>
+<div id="vm">
+  <template v-for="item in list">
+    <div class="aui-margin-15  main">
+        <div class="aui-padded-10 lin">
+            <p class="clo-99 aui-font-size-16 ">姓名:<span class="clo-33"> {{item.name}}</span></p>
+            <p class="clo-99 aui-font-size-16 ">账号:<span class="clo-33"> {{item.account}}</span></p>
+            <!-- <p class="clo-99 aui-font-size-16 ">医院: <span class="clo-33">   {{item.name}}</span></p> -->
+            <p class="clo-99 aui-font-size-16 ">学历: <span class="clo-33">  {{item.educationame}}</span></p>
+            <p class="clo-99 aui-font-size-16 ">类别: <span class="clo-33 "> {{item.typename}}</span></p>
+            <p class="clo-99 aui-font-size-16 ">对应科室:<span class="clo-33">  {{item.departmentname}}）</span></p>
+            <p class="clo-99 aui-font-size-16 ">对应专业:<span class="clo-33">  {{item.professioname}}</span></p>
+            <p class="clo-99 aui-font-size-16 ">开始时间: <span class="clo-33">  {{item.start}}</span></p>
+            <p class="clo-99 aui-font-size-16 ">结束时间:<span class="clo-33">   {{item.end}}</span></p>
+            <p class="clo-99 aui-font-size-16 ">带教老师:<span class="clo-33">   {{item.teachername}}</span></p>
+            <p class="clo-99 aui-font-size-16 ">分数: <span class="clo-33">{{item.eva_id}}</span></p>
+            <p class="clo-99 aui-font-size-16 ">规培状态: <span class="clo-33"> {{item.rotate_status}}</span></p>
+            <div class="btn aui-text-right aui-padded-10">
+                <button class="btn_lan aui-margin-r-10"tapmode v-on:click="pj(item.rid)">评价</button>
+            </div>
+        </div>
+    </div>
+  </template>
+</div>
+
+</body>
+<script src="../../../script/api.js"></script>
+<script src="../../../script/AHelper.js"></script>
+<script src="../../../script/base.js"></script>
+<script src="../../../script/vue/vue.min.js"></script>
+<script src="../../../script/fastclick.js"></script>
+<script src="../../../script/zepto.min.js"></script>
+<script>
+    function fh() {
+        api.closeWin({});
+
+    }
+    var vm = new Vue({
+      el:"#vm",
+      data:{
+        list:[]
+      },
+      methods:{
+        pj:(id)=>{
+          H.setStorage("zr_pjxy_id",id);
+          api.openWin({
+              name: 'zr-pjxy2',
+              url: '../../keshizhuren/zr-gongzuo/zr-pjxueyuan2.html',
+              pageParam: {
+                  name: 'test'
+              }
+          });
+        }
+      }
+    })
+    H.ready(function () {
+      var address = "/Hospital/index.php/api/department/department_evaluate";
+      var token = H.getStorage('token');
+      $base.showLoading();
+      var ajaxData = {
+          token: token,
+      };
+      $base.get(address, ajaxData, function(ret) {
+          console.log(JSON.stringify(ret));
+          vm.list = ret.data;
+          $base.closeLoading();
+      }, function(err) {
+          console.log(JSON.stringify(err));
+      });
+      //处理点击延迟
+      $(function() {
+          FastClick.attach(document.body);
+      });
+
+    api.addEventListener({
+        name: 'zr-pjxy'
+    }, function(ret, err){
+        if( ret ){
+             console.log( JSON.stringify( ret ) );
+              location.reload();
+        }else{
+             alert( JSON.stringify( err ) );
+        }
+    });
+
+    })
+</script>
+
+</html>

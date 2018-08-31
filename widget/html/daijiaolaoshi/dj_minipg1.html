@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+    <link rel="stylesheet" href="../../css/style/style.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .list {
+        background-color: #fff;
+        line-height: 1.5rem
+    }
+
+    .btn {
+        position: relative;
+    }
+
+    .btn button {
+        width: 4rem;
+    }
+
+    .btn_lan {
+        background: #fff;
+        border: 1px solid #4593DE;
+        color: #4593DE;
+    }
+
+    .btn_hong {
+        background: #fff;
+        border: 1px solid #FF7F7F;
+        color: #FF7F7F;
+    }
+
+    .btn-bg-l {
+        background: #4593de;
+        color: #fff;
+    }
+
+    .btn-bg-h {
+        background: #FF7F7F;
+        color: #fff;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">迷你临床演练评估表</div>
+        <!-- <p class="clo-lan aui-font-size-16 aui-pull-right aui-margin-r-10" tapmode onclick="xz()">新增</p> -->
+    </header>
+    <div class="pad "></div>
+    <div id="vm">
+        <!-- 无数据 -->
+        <template v-if="list == false">
+        <div class="aui-text-center "id="wsj">
+            <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+            <p class="aui-font-size-16">暂无数据</p>
+        </div>
+      </template>
+
+        <template v-for="item in list" v-else>
+        <div class="content aui-margin-15">
+            <div class="list  aui-padded-10">
+                <p class="clo-22 aui-font-size-16">住院医师：<span class="clo-99">{{item.name}}</span></p>
+                <p class="clo-22 aui-font-size-16">账号：<span class="clo-99">{{item.account}}</span></p>
+                <p class="clo-22 aui-font-size-16">教师姓名：<span class="clo-99">{{item.teachername}}</span></p>
+                <p class="clo-22 aui-font-size-16">记录时间：<span class="clo-99">{{item.create_at}}</span></p>
+                <p class="clo-22 aui-font-size-16">演练及评估重点：<span class="clo-99">{{item.main_point}}</span></p>
+                <p class="clo-22 aui-font-size-16">整体表现：<span class="clo-99">8</span></p>
+                <div class="aui-hr"></div>
+                <div class="btn aui-padded-t-10 ">
+                    <button type="button" name="button" class="btn_lan btn-bg-l "tapmode v-on:click="ck(item.mcid)">查看</button>
+                      <button type="button" name="button" class="btn_lan aui-margin-l-15"tapmode v-on:click="bj(item.mcid)">编辑</button>
+                    <button type="button" name="button" class="btn_hong aui-margin-l-10 btn-bg-h aui-pull-right"tapmode v-on:click="del(item.mcid)">删除</button>
+                </div>
+            </div>
+        </div>
+      </template>
+    </div>
+
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script>
+    function fh() {
+        api.closeWin({});
+    }
+
+    function xz() {
+        api.openWin({
+            name: 'dj_minipg2',
+            url: '../daijiaolaoshi/dj_minipg2.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+    }
+    var vm = new Vue({
+        el: "#vm",
+        data: {
+            list: []
+        },
+        methods: {
+            ck: (id) => {
+                console.log(id);
+                H.setStorage("dj_minipg1_id", id);
+                api.openWin({
+                    name: 'dj_minipg3',
+                    url: '../daijiaolaoshi/dj_minipg3.html',
+                    pageParam: {
+                        name: 'test'
+                    }
+                });
+
+            },
+            del: (id) => {
+                var address = "/Hospital/index.php/api/teacher/mini_cex";
+                var token = H.getStorage('token');
+                var ajaxData = {
+                    token: token,
+                    action: 'delete',
+                    id: id,
+                };
+                $base.submit(address, ajaxData, function(ret) {
+                    console.log(JSON.stringify(ret));
+                    if (ret.status == 1) {
+                        $base.toast(ret.errmsg)
+                        location.reload();
+                    } else {
+                        $base.toast(ret.errmsg)
+                    }
+                }, function(err) {
+                    console.log(JSON.stringify(err));
+                });
+            },
+            bj: (id) => {
+                H.setStorage("dj_minipg1_id", id);
+                api.openWin({
+                    name: 'dj_minipg4',
+                    url: '../daijiaolaoshi/dj_minipg4.html',
+                    pageParam: {
+                        name: 'test'
+                    }
+                });
+            }
+        }
+    })
+    H.ready(function() {
+        var address = "/Hospital/index.php/api/teacher/mini_cex";
+        var token = H.getStorage('token');
+        var id = H.getStorage('dj_minipg_id');
+        $base.showLoading();
+        var ajaxData = {
+            token: token,
+            action: "list",
+            uid: id,
+        };
+        $base.get(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret));
+            vm.list = ret.data;
+            $base.closeLoading();
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        })
+    })
+</script>
+
+</html>

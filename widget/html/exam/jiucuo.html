@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    .jc {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        font-size: 0.9rem;
+        background: #eee;
+        color: #333;
+    }
+
+    .aui-list textarea {
+        font-size: 0.75rem;
+        color: #999;
+        height: 10rem;
+    }
+
+    .aui-list-item {
+        height: 2rem;
+    }
+
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    header p {
+        color: #222;
+        font-size: 0.9rem;
+        font-family: PingFangSC-Regular;
+    }
+
+    textarea {
+        height: 10rem;
+        background: #fff;
+        padding-top: 1rem;
+        padding-left: 1rem;
+    }
+
+    .aui-radio:checked {
+        background-color: #06B666 !important;
+        border: solid 1px #046D3D !important;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">试题纠错</div>
+        <p class="aui-pull-right aui-col-xs-2 aui-font-size-16" tapmode onclick="openDialog('text')">提交</p>
+    </header>
+    <div class="pad"></div>
+    <div class="aui-padded-l-10 jc">
+        选择错误类型
+    </div>
+    <div class="aui-content aui-margin-b-15">
+        <ul class="aui-list aui-select-list">
+            <li class="aui-list-item ">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <label><input class="aui-radio aui-margin-r-10" type="radio" name="radio" checked>题目错误</label>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <label><input class="aui-radio aui-margin-r-10" type="radio" name="radio" checked>选择错误</label>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <label><input class="aui-radio aui-margin-r-10" type="radio" name="radio" checked>答案错误</label>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <label><input class="aui-radio aui-margin-r-10" type="radio" name="radio" checked>考点错误</label>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <label><input class="aui-radio aui-margin-r-10" type="radio" name="radio" checked>文字解析错误/无法理解</label>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <label><input class="aui-radio aui-margin-r-10" type="radio" name="radio">其他</label>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <textarea name="name" rows="8" cols="80" placeholder="感谢您给我们提供宝贵的意见！"></textarea>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script type="text/javascript" src="../../script/aui-dialog.js"></script>
+<script src="../../script/index.js"></script>
+<script>
+    function fh() {
+        api.closeWin({
+            name: 'jc'
+        });
+
+    }
+    H.ready(function () {
+
+    })
+    var dialog = new auiDialog({})
+
+    function openDialog(type) {
+        switch (type) {
+            case "text":
+                dialog.alert({
+                    title: "提交成功",
+                    msg: '您的宝贵建议已提交，我们会尽快处理',
+                    buttons: ['确定']
+                }, function(ret) {
+                    api.closeWin({
+                        name: 'jc'
+                    });
+
+                })
+                break;
+        }
+    }
+</script>
+
+</html>

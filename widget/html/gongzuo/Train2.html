@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .mm {
+        background: #fff;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        font-family: PingFang-SC-Bold;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .bt {
+        text-align: center;
+        float: left;
+        width: 100%;
+        margin: 1rem auto auto auto;
+        background: #fff;
+        padding: 0.5rem 0 0.5rem 0;
+        position: fixed;
+        ;
+        bottom: 0;
+    }
+
+    .bt button {
+        width: 80%;
+        text-align: center;
+        border-radius: 4px;
+        height: 2.5rem;
+        font-size: 0.85rem;
+        outline: none;
+        border: 0;
+        background: #4593DE;
+        color: #fff;
+    }
+
+    .nk {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        background: #fff;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .nk select {
+        /*width: 35%;*/
+        direction: rtl;
+        width: auto;
+        padding: 0 2%;
+        margin: 0;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    option {
+        text-align: right;
+        direction: ltr;
+    }
+
+    .gg {
+        background: #fff;
+        line-height: 2.5rem;
+        font-family: PingFang-SC-Bold;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .ll {
+        margin-bottom: 2rem;
+        height: 2rem;
+    }
+
+    .gg textarea {
+        height: 6rem;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">培训记录</div>
+    </header>
+    <div class="pad"></div>
+    <div class="content">
+        <div class="nk">
+            <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">活动形式</p>
+            <i class="iconfont icon-arrow-right aui-pull-right aui-font-size-16"></i>
+            <select name="" class="aui-pull-right" v-model="inputtext.train_form">
+            <option value=""  selected="selected">请选择</option>
+            <option value="小讲课">小讲课</option>
+            <option value="病例讨论(疑难、死亡)">病例讨论(疑难、死亡)</option>
+            <option value="学术活动/理论大课">学术活动/理论大课</option>
+            <option value="教学查房/主任查房">教学查房/主任查房</option>
+            <option value="技能操作培训">技能操作培训</option>
+            <option value="临床见习">临床见习</option>
+            </select>
+        </div>
+        <div class="mm">
+            <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">病人姓名</div>
+            <div class="aui-pull-right aui-font-size-16 clo-99 "><input type="text" name="" value="" placeholder="请输入病人姓名" id="inp" class="clo-99 aui-text-right aui-padded-r-10" v-model="inputtext.patient_name"></div>
+        </div>
+        <div class="mm">
+            <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">病历号</div>
+            <div class="aui-pull-right aui-font-size-16 clo-99 "><input type="text" name="" value="" placeholder="请输入病历号" id="inp" class="clo-99 aui-text-right aui-padded-r-10" v-model="inputtext.record_num"></div>
+        </div>
+
+        <div class="gg aui-margin-t-15">
+            <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">入院诊断：</div>
+            <textarea name="a" class="aui-padded-l-10" placeholder="请输入入院诊断" v-model="inputtext.diagnosis"></textarea>
+        </div>
+        <div class="gg aui-margin-t-15">
+            <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">内容：</div>
+            <textarea name="a" class="aui-padded-l-10" placeholder="请输入内容" v-model="inputtext.content"></textarea>
+        </div>
+        <div class="mm aui-margin-t-15 ">
+            <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">主讲人</div>
+            <div class="aui-pull-right aui-font-size-16 clo-99 "><input type="text" name="" value="" placeholder="请输入主讲人" id="inp" class="clo-99 aui-text-right aui-padded-r-10" v-model="inputtext.speaker"></div>
+        </div>
+        <div class="mm">
+            <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">学时</div>
+            <div class="aui-pull-right aui-font-size-16 clo-99 "><input type="text" name="" value="" placeholder="请输入学时" id="inp" class="clo-99 aui-text-right aui-padded-r-10" v-model="inputtext.hours"></div>
+        </div>
+        <div class="mm aui-margin-t-15 ">
+            <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">记录日期</div>
+            <i class="aui-iconfont aui-icon-right aui-pull-right aui-padded-r-10"></i>
+            <div class="aui-pull-right aui-padded-r-10 aui-font-size-16"><input type="date" id="add-time" value="" style="padding: 0.7rem 0;" v-model="inputtext.work_time" /></div>
+        </div>
+        <div class="ll"></div>
+        <div class=" bt" tapmode v-on:click="submit()">
+            <button>提交</button>
+        </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/aui-dialog.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+
+<script>
+    function fh() {
+        api.closeWin({});
+    }
+    var vm = new Vue({
+        el: '.content',
+        data: {
+            inputtext: {
+                work_time: "2018-02-01",
+                train_form: "",
+            }
+        },
+        methods: {
+            submit: function() {
+                console.log(JSON.stringify(this.inputtext));
+                var address = "/Hospital/index.php/api/ys/trainactivity";
+                var token = H.getStorage('token');
+                var id = H.getStorage('ys_Train_id');
+                var ajaxData = {
+                    token: token,
+                    action: "update",
+                    id: id,
+                    train_form: this.inputtext.train_form,
+                    patient_name: this.inputtext.patient_name,
+                    record_num: this.inputtext.record_num,
+                    content: this.inputtext.content,
+                    diagnosis: this.inputtext.diagnosis,
+                    speaker: this.inputtext.speaker,
+                    hours: this.inputtext.hours,
+                    work_time: this.inputtext.work_time,
+                };
+                $base.submit(address, ajaxData, function(ret) {
+                    console.log(JSON.stringify(ret));
+                    if (ret.status == 1) {
+                        $base.toast(ret.errmsg);
+                        api.sendEvent({
+                            name: 'Train',
+                            extra: {
+                                key1: true,
+                            }
+                        });
+                        setTimeout(function() {
+                            api.closeWin({});
+                        }, 500)
+                    } else {
+                        $base.toast(ret.errmsg);
+                    }
+                }, function(err) {
+                    console.log(JSON.stringify(err));
+                });
+            }
+        },
+    })
+    H.ready(function() {
+        var data = H.getStorage('ys_Train_data');
+        console.log(JSON.stringify(data));
+        vm.inputtext = data
+            //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        })
+    })
+</script>
+
+</html>

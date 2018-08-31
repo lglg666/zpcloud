@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/aui.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .aui-text-center .s {
+        display: inline-block;
+        width: 2.2rem;
+        height: 1.1rem;
+        background: #cecece;
+        color: #fff;
+        border-radius: 0.3rem;
+        margin-top: 0.6rem;
+        font-size: 0.7rem;
+    }
+
+    .aui-text-center .j {
+        display: inline-block;
+        width: 4rem;
+        height: 1.1rem;
+        background: #cecece;
+        color: #fff;
+        border-radius: 0.3rem;
+        margin: 0.6rem;
+        font-size: 0.7rem;
+    }
+
+    .tz {
+        background: #fff;
+    }
+
+    .p1 {
+        color: #222;
+        font-weight: 700;
+        padding-top: 0.5rem;
+        padding-left: 0.5rem;
+    }
+
+    .p2 {
+        color: #333;
+        line-height: 1.3rem;
+        margin: 0.5rem;
+        font-family: PingFang-SC-Medium;
+    }
+
+    .ks {
+        margin: 0.6rem auto;
+        display: block;
+        line-height: 1.4rem;
+        background: #fff;
+        position: relative;
+    }
+
+    .aui-hr {
+        width: 94%;
+        margin: 0 auto;
+    }
+
+    .color-99 {
+        padding-left: 0.5rem;
+        color: #999999;
+    }
+
+    .color-22 {
+        color: #222222;
+    }
+
+    .color-33 {
+        padding-top: 0.5rem;
+        padding-left: 0.5rem;
+        font-family: PingFang-SC-Medium;
+        color: #333333;
+    }
+
+    .kj {
+        color: #333;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        background: #fff;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .kj p {
+      background-color: #fff;
+        color: #333;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+</style>
+
+<body>
+
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">通知公告</div>
+    </header>
+    <div class="pad"></div>
+    <div class="main">
+        <div class="tz">
+            <p class="p1 aui-font-size-18" id="title"></p>
+            <p class="p2 aui-font-size-16" id="con"></p>
+        </div>
+    </div>
+
+    <div class="ks ">
+        <p class="aui-font-size-16 color-33">发布人:<span id="author"></span></p>
+        <p class="aui-font-size-14 color-99">发布日期: <span id="time"></span></p>
+    </div>
+
+    <div class="kj">
+        <p class="aui-font-size-16 aui-text-left aui-padded-l-10">附件文档</p>
+    </div>
+    <div class="kj" id="attr" style="display:none;" tapmode onclick="download()">
+        <p class="aui-font-size-14 aui-text-left aui-padded-l-10"><span id="attr_name" class="clo-33"></span><i class="iconfont icon-download-file aui-pull-right aui-padded-r-10"></i></p>
+    </div>
+
+</body>
+<script src="../script/api.js"></script>
+<script src="../script/AHelper.js"></script>
+<script src="../script/base.js"></script>
+<script src="../script/zepto.min.js"></script>
+<script>
+    H.ready(function() {
+        var notice_id = H.getStorage("notice_id");
+        // console.log(notice_id);
+        var token = H.getStorage("token");
+        var user_role = H.getStorage("user_role");
+        // console.log(token);
+        var address = "/Hospital/index.php/api/user/get_notice_detail";
+        var ajaxData = {
+            id: notice_id,
+            token: token,
+            user_role: user_role
+
+        };
+        $base.get(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret));
+            $("#title").html(ret.data.title);
+            $("#con").html(ret.data.content);
+            $("#time").html(ret.data.date);
+            $("#author").html(ret.data.author);
+            H.setStorage("download", ret.data.attr)
+            H.setStorage("attr_name", ret.data.attr_name)
+            if (ret.data.attr == "") {
+                console.log("kong");
+                $("#attr").hide();
+            } else {
+                console.log("bukong");
+                $("#attr").show();
+                $("#attr_name").html(ret.data.attr_name)
+            }
+        }, function(err) {
+            console.log(err);
+        });
+
+
+
+    })
+
+    function fh() {
+
+        api.closeWin({
+            name: 'tz2'
+        });
+
+
+    }
+
+    function download() {
+        var download = H.getStorage("download");
+        var attr_name = H.getStorage("attr_name");
+        console.log(download);
+        var downloadManager = api.require('downloadManager');
+        downloadManager.enqueue({
+            url: download,
+            cache: true,
+            allowResume: true,
+            title: attr_name,
+            networkTypes: 'all'
+        }, function(ret, err) {
+            if (ret) {
+                console.log(JSON.stringify(ret));
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+        downloadManager.openManagerView({
+            title: '下载管理'
+        }, function(ret, err) {
+            if (ret) {
+                console.log(JSON.stringify(ret));
+                downloadManager.openDownloadedFile({
+                    id: ret.id,
+                }, function(ret, err) {
+                    if (ret.status) {
+                        console.log(JSON.stringify(ret));
+                    } else {
+                        console.log(JSON.stringify(err));
+                    }
+                });
+            } else {
+                console.log(JSON.stringify(err));
+            }
+        });
+
+
+
+
+    }
+</script>
+
+</html>

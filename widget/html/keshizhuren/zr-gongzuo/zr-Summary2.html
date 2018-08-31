@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../../css/aui.css">
+    <link rel="stylesheet" href="../../../css/iconfont/iconfont.css">
+    <style media="screen">
+        body {
+            height: 100%;
+        }
+
+        header {
+            position: fixed !important;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        header i {
+            color: #222222;
+            font-size: 1rem !important;
+            font-weight: 600;
+        }
+
+        .pad {
+            padding-top: 3.5rem;
+        }
+
+        .inp {
+            height: 7rem;
+            background-color: #fff;
+        }
+
+        .inp textarea {
+            height: 100%;
+        }
+
+        .mm {
+            background: #fff;
+            height: 2.5rem;
+            line-height: 2.5rem;
+            font-family: PingFang-SC-Bold;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .bt {
+            text-align: center;
+            float: left;
+            width: 100%;
+            margin: 1rem auto auto auto;
+            background: #fff;
+            padding: 0.5rem 0 0.5rem 0;
+            position: fixed;
+            ;
+            bottom: 0;
+        }
+
+        .bt button {
+            width: 80%;
+            text-align: center;
+            border-radius: 4px;
+            height: 2.5rem;
+            font-size: 0.85rem;
+            outline: none;
+            border: 0;
+            background: #4593DE;
+            color: #fff;
+        }
+
+        .ml {
+            height: 100%;
+            line-height: 2.5rem;
+        }
+
+        .ml input {
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left "></i>
+        </a>
+        <div class="aui-title">评语</div>
+    </header>
+    <div class="pad"></div>
+    <div class="vv">
+        <div class="inp aui-margin-t-15">
+            <textarea name="a" placeholder="请输入评语" class="aui-padded-l-10 aui-padded-t-10" value="" v-model="inputtext.content"></textarea>
+        </div>
+        <div class="mm aui-margin-t-15">
+            <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">科室主任签名</div>
+            <i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10"></i>
+            <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 ml"><input type="text" id="add-time" value="" placeholder="请输入科室主任签名" class="aui-text-right" v-model="inputtext.date" /></div>
+        </div>
+        <div class=" bt" tapmode v-on:click="submit()">
+            <button>提交</button>
+        </div>
+    </div>
+</body>
+<script src="../../../script/api.js"></script>
+<script src="../../../script/AHelper.js"></script>
+<script src="../../../script/base.js"></script>
+<script src="../../../script/zepto.min.js"></script>
+<script src="../../../script/vue/vue.min.js"></script>
+<script src="../../../script/fastclick.js"></script>
+<script>
+  var vm = new Vue({
+        el: '.vv',
+        data: {
+            inputtext:{}
+        },
+        methods: {
+            submit: function() {
+                console.log(this.inputtext);
+                var address = "/Hospital/index.php/api/department/summarize";
+                var token = H.getStorage('token');
+                var id = H.getStorage('sum2_id');
+                var ajaxData = {
+                    token: token,
+                    action: "reply",
+                    id: id,
+                    d_content: this.inputtext.content,
+                    d_name: this.inputtext.date,
+
+                };
+                $base.submit(address, ajaxData, function(ret) {
+                    console.log(JSON.stringify(ret));
+                    if(ret.status == 1){
+                      $base.toast(ret.errmsg);
+                      setTimeout(function () {
+                        api.closeWin({});
+                      },500);
+                      api.sendEvent({
+                          name: 'zr-sum',
+                          extra: {
+                              key1: true, 
+                          }
+                      });
+
+                    }
+                }, function(err) {
+                    console.log(JSON.stringify(err));
+                });
+            }
+        },
+    })
+
+    H.ready(function() {
+      //处理点击延迟
+      $(function() {
+          FastClick.attach(document.body);
+      });
+    })
+
+    function fh() {
+        api.closeWin({});
+
+    }
+</script>
+
+</html>

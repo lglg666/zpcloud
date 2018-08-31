@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .list {
+        background-color: #fff;
+        line-height: 1.5rem
+    }
+
+    .btn {
+        position: relative;
+        text-align: right;
+        right: 1rem;
+    }
+
+    .btn button {
+        width: 4rem;
+    }
+
+    .btn_lan {
+        background: #fff;
+        border: 1px solid #4593DE;
+        color: #4593DE;
+    }
+
+    .btn_hong {
+        background: #fff;
+        border: 1px solid #FF7F7F;
+        color: #FF7F7F;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">门诊诊治内容</div>
+    </header>
+    <div class="pad "></div>
+    <div id="vm">
+        <template v-for="item in list">
+    <div class="content aui-margin-15">
+        <div class="list  aui-padded-10">
+          <p class="clo-22 aui-font-size-16">病人姓名：<span class="clo-99">{{item.patient_name}}</span></p>
+          <p class="clo-22 aui-font-size-16">病历号：<span class="clo-99">{{item.record_num}}</span></p>
+          <p class="clo-22 aui-font-size-16">接诊病种名称：<span class="clo-99">{{item.disease}}</span></p>
+          <p class="clo-22 aui-font-size-16">主诉：<span class="clo-99">{{item.complaint}}</span></p>
+          <p class="clo-22 aui-font-size-16">既往史：<span class="clo-99">{{item.diagnosis}}</span></p>
+          <p class="clo-22 aui-font-size-16">现病史：<span class="clo-99">{{item.history}}</span></p>
+          <p class="clo-22 aui-font-size-16">过敏史：<span class="clo-99">{{item.allergy}}</span></p>
+          <p class="clo-22 aui-font-size-16">查体：<span class="clo-99">{{item.check}}</span></p>
+          <p class="clo-22 aui-font-size-16">诊断：<span class="clo-99">{{item.diagnosis_ys}}</span></p>
+          <p class="clo-22 aui-font-size-16">治疗：<span class="clo-99">{{item.treatment}}</span></p>
+          <p class="clo-22 aui-font-size-16">备注：<span class="clo-99">{{item.past_txt}}</span></p>
+          <p class="clo-22 aui-font-size-16">记录日期：<span class="clo-99">{{item.work_time}}</span></p>
+          <p class="clo-22 aui-font-size-16">教师审批：<span v-bind:class="item.t_stauts==1 ? 'clo-lan' : 'clo-hong'" v-text="item.t_stauts == 1?'已审核':'未审核'">已审核</span></p>
+          <p class="clo-22 aui-font-size-16">科室审批：<span v-bind:class="item.d_stauts==1 ? 'clo-lan' : 'clo-hong'" v-text="item.d_stauts == 1?'已审核':'未审核'">未审核</span></p>
+            <div class="aui-hr"></div>
+            <div class="btn aui-padded-t-10 aui-text-right">
+                <button type="button" name="button" class="btn_lan " tapmode v-on:click="sh(item.id)">审核</button>
+            </div>
+        </div>
+    </div>
+  </template>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/aui-dialog.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script>
+    function fh() {
+        api.closeWin({});
+    }
+
+    var vm = new Vue({
+        el: "#vm",
+        data: {
+            list: []
+        },
+        methods: {
+            sh: (id) => {
+                var address = "/Hospital/index.php/api/teacher/outpatientservice";
+                var token = H.getStorage('token');
+                var ajaxData = {
+                    token: token,
+                    action: "pass",
+                    id: id
+                };
+                $base.submit(address, ajaxData, function(ret) {
+                    console.log(JSON.stringify(ret));
+                    if (ret.status == 1) {
+                        $base.toast(ret.errmsg);
+                        setTimeout(function () {
+                          location.reload();
+                        },500)
+                    } else {
+                        $base.toast(ret.errmsg);
+                    }
+                }, function(err) {
+                    console.log(JSON.stringify(err));
+                });
+            },
+        }
+
+    })
+    H.ready(function() {
+        var address = "/Hospital/index.php/api/teacher/outpatientservice";
+        var token = H.getStorage('token');
+        var id = H.getStorage('dj_menzhen_id');
+        var ajaxData = {
+            token: token,
+            action: "list",
+            uid: id
+        };
+        $base.get(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret));
+            vm.list = ret.data;
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        })
+    })
+</script>
+
+</html>

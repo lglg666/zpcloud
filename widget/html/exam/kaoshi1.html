@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style>
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    header p {
+        color: #222;
+        font-size: 0.9rem;
+        font-family: PingFangSC-Regular;
+    }
+
+    body {
+        background: #eee;
+    }
+
+    .sj_top {
+        overflow: hidden;
+        background: #fff;
+        width: 100%;
+    }
+
+    .aui-pull-right {
+        font-size: 0.8rem;
+        padding-right: 10px;
+        text-align: center;
+    }
+
+    .sj_main {
+        overflow: hidden;
+        background: #fff;
+        height: 28rem;
+    }
+
+    .sj_main p {
+        margin: 1rem;
+        /*font-size: 0.8rem;*/
+        color: #333333;
+        line-height: 2rem;
+    }
+
+    .x {
+        width: 100%;
+        margin: 1.2rem;
+        /*font-size: 0.8rem;*/
+        color: #333;
+    }
+
+    .x a {
+        float: left;
+        display: block;
+        width: 1.2rem;
+        font-size: 0.75rem;
+        border: 1px solid #4593DE;
+        border-radius: 50%;
+        text-align: center;
+        margin-right: 1.4rem;
+        color: #4593DE;
+    }
+
+    #sj_footer {
+        height: 4rem;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .aui-grid {
+        background: #EBEBEB !important;
+    }
+
+    .aui-col-xs-4 i img {
+        margin: 0 auto;
+        width: 1.2rem;
+        height: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .col-33 {
+        color: #333333;
+    }
+
+    .col-lan {
+        color: #4593DE;
+    }
+
+    .aui-pull-left a {
+        color: #4593DE;
+    }
+
+    .aui-content-padded {
+        margin: 0 !important;
+    }
+
+    .aui-collapse-item {
+        line-height: 1.5rem;
+    }
+</style>
+
+<body>
+    <div class="sj">
+        <div class="kaoshi2">
+            <header class="aui-bar aui-bar-nav" id="header">
+                <a class="aui-pull-left" tapmode onclick="fh()">
+                    <i class="iconfont icon-arrow-left aui-iconfont"></i>
+                </a>
+                <div class="aui-title">2017年12月住院医师考试</div>
+                <!-- <p class="aui-pull-right aui-col-xs-2 aui-font-size-16" tapmode onclick="jc()">纠错</p> -->
+            </header>
+            <div class="pad"></div>
+            <div class="sj_top"></div>
+            <section class="aui-content-padded">
+                <ul class="aui-list aui-collapse aui-border">
+                    <div class="aui-collapse-item">
+                        <li class="aui-list-item aui-collapse-header">
+                            <div class="aui-list-item-inner">
+                                <div class="aui-list-item-title">
+                                    <p class="aui-pull-left col-33 aui-font-size-16">{{questions[questionindex[0]].num}}, {{questions[questionindex[0]].type_name}}</p>
+                                    <p href="" class="aui-pull-left"><a>{{questionindex[1]+1}}</a>/{{questions[questionindex[0]].count}}</p>
+                                    <!-- <p href="" class="aui-pull-left aui-font-size-12">在每小题的5个备选答案中，选出1个最佳的或最恰当的答案。</p> -->
+                                </div>
+                                <div class="aui-list-item-right">
+                                    <i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+                                </div>
+                            </div>
+                        </li>
+                        <div class="aui-collapse-content">
+                            <li class="aui-list-item" tapmode onclick="er()" v-for="(item,index) in questions">
+                                <div class="aui-list-item-inner">
+                                    <div class="aui-list-item-title">
+                                        <p class="aui-pull-left col-33 aui-font-size-16">{{item.num}}、{{item.type_name}}</p>
+                                        <p href="" class="aui-pull-left"><a>1</a>/{{item.count}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </div>
+                    </div>
+                </ul>
+            </section>
+            <div class="sj_main" id="questioninfo">
+                  <p class="aui-font-size-16">{{questionindex[1]+1}}.{{questions[questionindex[0]].question[questionindex[1]].stem}}</p>
+                  <div v-if="(questions[questionindex[0]].question[questionindex[1]].new_option != null && questions[questionindex[0]].question[questionindex[1]].new_option.length >0)||( questions[questionindex[0]].question[questionindex[1]].new_foption != null && questions[questionindex[0]].question[questionindex[1]].new_foption.length > 0)">
+                      <div class="x aui-font-size-16" v-for="(option,optionindex) in questions[questionindex[0]].question[questionindex[1]].new_option">
+                          <a href="javascript:void(0)" class="a" v-on:click="checkclick(option.split(':')[0])" :style="questions[questionindex[0]].question[questionindex[1]].useranswer.indexOf(option.split(':')[0]) > -1?'background:#4593DE;color:white;':''">
+                              {{option.split(":")[0]}}
+                          </a>{{option.split(":")[1]}}
+                      </div>
+                      <button class="btn btn_hong aui-font-size-14" v-on:click="next()">下一题</button>
+                  </div>
+                  <div class="x aui-font-size-16"  v-if="((!questions[questionindex[0]].question[questionindex[1]].new_option)||questions[questionindex[0]].question[questionindex[1]].new_option.length == 0) && ((!questions[questionindex[0]].question[questionindex[1]].new_foption)||questions[questionindex[0]].question[questionindex[1]].new_foption.length == 0)">
+                      <p class="aui-font-size-16">
+                          请输入你的答案:<button class="btn btn_hong aui-font-size-14" v-on:click="next()">下一题</button>
+                      </p>
+                      <p> 已填写的答案:{{questions[questionindex[0]].question[questionindex[1]]['useranswer']}} </p>
+                      <textarea id="answer" rows="10" cols="20" placeholder="请输入你的答案" style="height:10rem;"></textarea>
+                  </div>
+            </div>
+            <div id="sj_footer">
+                <secton class="aui-grid">
+                    <div class="row aui-text-center">
+                        <div class="aui-col-xs-4" tapmode onclick="dtk()">
+                            <i class="aui-iconfont"><img src="../../image/answer_sheet_btn.png" alt=""></i>
+                            <p class="aui-font-size-12  col-lan">答题卡</p>
+                        </div>
+                        <div class="aui-col-xs-4" tapmode onclick="openDialog('text')">
+                            <i class="aui-iconfont "> <img src="../../image/submit_btn.png" alt=""></i>
+                            <p class="aui-font-size-12 col-lan">提交试卷</p>
+                        </div>
+                        <div class="aui-col-xs-4">
+                            <i class="aui-iconfont "><img src="../../image/time_btn.png" alt=""></i>
+                            <p class="aui-font-size-12 col-lan">00:55:56</p>
+                        </div>
+                </secton>
+                </div>
+            </div>
+</body>
+<script type="text/javascript" src="../../script/aui-collapse.js"></script>
+<script src="../../script/aui-tab.js"></script>
+<script src="../../script/aui-toast.js"></script>
+<script src="../../script/aui-dialog.js"></script>
+<script src="../../script/api.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/index.js"></script>
+<script type="text/javascript">
+function unique(arr){
+    let newArr = [arr[0]];
+    for(let i = 1; i < arr.length; i++){
+          let flag = false;
+          for(var j = 0; j < newArr.length; j++){
+               if(arr[i] == newArr[j]){
+                flag = true;
+                break;
+               }
+          }
+          if(!flag){
+               newArr.push(arr[i]);
+          }
+     }
+     return newArr;
+    }
+    H.ready(function () {
+      var qtlist = new Vue({
+          el: ".sj",
+          data: {
+                questions:[{
+                  "paper_id": "83",
+                  "type_id": "1",
+                  "type_name": "单选题",
+                  "score": "1",
+                  "count": "50",
+                  "num": "一",
+                  "question": [{"id": "1","uid": "1","did": "1","paper_id": "1","question_id": "1","oqid": "1","type_id": "1","stem": "XXXXXXXX()","answer": "D","analysis": "","path_id":"1","score": "1","is_cap": "0","num": "0","difficulty": "1","is_delete": "0","batch_id": "2","fid": "0","is_examine": "0","fstem": null,"foption": null,"new_option": ["A:B超检查","B:食管吞钡检查","C:纤维内镜检查","D:肝脏活组织检查","E:放射性核素检查"],"useranswer":""}]
+              }],questionindex:[0,0]
+            },methods:{
+                checkclick:function(answer){
+                    //要先判断是否单选题
+                    var questionindex     =    H.getStorage('questionindex')== null?[0,0]:H.getStorage('questionindex');
+                    if( qtlist.questions[questionindex[0]].question[questionindex[1]].type_id == 4 ){
+                          //当这个是多选题的时候呢？
+                          var answerindex =    qtlist.questions[questionindex[0]].question[questionindex[1]]['useranswer'].indexOf(answer);
+                          console.log(answerindex);
+                          if(answerindex > -1){
+                              qtlist.questions[questionindex[0]].question[questionindex[1]]['useranswer']=qtlist.questions[questionindex[0]].question[questionindex[1]]['useranswer'].replace(answer,"");
+                          }else{
+                              qtlist.questions[questionindex[0]].question[questionindex[1]]['useranswer']     +=        answer;
+                          }
+                          var arr         =    qtlist.questions[questionindex[0]].question[questionindex[1]]['useranswer'].split('');
+                          arr             =    unique(arr);
+                          arr             =    arr.sort();
+                          arr             =    arr.join('');
+                          qtlist.questions[questionindex[0]].question[questionindex[1]]['useranswer']     =       arr;
+                    }else{
+                          qtlist.questions[questionindex[0]].question[questionindex[1]]['useranswer']     =          answer;
+                    }
+                    var paperinfo          =    H.getStorage('paperinfo');
+                    //paper_info
+                    paperinfo.paper_info   =     qtlist.questions;
+                    qtlist.questionindex   =     questionindex;
+                    H.setStorage('paperinfo',paperinfo);
+                },
+                next:function(){
+                    var paperuser         =    H.getStorage('paperuser')== null?[]:H.getStorage('paperuser');
+                    var questionindex     =    H.getStorage('questionindex')== null?[0,0]:H.getStorage('questionindex');
+                    if(["5","6","8","10"].indexOf(qtlist.questions[questionindex[0]].question[questionindex[1]].type_id) > -1){
+                        console.log("AAAAAA");
+                          var temp        =    $("#answer").val();
+                          //记录下这一题的答案
+                          qtlist.questions[questionindex[0]].question[questionindex[1]]['useranswer']       =        temp;
+                          var paperinfo          =    H.getStorage('paperinfo');
+                          //paper_info
+                          paperinfo.paper_info   =     qtlist.questions;
+                          H.setStorage('paperinfo',paperinfo);
+                          $("#answer").val('');
+                    }else{
+                        //一次性获取选择框的值
+                    }
+
+                    if( ((questionindex[1] + 1) >= qtlist.questions[questionindex[0]].question.length) && ((questionindex[0] + 1) >= qtlist.questions.length)){
+                          //结束掉答题
+                          //跳转到答题卡页面
+                          //弹出对话框,这是最后一题
+                    }else if((questionindex[1] + 1) >= qtlist.questions[questionindex[0]].question.length){
+                          //切换到下一个题，下一个大题
+                          questionindex[0]        =        questionindex[0]+1;
+                          questionindex[1]        =        0;
+                          qtlist.questionindex    =        questionindex;
+                    }else{
+                          //切换到下一个题
+                          questionindex[1]        =        questionindex[1]+1;
+                          qtlist.questionindex    =        questionindex;
+                    }
+                    H.setStorage('questionindex',questionindex);
+                }
+            }
+          });
+          api.addEventListener('questionchose',function(ret, err) {
+              var paperinfo         =    H.getStorage('paperinfo');
+              qtlist.questions      =    paperinfo.paper_info;
+              var questionindex     =    H.getStorage('questionindex');
+              qtlist.questionindex  =    questionindex == null?[0,0]:questionindex;
+          });
+          var paperinfo     =    H.getStorage('paperinfo');
+          //paper_info
+          qtlist.questions      =    paperinfo.paper_info;
+          var questionindex     =    H.getStorage('questionindex');
+          qtlist.questionindex  =    questionindex == null?[0,0]:questionindex;
+    })
+
+    var collapse = new auiCollapse({
+        autoHide: true //是否自动隐藏已经展开的容器
+    });
+
+
+    function fh() {
+        api.closeWin({
+            name: "ks1"
+        });
+    }
+
+    function dtk() {
+        api.openWin({
+            name: 'dtk1',
+            url: './datik1.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+    }
+
+    var dialog = new auiDialog({})
+
+    function openDialog(type) {
+        switch (type) {
+            case "text":
+                dialog.alert({
+                    title: "提交试卷",
+                    msg: '试卷还没有做完，确认提交试卷？',
+                    buttons: ['继续做题', '确定提交']
+                }, function(ret) {
+                    if (ret.buttonIndex == 2)
+                        submit_answer();
+                })
+        }
+
+
+    }
+
+
+    function er() {
+        api.openWin({
+            name: 'ks2',
+            url: './kaoshi2.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function san() {
+        api.openWin({
+            name: 'ks3',
+            url: './kaoshi3.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function si() {
+        api.openWin({
+            name: 'ks4',
+            url: './kaoshi4.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function wu() {
+        api.openWin({
+            name: 'ks5',
+            url: './kaoshi5.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+    }
+
+    function jc() {
+        api.openWin({
+            name: 'jc',
+            url: './jiucuo.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+</script>
+
+</html>

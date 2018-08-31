@@ -1,0 +1,72 @@
+<widget id="A6060682265844" version="0.0.1">
+
+    <name>规培系统</name>
+
+    <description>
+
+        Example For APICloud.
+
+    </description>
+
+    <author email="developer@apicloud.com" href="http://www.apicloud.com">
+
+        Developer
+
+    </author>
+
+    <content src="./index.html"/>
+
+    <access origin="*"/>
+
+    <preference name="pageBounce" value="false"/>
+
+    <preference name="appBackground" value="rgba(0,0,0,0.0)"/>
+
+    <preference name="windowBackground" value="rgba(0,0,0,0.0)"/>
+
+    <preference name="frameBackgroundColor" value="rgba(0,0,0,0.0)"/>
+
+    <preference name="hScrollBarEnabled" value="false"/>
+
+    <preference name="vScrollBarEnabled" value="false"/>
+
+    <preference name="autoLaunch" value="true"/>
+
+    <preference name="fullScreen" value="false"/>
+
+    <preference name="autoUpdate" value="true"/>
+
+    <preference name="smartUpdate" value="false"/>
+
+    <preference name="debug" value="true"/>
+
+    <preference name="statusBarAppearance" value="true"/>
+
+    <preference name="iOS7StatusBarAppearance" value="true"/>
+
+    <permission name="readPhoneState"/>
+
+    <permission name="camera"/>
+
+    <permission name="record"/>
+
+    <permission name="location"/>
+
+    <permission name="fileSystem"/>
+
+    <permission name="internet"/>
+
+    <permission name="bootCompleted"/>
+
+    <permission name="hardware"/>
+
+    <preference name="softInputMode" value="auto"/>
+<!-- 短信验证 -->
+    <!-- <feature name="smsVerify">
+        <param name="android_app_key" value="247d6fcfe1ce6"/>
+        <param name="android_app_secret" value="33f820f80c44cbb619d4e4b199b9251a"/>
+        <param name="ios_app_key" value="247d873627187"/>
+        <param name="ios_app_secret" value="9a5332feeb0f1b579b7e161000413e55"/>
+    </feature> -->
+
+</widget>

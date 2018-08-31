@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .db {
+        background: #fff;
+        line-height: 1.5rem;
+    }
+
+    .color-33 {
+        color: #333;
+    }
+
+    .color-99 {
+        color: #999;
+    }
+
+    .color-22 {
+        color: #222;
+    }
+
+    .color-76 {
+        color: #76D166;
+    }
+
+    .color-ff {
+        color: #ff6655;
+    }
+
+    .aui-hr {
+        background-size: 90% 1px;
+    }
+
+    .aui-padded-15 img {
+        margin: 0 auto;
+    }
+
+    .main_3 i {
+        float: right;
+        font-size: 1rem !important;
+    }
+
+    .main_3 p {
+        color: #222;
+        font-size: 0.75rem;
+    }
+
+    .main_3 {
+        width: 100%;
+        background: #fff;
+        margin: 1rem auto;
+        font-size: 0.8rem;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .title {
+        height: 3rem;
+        line-height: 3rem;
+        padding-left: 1rem;
+    }
+
+    .con {
+        background: #F9F9F9;
+    }
+
+    .nr {
+        background: #fff;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .bm {
+        width: 100%;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .bm p {
+        float: left;
+    }
+
+    .bm i {
+        font-size: 1rem;
+    }
+
+    .xm {
+        background: #fff;
+        overflow: hidden;
+        height: auto;
+    }
+
+    .xm p {
+        display: block;
+        line-height: 2rem;
+        height: 2rem;
+    }
+
+    .cn {}
+
+    .cn_nav {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        background-color: #fff;
+    }
+
+    .ds_con {
+        background: #fff;
+    }
+
+    .bt {
+        text-align: center;
+        background: #fff;
+        padding: 0.5rem 0 0.5rem 0;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .bt button {
+        width: 80%;
+        text-align: center;
+        border-radius: 4px;
+        height: 2.5rem;
+        font-size: 0.85rem;
+        outline: none;
+        border: 0;
+        background: #4593de;
+        color: #fff;
+    }
+
+    .upload {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        background-color: #fff;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">教学活动</div>
+    </header>
+    <div class="pad"></div>
+
+    <div class="db ">
+        <div class="title">
+            <p class="aui-font-size-18 color-22 chu" id="name">教学活动1</p>
+        </div>
+        <div class="aui-padded-15 con">
+            <p class="aui-font-size-16 color-33" id="content">教学活动内容，教学活动内容，教学活动内容，教学活动内容教学活动内容教学活动内容教学活动内容教学活动内容教学活动内容。教学活动内容，教学活动内容。 教学活动内容，教学活动内容教学活动内容教学活动内容教学活动内容教学活动内容教学活动内容。教学活动内容，教学活动内容，教学活动内容，教学活动内容教学活动内容教学活动内容教学活动内容教学活动内容教学活动内容。</p>
+        </div>
+    </div>
+
+    <div class="cn">
+        <div class="cn_nav">
+            <p class="aui-font-size-16 aui-padded-l-15 clo-33">病人姓名:<span class="aui-pull-right aui-padded-r-15" id="patient_name"></span></p>
+            <div class="aui-hr"></div>
+        </div>
+        <div class="cn_nav ">
+            <p class="aui-font-size-16 aui-padded-l-15 clo-33">病历号:<span class=" aui-pull-right aui-padded-r-15" id="record_num"></span></p>
+        </div>
+    </div>
+    <div class="Diagnosis aui-margin-t-15">
+        <div class="cn_nav ">
+            <p class="aui-font-size-16 aui-padded-l-15 clo-33">入院诊断</p>
+            <div class="aui-hr"></div>
+        </div>
+        <div class="ds_con aui-padded-10">
+            <p class="aui-font-size-16 clo-33" id="diagnosis"></p>
+        </div>
+    </div>
+    <div class="aui-margin-t-15  aui-margin-b-15">
+        <div class="nr ">
+            <p class="aui-font-size-16 clo-33 aui-padded-l-15"> 主讲人：<span id="speaker"></span></p>
+            <div class="aui-hr"></div>
+        </div>
+
+        <div class="nr ">
+            <p class="aui-font-size-16 clo-33  aui-padded-l-15"> 活动时间：<span id="date"></span></p>
+            <div class="aui-hr"></div>
+        </div>
+        <div class="nr  ">
+            <p class="aui-font-size-16 clo-33  aui-padded-l-15"> 活动形式：<span id="typename"></span></p>
+            <div class="aui-hr"></div>
+        </div>
+        <div class="nr  ">
+            <p class="aui-font-size-16 clo-33  aui-padded-l-15"> 课时：<span id="hours"></span></p>
+            <div class="aui-hr"></div>
+        </div>
+        <div class="nr  ">
+            <p class="aui-font-size-16 clo-33  aui-padded-l-15"> 发布日期：<span id="create_at"></span></p>
+            <div class="aui-hr"></div>
+        </div>
+        <div class="nr">
+            <p class="aui-font-size-16 clo-33  aui-padded-l-15"> 活动地点：<span id="address"></span></p>
+        </div>
+        <!-- <div class="upload aui-margin-t-15 aui-padded-l-10" tapmode onclick="upload()">
+            <p class="aui-font-size-16 clo-33 aui-pull-left">上传佐证<span class=" aui-font-size-14 clo-99 aui-padded-l-10"> 点击上传佐证</span></p>
+            <i class="iconfont icon-upload aui-pull-right aui-padded-r-15 aui-font-size-18 clo-33"></i>
+        </div> -->
+    </div>
+    <div class="nr">
+        <div class="bm" tapmode onclick="cyry()">
+            <i class="iconfont icon-about-us aui-pull-left color-76 aui-font-size-20 aui-padded-l-5 aui-padded-r-15"></i>
+            <p class="aui-font-size-16 color-22">已报名参加人员(<span class="clo-99" id="sign_users_num"></span>)</p>
+            <i class="iconfont icon-arrow-right aui-pull-right clo-22 aui-padded-r-10"></i>
+        </div>
+        <!-- <div class="aui-hr"></div> -->
+    </div>
+    <div class="xm" id="xm">
+        <div v-for="item in list">
+            <p class="aui-font-size-14 color-33 aui-col-xs-3 aui-text-center"> {{item.name}}</p>
+        </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/aui-dialog.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#xm",
+        data: {
+            list: []
+        },
+        methods: {
+
+        },
+    })
+
+    function fh() {
+        api.closeWin({});
+
+
+    }
+
+
+    function upload() {
+        api.getPicture({
+            sourceType: 'library',
+            encodingType: 'jpg',
+            mediaValue: 'pic',
+            destinationType: 'url',
+            allowEdit: true,
+            quality: 100,
+            saveToPhotoAlbum: false
+        }, function(ret, err) {
+            console.log(JSON.stringify(ret.data));
+            if (ret) {
+                alert(JSON.stringify(ret.data));
+                var token = H.getStorage("token");
+                var id = H.getStorage("zr_jxid1_id")
+                console.log(id);
+                var address = "/Hospital/index.php/api/ys/teaching_activities";
+                var ajaxData = {
+                    token: token,
+                    photoimg: ret.data,
+                    action: "update_photo",
+                    id: id,
+
+                };
+
+                $base.submit(address, ajaxData, function(ret) {
+                    console.log(JSON.stringify(ret));
+                    if (ret.status == 1) {
+                        $base.toast(ret.errmsg);
+                    } else {
+                        $base.toast(ret.errmsg);
+                    }
+                });
+            } else {
+                console.log(JSON.stringify(err));
+            }
+        });
+
+    }
+    var dialog = new auiDialog({})
+
+    function openDialog(type) {
+        switch (type) {
+            case "text":
+                dialog.alert({
+                    title: "活动未结束",
+                    msg: '该教学活动需要参与人员在结束后才能参与评价哦~~',
+                    buttons: ['确定']
+                }, function(ret) {
+                    api.openWin({
+                        name: 'jxpj',
+                        url: './jxpingjia.html',
+                        pageParam: {
+                            name: 'test'
+                        }
+                    });
+
+                })
+                break;
+        }
+    }
+
+    H.ready(function() {
+        var address = "/Hospital/index.php/api/department/teaching_activities";
+        var token = H.getStorage('token');
+        var id = H.getStorage("zr_jxid1_id");
+        console.log(id);
+        $base.showLoading();
+        var ajaxData = {
+            token: token,
+            id: id,
+            action: "detail",
+        };
+        $base.get(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret));
+            $("#name").html(ret.data.name)
+            $("#content").html(ret.data.content)
+            $("#patient_name").html(ret.data.patient_name)
+            $("#record_num").html(ret.data.record_num)
+            $("#diagnosis").html(ret.data.diagnosis)
+            $("#date").html(ret.data.date)
+            $("#create_at").html(ret.data.create_at)
+            $("#address").html(ret.data.address)
+            $("#speaker").html(ret.data.speaker)
+            $("#typename").html(ret.data.typename)
+            $("#hours").html(ret.data.hours)
+            $("#sign_users_num").html(ret.data.sign_users_num +"人")
+            vm.list = ret.data.sign_users;
+            $base.closeLoading();
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+    })
+</script>
+
+</html>

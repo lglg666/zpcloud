@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/aui.css">
+    <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+    <link rel="stylesheet" href="../css/style/style.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+        padding-top: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 4.5rem;
+    }
+
+    .main_2 i {
+        color: #222222;
+        float: right;
+        padding-right: 0.5rem;
+        font-size: 0.9rem !important;
+    }
+
+    .main_2 p {
+        padding-left: 0.5rem;
+        color: #222;
+        font-size: 0.75rem;
+    }
+
+    .main {
+        margin: 0.8rem;
+    }
+
+    .main_2 {
+        font-size: 0.8rem;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .tz {
+        background: #fff;
+    }
+
+    .tz_title {
+        height: 4rem;
+        padding-bottom: .5rem;
+    }
+
+    .tz_title i {
+        font-size: 1.2rem
+    }
+
+    .p1 {
+        color: #222;
+        font-weight: 700;
+    }
+
+    .s {
+        background: #cecece;
+        color: #fff;
+        list-style: none;
+        border-radius: 0.3rem;
+        line-height: 1.22rem;
+        width: 3rem;
+        padding: .2rem;
+        font-size: 0.7rem;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <p class="aui-font-size-16 aui-pull-right clo-lan" tapmode onclick="commit()">提交反馈</p>
+        <div class="aui-title">意见反馈</div>
+    </header>
+    <div class="pad"></div>
+    <div class="" id="notice_info">
+      <!-- 没有数据 -->
+        <template v-if="list == false ">
+            <div class="aui-text-center "id="wsj">
+                <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+                <p class="aui-font-size-16">暂无数据</p>
+            </div>
+        </template>
+      <!-- 有数据 -->
+      <template v-else>
+        <div class="" v-for="item in list" >
+            <div class=" aui-text-center">
+                <a class="s">{{item.date_time}}</a>
+            </div>
+            <div class="main">
+                <div class="tz aui-padded-t-15 aui-padded-r-15 aui-padded-l-15">
+                    <div class="tz_title">
+                        <div class="aui-col-xs-3">
+                            <p class=" aui-pull-left clo-22  p1">反馈内容:</p>
+                        </div>
+                        <div class="aui-col-xs-9">
+                            <p class=" aui-font-size-16 clo-99">{{item.content}}</p>
+                        </div>
+
+                    </div>
+                    <div class="tz_title">
+                        <div class="aui-col-xs-3">
+                            <p class=" aui-pull-left clo-22  p1">回复内容:</p>
+                        </div>
+                        <div class="aui-col-xs-9">
+                            <p class=" aui-font-size-16 clo-99">{{item.back_content}}</p>
+                        </div>
+
+                    </div>
+                    <div class="aui-hr"></div>
+                    <div class="main_2" tapmode v-on:click="select(item.id)">
+                        <i class="iconfont icon-arrow-right"></i>
+                        <p class="aui-text-left aui-font-size-16">查看详情</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+      </template>
+
+
+    </div>
+</body>
+<script src="../script/api.js"></script>
+<script src="../script/AHelper.js"></script>
+<script src="../script/zepto.min.js"></script>
+<script src="../script/fastclick.js"></script>
+<script src="../script/base.js"></script>
+<script src="../script/vue/vue.min.js"></script>
+<script>
+    H.ready(function() {
+        var address = "/Hospital/index.php/api/user/mailbox";
+        var token = H.getStorage('token');
+        var userid = H.getStorage("user_id");
+        var user_role = H.getStorage("user_role");
+        $base.showLoading();
+        var ajaxData = {
+            token: token,
+            userid: userid,
+            user_role: user_role
+        };
+        $base.submit(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret));
+            $base.closeLoading();
+            if (ret.status == 1) {
+                vm.list = ret.feedback;
+            } else {
+                $("#notice_info").hide();
+            }
+
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+
+        api.addEventListener({
+            name: 'yijian'
+        }, function(ret, err) {
+            var lo = JSON.stringify(ret.value.yijian);
+            console.log(lo);
+            if (lo == 'true') {
+                console.log('修改了东西');
+                location.reload();
+            } else {
+                console.log("没改");
+            }
+
+            console.log(ret.value);
+        });
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        });
+    })
+
+    var vm = new Vue({
+        el: "#notice_info",
+        data: {
+            list: []
+        },
+        methods: {
+            select: function(id) {
+                // alert(id);
+                H.setStorage("fid", id);
+                api.openWin({
+                    name: 'yj1',
+                    url: './yijian1.html',
+                    pageParam: {
+                        name: 'test'
+                    }
+                });
+            }
+
+        }
+    });
+
+    function fh() {
+        api.closeWin({});
+    }
+
+    function commit() {
+        api.openWin({
+            name: 'yj2',
+            url: './yijian2.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function cheak() {
+        api.openWin({
+            name: 'yj1',
+            url: './yijian1.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+</script>
+
+</html>

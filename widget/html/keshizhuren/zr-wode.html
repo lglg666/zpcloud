@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+    <style media="screen">
+        header {
+            position: fixed;
+            width: 100%;
+            z-index: 99;
+        }
+
+        .pad {
+            padding-top: 12.65rem;
+        }
+
+        .top {
+            color: #fff;
+            height: 7.5rem;
+            background: #4593de;
+        }
+
+        .top p {
+            width: 4.5rem;
+            margin: 0 auto;
+            padding-top: 1.45rem;
+        }
+
+        .camera {
+            width: 4.5rem;
+            height: 4.5rem;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -1.2rem;
+            bottom: 0;
+            margin: auto;
+        }
+
+        .camera img {
+            border-radius: 50%;
+            border: 0.1rem solid #fff;
+        }
+
+        .color-28 {
+            color: #282828;
+        }
+
+        .color-76 {
+            color: #76D166;
+        }
+
+        .color-ff76 {
+            color: #FF6655;
+        }
+
+        .color-76 {
+            color: #76D166;
+        }
+
+        .color-fa {
+            color: #FACB5C;
+        }
+
+        .top2,
+        .content,
+        .aui-row,
+        .main_2 {
+            background: #fff;
+        }
+
+        .aui-hr {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .aui-row {
+            height: 3.5rem;
+            width: 100%;
+        }
+
+        .aui-border-r {
+            background-size: 1pt 50%;
+        }
+
+        .content {}
+
+        .main_2 i {
+            font-size: 0.8rem;
+            padding-right: 0.5rem;
+        }
+
+        .main_2 .i1 {
+            font-size: 1.2rem;
+            padding: 0 0.5rem;
+        }
+
+        .main_2 p {
+            color: #222;
+            font-size: 0.9rem;
+        }
+
+        .main_2 {
+            font-size: 0.8rem;
+            height: 2.5rem;
+            line-height: 2.5rem;
+        }
+
+        #box {
+          background: #ffffff;
+          height: 5.5rem;
+          width: 100%;
+          position: fixed;
+          left: 0;
+          bottom: -6rem;
+          -webkit-transform: translate3d(0px, -106px, 0px);
+          -moz-transform: translate3d(0px, -106px, 0px);
+          transform: translate3d(0px, -106px, 0px);
+          transition: all 0.3s;
+          visibility: hidden;
+        }
+
+        #box button {
+            height: 2rem;
+            line-height: 2rem;
+            font-size: 0.8rem !important;
+        }
+
+        #box a {
+            display: block;
+            width: 100%;
+            text-align: center;
+            height: 2rem;
+            background: #fff;
+            color: #333;
+            line-height: 2rem;
+            border-bottom: 1px solid #ebebeb;
+            font-size: 16px;
+            position: relative;
+            margin-bottom: 6px;
+        }
+
+        .btn {
+            margin-top: 0.1rem;
+            margin-bottom: 2rem;
+            text-align: center
+        }
+
+        .btn button {
+            width: 90%;
+            background: #009bdb;
+            color: #fff;
+            height: 0.9rem;
+            border-radius: 0.4rem;
+        }
+
+        .aui-col-xs-4 {
+            height: 100%;
+        }
+
+        .qh {
+            height: 1rem;
+            background: #4593de;
+            color: #fff;
+            font-size: 0.5rem !important;
+            border: 0;
+            line-height: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="top ">
+            <p class="aui-font-size-20 clo-bai ">个人信息</p>
+        </div>
+        <div class="camera " tapmode onclick="upimg()" id="tx">
+            <img src="../../image/gril.jpg" alt="" id="user_head">
+        </div>
+        <div class="top2">
+            <p class="color-28 aui-font-size-20 aui-text-center" style="padding-top:1rem;" id="user_name">默认角色</p>
+            <p class="aui-font-size-14 aui-text-center clo-lan aui-padded-t-5 aui-padded-b-5" id="user_role">规培办</p>
+            <p class="color-99 aui-font-size-14 aui-text-center  aui-padded-b-5" id="hospital_name">炬海中医院</p>
+        </div>
+        <div id="jd"></div>
+        <div class="aui-hr"></div>
+    </header>
+    <div class="pad"></div>
+    <div class="content aui-margin-t-15">
+        <div class="main_2" tapmode onclick="grxx()">
+            <i class="iconfont icon-arrow-right aui-pull-right"></i>
+            <i class="iconfont icon-my-information aui-pull-left clo-lan i1"></i>
+            <p class="aui-text-left aui-font-size-16 clo-22">个人档案信息</p>
+        </div>
+        <div class="main_2" tapmode onclick="dgxz()">
+            <i class="iconfont icon-arrow-right aui-pull-right"></i>
+            <i class="iconfont icon-outline-rules aui-pull-left color-76 i1"></i>
+            <p class="aui-text-left aui-font-size-16 clo-22">大纲细则</p>
+        </div>
+    </div>
+    <div class="main_2 aui-margin-t-15 aui-margin-b-15" tapmode onclick="yjfk()">
+        <i class="iconfont icon-arrow-right aui-pull-right"></i>
+        <i class="iconfont icon-learn-s aui-pull-left color-ff76 i1"></i>
+        <p class="aui-text-left aui-font-size-16 clo-22">意见反馈</p>
+    </div>
+    <div class="main_2 aui-margin-t-15 aui-margin-b-15" tapmode onclick="gywm()">
+        <i class="iconfont icon-arrow-right aui-pull-right"></i>
+        <i class="iconfont icon-about-us aui-pull-left clo-lan i1"></i>
+        <p class="aui-text-left aui-font-size-16 clo-22">关于我们</p>
+    </div>
+
+    <div class="main_2 aui-margin-t-15 aui-margin-b-15" tapmode onclick="fx()">
+        <i class="iconfont icon-arrow-right aui-pull-right"></i>
+        <i class="iconfont icon-share-to aui-pull-left color-fa i1"></i>
+        <p class="aui-text-left aui-font-size-16 clo-22">分享</p>
+    </div>
+    <div class="main_2 aui-margin-t-15 aui-margin-b-15" tapmode onclick="sz()">
+        <i class="iconfont icon-arrow-right aui-pull-right"></i>
+        <i class="iconfont icon-set aui-pull-left color-fa i1"></i>
+        <p class="aui-text-left aui-font-size-16 clo-22">设置</p>
+    </div>
+
+    <div id="box">
+        <a>操 作</a>
+        <div class="btn" tapmode onclick="save()">
+            <button>
+        截取头像
+      </button>
+        </div>
+    </div>
+</body>
+<script src="../../css/iconfont/iconfont.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/api.js"></script>
+<script>
+    H.ready(function() {
+        var address = "/Hospital/index.php/api/user/user_info";
+        var token = H.getStorage('token');
+        var userid = H.getStorage("user_id");
+        // $base.showLoading();
+        var ajaxData = {
+            token: token,
+            userid: userid
+        };
+        $base.get(address, ajaxData, function(ret) {
+            $("#user_name").html(ret.data.user_name);
+            $("#hospital_name").html(ret.data.hospital_name);
+            $("#user_role").html(ret.data.role_name);
+            if (ret.data.user_head != "") {
+                $("#user_head").attr("src", ret.data.user_head);
+                console.log(ret.data.user_head);
+            } else {
+                $("#user_head").attr("src", "../../image/gril.jpg");
+                console.log(55555);
+            }
+            // $base.closeLoading();
+        }, function(ret) {
+            console.log(JSON.stringify(ret));
+        });
+
+        api.addEventListener({
+            name: 'modify_name'
+        }, function(ret, err) {
+            var lo = JSON.stringify(ret.value.key);
+            console.log(lo);
+            if (lo == 'true') {
+                console.log('修改了东西');
+                location.reload();
+            } else {
+                console.log("没改");
+            }
+
+            console.log(ret.value);
+        });
+    })
+
+    function upimg() {
+        api.actionSheet({
+            title: '上传照片',
+            cancelTitle: '取消',
+            buttons: ['拍照', '手机相册']
+        }, function(ret, err) {
+            if (ret) {
+                getPicture(ret.buttonIndex);
+            }
+        });
+    }
+
+
+    function getPicture(sourceType) {
+        //相机拍照
+        if (sourceType == 1) {
+            api.getPicture({
+                sourceType: 'camera',
+                encodingType: 'jpg',
+                mediaValue: 'pic',
+                destinationType: 'url',
+                allowEdit: true,
+                quality: 50,
+                targetWidth: 100,
+                targetHeight: 100,
+                saveToPhotoAlbum: false
+            }, function(ret, err) {
+                // 获取拍照图像并剪辑
+                if (ret) {
+                    $api.byId('box').style.visibility = 'visible';
+                    var FNImageClip = api.require('FNImageClip');
+                    FNImageClip.open({
+                        rect: {
+                            x: 0,
+                            y: 0,
+                            w: api.frameWidth,
+                            h: api.frameHeight - document.querySelector('#box').offsetHeight
+                        },
+                        srcPath: ret.data,
+                        mode: 'image',
+                        style: {
+                            mask: 'rgba(0,0,0,0.75)',
+                            clip: {
+                                w: 200,
+                                h: 200,
+                                x: (api.frameWidth - 200) / 2,
+                                y: (api.frameHeight - 200) / 2,
+                                borderColor: '#0f0',
+                                borderWidth: 1,
+                                appearance: 'rectangle'
+                            }
+                        },
+                    }, function(ret, err) {});
+                }
+            });
+        } else if (sourceType == 2) {
+            //手机相册选图片
+            var obj = api.require('UIMediaScanner');
+            obj.open({
+                type: 'picture',
+                column: 4,
+                max: 1,
+                sort: {
+                    key: 'time',
+                    order: 'desc'
+                },
+                texts: {
+                    stateText: '已选择*项',
+                    cancelText: '取消',
+                    finishText: '完成'
+                },
+                styles: {
+                    bg: '#fff',
+                    mark: {
+                        icon: '',
+                        position: 'bottom_right',
+                        size: 20
+                    },
+                    nav: {
+                        bg: '#eee',
+                        stateColor: '#000',
+                        stateSize: 18,
+                        cancleBg: 'rgba(0,0,0,0)',
+                        cancelColor: '#000',
+                        cancelSize: 18,
+                        finishBg: 'rgba(0,0,0,0)',
+                        finishColor: '#000',
+                        finishSize: 18
+                    }
+                }
+            }, function(ret) {
+                //将选择的图像进行剪辑
+                if (ret.eventType == 'cancel') {} else if (ret.list.length > 0) {
+                    $api.byId('box').style.visibility = 'visible';
+                    var FNImageClip = api.require('FNImageClip');
+                    FNImageClip.open({
+                        rect: {
+                            x: 0,
+                            y: 0,
+                            w: api.winWidth,
+                            h: api.winHeight - document.querySelector('#box').offsetHeight
+                        },
+                        srcPath:ret.list[0].thumbPath,
+                        mode: 'image',
+                        style: {
+                            mask: 'rgba(0,0,0,0.75)',
+                            clip: {
+                                w: 200,
+                                h: 200,
+                                x: (api.frameWidth - 200) / 2,
+                                y: (api.frameHeight - 200) / 2,
+                                borderColor: '#0f0',
+                                borderWidth: 0,
+                                appearance: 'rectangle'
+                            }
+                        },
+                    }, function(ret, err) {});
+                }
+            });
+        }
+    }
+    //保存剪辑图像
+    function save() {
+        var FNImageClip = api.require('FNImageClip');
+        var nubs = nub(1000, 3000);
+        FNImageClip.save({
+            destPath: 'fs://tx_' + nubs + '.jpg',
+            copyToAlbum: false,
+            quality: 1
+        }, function(ret, err) {
+            $api.byId('box').style.visibility = 'hidden';
+            var tx = ret.destPath;
+            FNImageClip.close();
+            //上传剪辑后的图像到服务器
+
+            // var hospital_ip = H.getStorage("hospital_ip");
+            // var address = "/Hospital/index.php/api/user/user_image";
+            // var url = hospital_ip+address;
+            var userid = H.getStorage("user_id");
+            var address = "/Hospital/index.php/api/user/user_image";
+            var ajaxData = {
+                file: tx,
+                userid: userid
+            };
+
+            $base.submit(address, ajaxData, function(ret) {
+              console.log(JSON.stringify(ret));
+                if (ret.status == 0) {
+                    api.toast({
+                        msg: '上传错误',
+                        duration: 3000,
+                        location: 'bottom'
+                    });
+                } else if (ret.status == 1) {
+                    $api.byId('tx').innerHTML = '<img src="' + ret.path + ret.name + '">';
+                    //$api.byId('tx').innerHTML = '<img src="http://192.168.1.27/Hospital/www/user_head_img/201805051009-33.jpg">';
+                    api.toast({
+                        msg: '上传成功',
+                        duration: 3000,
+                        location: 'bottom'
+                    });
+                } else if (ret.status == 2) {
+                    api.toast({
+                        msg: '图像无效',
+                        duration: 3000,
+                        location: 'bottom'
+                    });
+                }
+            }, function(err) {
+                console.log(err);
+            });
+        });
+    }
+
+    function nub(minNum, maxNum) {
+        switch (arguments.length) {
+            case 1:
+                return parseInt(Math.random() * minNum + 1);
+                break;
+            case 2:
+                return parseInt(Math.random() * (maxNum - minNum + 1) + minNum);
+                break;
+            default:
+                return 0;
+                break;
+        }
+    }
+
+    function grxx() {
+        api.openWin({
+            name: 'grxx',
+            url: '../gerenxx.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function sz() {
+      api.openWin({
+          name: 'sz',
+          url: '../shezhi.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+
+
+  }
+
+  function fx() {
+    api.openFrame({
+        name: 'page2',
+        url: '../popup/ewm_an.html',
+        rect: {
+            x: 0,
+            y: 0,
+            w: "auto",
+            h: "auto"
+        },
+        pageParam: {
+            name: 'test'
+        },
+        bounces: false,
+        bgColor: 'rgba(255,255,255,.8)',
+        vScrollBarEnabled: false,
+        hScrollBarEnabled: false
+    });
+
+
+  }
+
+
+  function gywm() {
+      api.openWin({
+          name: 'gywm',
+          url: '../guanyuwm.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+
+
+  }
+
+  function yjfk() {
+      api.openWin({
+          name: 'yjfk',
+          url: '../yijianfk.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+
+  }
+
+  function dgxz() {
+      api.openWin({
+          name: 'dgxz',
+          url: '../dagangxz.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+  }
+
+
+</script>
+
+</html>

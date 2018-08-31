@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../../css/aui.css">
+    <link rel="stylesheet" href="../../../css/iconfont/iconfont.css">
+    <title>Document</title>
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .con {
+        background: #fff;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .con input {
+        width: 80%;
+        height: 2.5rem;
+    }
+
+    .bt {
+        position: relative;
+        width: 80%;
+        margin: 0.7rem auto;
+    }
+
+    .bt button {
+        width: 100%;
+        margin: 0 auto;
+        border-radius: 4px;
+        height: 2.5rem;
+        font-size: 0.85rem;
+        outline: none;
+        border: 0;
+        background: #4593de;
+        color: #fff;
+    }
+
+    .con select {
+        width: 79%;
+        direction: rtl;
+        /*width: auto;*/
+        padding: 0 2%;
+        margin: 0;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        float: left;
+    }
+
+    option {
+        text-align: right;
+        direction: ltr;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">添加带教</div>
+    </header>
+    <div class="pad"></div>
+    <div class="vue">
+        <div class="con aui-padded-l-15 aui-border-b">
+            <p class="aui-font-size-16 clo-99 aui-pull-left">姓名：</p><input type="text" placeholder="请输入姓名" class="aui-pull-left" v-model="inputval.name">
+        </div>
+        <div class="con aui-padded-l-15 aui-border-b">
+            <p class="aui-font-size-16 clo-99 aui-pull-left">账号：</p><input type="text" placeholder="请输入账号" class="aui-pull-left" v-model="inputval.account">
+        </div>
+        <div class="con aui-padded-l-15 aui-border-b">
+            <p class="aui-font-size-16 clo-99 aui-pull-left">密码：</p><input type="text" placeholder="请设置密码" class="aui-pull-left" v-model="inputval.password">
+        </div>
+        <div class="con aui-padded-l-15 aui-border-b">
+            <p class="aui-font-size-16 clo-99 aui-pull-left">密码：</p><input type="text" placeholder="请重复密码" class="aui-pull-left" v-model="inputval.password1">
+        </div>
+
+        <div class="con aui-padded-l-15 aui-border-b aui-margin-t-15">
+            <p class="aui-font-size-16 clo-99 aui-pull-left">专业：</p>
+            <select v-model="inputval.zy">
+      <option value="">请选择</option>
+    <option v-for="profession in config.professions" :value="profession.id" >{{profession.name}}</option>
+              </select>
+
+            <i class="iconfont icon-arrow-right aui-pull-right  aui-padded-r-10"></i>
+        </div>
+        <div class="con aui-padded-l-15 aui-border-b">
+            <p class="aui-font-size-16 clo-99 aui-pull-left">学历:</p>
+            <select v-model="inputval.xl">
+              <option value="">请选择</option>
+  <option :value="education.id" v-for="education in config.educations">{{education.name}}</option>
+          </select>
+            <i class="iconfont icon-arrow-right aui-pull-right  aui-padded-r-10"></i>
+        </div>
+
+        <div class="bt" tapmode v-on:click="submit()">
+            <button>确定</button>
+        </div>
+
+    </div>
+</body>
+<script src="../../../script/api.js"></script>
+<script src="../../../script/AHelper.js"></script>
+<script src="../../../script/base.js"></script>
+<script src="../../../script/vue/vue.min.js"></script>
+<script src="../../../script/jquery.min.js"></script>
+<script src="../../../script/fastclick.js"></script>
+<script src="../../../script/zepto.min.js"></script>
+<script src="../../../script/index.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: '.vue',
+        data: {
+            config: {
+                departments: [],
+                educations: [],
+                professions: [],
+                user_types: [],
+                user_titles: [],
+                user_classs: [],
+                schools: [],
+                companys: []
+            },
+            inputval: {
+                zy: "",
+                xl: "",
+            }
+        },
+        methods: {
+            submit: function() {
+                console.log(JSON.stringify(this.inputval));
+                if (!this.inputval.name == "") {
+                    if (!this.inputval.account == "") {
+                        if (!this.inputval.password == "") {
+                            if (!this.inputval.zy == "") {
+                                if (!this.inputval.xl == "") {
+                                    if (this.inputval.password == this.inputval.password1) {
+                                        console.log(JSON.stringify(this.inputval));
+                                        var address = "/Hospital/index.php/api/department/teacher";
+                                        var token = H.getStorage('token');
+                                        var ajaxData = {
+                                            token: token,
+                                            action: "insert",
+                                            username: this.inputval.name,
+                                            account: this.inputval.account,
+                                            password: this.inputval.password,
+                                            eid: this.inputval.xl,
+                                            pid: this.inputval.zy,
+                                        };
+                                        $base.get(address, ajaxData, function(ret) {
+                                            console.log(JSON.stringify(ret));
+                                            $base.toast(ret.errmsg);
+                                            setTimeout(function() {
+                                                api.closeWin({});
+                                            }, 500)
+                                        }, function(err) {
+                                            console.log(JSON.stringify(err));
+                                        });
+                                    } else {
+                                        $base.toast("输入密码不一致")
+                                    }
+                                } else {
+                                    $base.toast("学历不能为空");
+                                }
+                            } else {
+                                $base.toast("学历不能为空");
+                            }
+                        } else {
+                            $base.toast("密码不能为空");
+                        }
+                    } else {
+                        $base.toast("账号不能为空");
+                    }
+                } else {
+                    $base.toast("姓名不能为空");
+                }
+
+            },
+        },
+    })
+    H.ready(function() {
+
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        });
+        addscript();
+    })
+
+    function fh() {
+        api.closeWin({});
+
+    }
+</script>
+
+</html>

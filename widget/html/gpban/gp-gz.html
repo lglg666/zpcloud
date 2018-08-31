@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 99;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .top {
+        color: #222222;
+        background: #fff;
+        border-bottom: 1px solid #ddd;
+        font-family: PingFangSC-Regular;
+    }
+
+    .aui-icon-right {
+        font-size: 0.8rem;
+        padding: 0 0.2rem;
+        font-weight: 800;
+    }
+
+    .q {
+        height: 2rem;
+        line-height: 2rem;
+        color: #222222;
+        font-size: 0.8rem;
+        font-weight: 600;
+        font-family: ios9SC-Medium;
+        background: #fff;
+    }
+
+    .aui-col-xs-3 img {
+        margin: 0 auto;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .pad {
+        padding-top: 2.5rem;
+    }
+    .top_img{
+      background: #fff;
+      width: 100%;
+      padding-top: 0.5rem
+    }
+</style>
+
+<body>
+    <header >
+        <div class="top aui-text-center aui-font-size-18">
+            工作
+        </div>
+    </header>
+    <div class="pad"></div>
+    <div class="top_img">
+      <img src="../../image/advertising.png" alt="" class="aui-padded-l-10 aui-padded-r-10 aui-padded-b-10">
+    </div>
+    <div class="jj aui-margin-b-15">
+        <div class="q aui-padded-l-15 chu">
+            用户管理
+        </div>
+        <section class="aui-grid">
+          <div class="aui-row">
+              <div class="aui-col-xs-3" tapmode onclick="ckys()">
+                  <img src="../../image/user-management.png" alt="">
+                  <div class="aui-grid-label">医师查看</div>
+              </div>
+              <div class="aui-col-xs-3" tapmode onclick="ckdj()">
+                  <img src="../../image/look-over-teacher.png" alt="">
+                  <div class="aui-grid-label">带教查看</div>
+              </div>
+              <div class="aui-col-xs-3" tapmode onclick="ckzr()">
+                  <img src="../../image/look-over-department.png" alt="">
+                  <div class="aui-grid-label">主任查看</div>
+              </div>
+          </div>
+        </section>
+    </div>
+    <div class="jj aui-margin-b-15">
+        <div class="q aui-padded-l-15 chu">
+            审核工作
+        </div>
+        <section class="aui-grid">
+            <div class="aui-row">
+                <div class="aui-col-xs-3" tapmode onclick="bz()">
+                    <img src="../../image/disease_registration_btn.png" alt="">
+                    <div class="aui-grid-label">病种登记</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="ss()">
+                    <img src="../../image/surgical_registration_btn.png" alt="">
+                    <div class="aui-grid-label">手术登记</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="jn()">
+                    <img src="../../image/skills_registration_btn.png" alt="">
+                    <div class="aui-grid-label">技能要求</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="qj()">
+                    <img src="../../image/rescue-record.png" alt="">
+                    <div class="aui-grid-label">抢救记录</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="px()">
+                    <img src="../../image/training-teaching.png" alt="">
+                    <div class="aui-grid-label">培训教学</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="sx()">
+                    <img src="../../image/writing-medical-records.png" alt="">
+                    <div class="aui-grid-label">书写病历</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="mz()">
+                    <img src="../../image/outpatient-diagnosis-and-treatment.png" alt="">
+                    <div class="aui-grid-label">门诊诊治</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="jz()">
+                    <img src="../../image/emergency-treatment.png" alt="">
+                    <div class="aui-grid-label">急诊诊治</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="xx()">
+                    <img src="../../image/learn-to-read.png" alt="">
+                    <div class="aui-grid-label">学习阅读</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="jxdbl()">
+                    <img src="../../image/great-medical-record.png" alt="">
+                    <div class="aui-grid-label">教学大病历</div>
+                </div>
+                <div class="aui-col-xs-3"tapmode onclick="ckxj()">
+                    <img src="../../image/summary_btn.png" alt="">
+                    <div class="aui-grid-label">出科小结</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="kq()">
+                    <img src="../../image/attendance_registration_btn.png" alt="">
+                    <div class="aui-grid-label">考勤审批</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="jj aui-margin-b-15">
+        <div class="q aui-padded-l-15 chu">
+            评价工作
+        </div>
+        <section class="aui-grid">
+            <div class="aui-row">
+                <div class="aui-col-xs-3" tapmode onclick="yspjks()">
+                    <img src="../../image/evaluation-student.png" alt="">
+                    <div class="aui-grid-label">医师对科室</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="yspjdj()">
+                    <img src="../../image/evaluation_of_teaching_btn.png" alt="">
+                    <div class="aui-grid-label">医师对带教</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="djpjys()">
+                    <img src="../../image/teacher-to-doctor.png" alt="">
+                    <div class="aui-grid-label">带教对医师</div>
+                </div>
+                <!-- <div class="aui-col-xs-3" tapmode onclick="kspjdj()">
+                    <img src="../../image/evaluation_section_btn.png" alt="">
+                    <div class="aui-grid-label">科室对带教</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="kspjys()">
+                    <img src="../../image/evaluation_self_btn.png" alt="">
+                    <div class="aui-grid-label">科室对医师</div>
+                </div> -->
+                <div class="aui-col-xs-3" tapmode onclick="mnpg()">
+                    <img src="../../image/evaluation-form.png" alt="">
+                    <div class="aui-grid-label">MINI-CEX</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="dops()">
+                    <img src="../../image/work-dops.png" alt="">
+                    <div class="aui-grid-label">DOPS</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <div class="jj aui-margin-b-15">
+        <div class="q aui-padded-l-15 chu">
+            考试工作
+        </div>
+        <section class="aui-grid">
+            <div class="aui-row">
+                <div class="aui-col-xs-3" tapmode onclick="jnks()">
+                    <img src="../../image/designated-exam.png" alt="">
+                    <div class="aui-grid-label">技能考试</div>
+                </div>
+
+                <div class="aui-col-xs-3" tapmode onclick="ckks()">
+                    <img src="../../image/exams_test_btn.png" alt="">
+                    <div class="aui-grid-label">出科考试</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="jj aui-margin-b-15">
+        <div class="q aui-padded-l-15 chu">
+            教学活动
+        </div>
+        <section class="aui-grid">
+            <div class="aui-row">
+              <div class="aui-col-xs-3" tapmode onclick="xjk()">
+                  <img src="../../image/summary_btn.png" alt="">
+                  <div class="aui-grid-label">小讲课</div>
+              </div>
+
+              <div class="aui-col-xs-3" tapmode onclick="bltl()">
+                  <img src="../../image/case-discussion.png" alt="">
+                  <div class="aui-grid-label">病例讨论</div>
+              </div>
+              <div class="aui-col-xs-3" tapmode onclick="xsll()">
+                  <img src="../../image/academic.png" alt="">
+                  <div class="aui-grid-label">学术/理论</div>
+              </div>
+              <div class="aui-col-xs-3" tapmode onclick="jxcf()">
+                  <img src="../../image/teaching.png" alt="">
+                  <div class="aui-grid-label">教学查房</div>
+              </div>
+            </div>
+        </section>
+    </div>
+
+</body>
+<script src="../../../script/api.js"></script>
+<script>
+function ckys() {
+  api.openWin({
+      name: 'ckys',
+      url: '../gpban/gp-ckyishi.html',
+      pageParam: {
+          name: 'test'
+      }
+  });
+
+}
+
+function jxcf(){
+  api.openWin({
+      name: 'gp_chafang',
+      url: 'gp_chafang.html',
+      pageParam: {
+          name: 'test'
+      }
+  });
+}
+
+function ckdj() {
+  api.openWin({
+      name: 'ckdj',
+      url: '../gpban/gp-ckdaijiao.html',
+      pageParam: {
+          name: 'test'
+      }
+  });
+
+}
+    function bz() {
+        api.openWin({
+            name: 'gp_bz',
+            url: '../gpban/gp-bingzhong.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function ckzr() {
+      api.openWin({
+          name: 'ckzr',
+          url: '../gpban/gp-ckzhuren.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+    }
+
+    function xsll(){
+      api.openWin({
+          name: 'xsll',
+          url: 'gp_xsll.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+    }
+
+    function ss() {
+        api.openWin({
+            name: 'gp_ss',
+            url: '../gpban/gp-shoushu.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function jn() {
+        api.openWin({
+            name: 'gp-jn',
+            url: '../gpban/gp-jineng.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function yspjks() {
+        api.openWin({
+            name: 'gp-yspjkeshi',
+            url: '../gpban/gp-yspjks.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function yspjdj() {
+        api.openWin({
+            name: 'gp-yspjdaijiao',
+            url: '../gpban/gp-yspjdj.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function djpjys() {
+        api.openWin({
+            name: 'gp-djpjys',
+            url: '../gpban/gp-djpjys.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function xjk() {
+        api.openWin({
+            name: 'zr_xjk',
+            url: 'gp-xjiangke.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+    }
+
+    function bltl() {
+        api.openWin({
+            name: 'dj_bltl',
+            url: 'gp-binglitaolun.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function jnks() {
+        api.openWin({
+            name: 'gp-jnks',
+            url: '../gpban/gp-jnkaoshi.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function ckks() {
+        api.openWin({
+            name: 'gp-ckks',
+            url: '../gpban/gp-ckkaoshi.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function ckxj() {
+        api.openWin({
+            name: 'gp-Sum1',
+            url: '../gpban/gp-Summary.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function mnpg() {
+        api.openWin({
+            name: 'gp-minipg',
+            url: '../gpban/gp-minipg.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function dops() {
+        api.openWin({
+            name: 'gp-dops',
+            url: '../gpban/gp-dops.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function qj() {
+        api.openWin({
+            name: 'gp-rescue',
+            url: '../gpban/gp-rescue.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function px() {
+        api.openWin({
+            name: 'gp-Train',
+            url: '../gpban/gp-Train.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function sx() {
+        api.openWin({
+            name: 'gp-Medical',
+            url: '../gpban/gp-Medical.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function mz() {
+        api.openWin({
+            name: 'gp-menzhen',
+            url: '../gpban/gp-menzhen.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function jz() {
+        api.openWin({
+            name: 'gp-jizhen',
+            url: '../gpban/gp-jizhen.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function xx() {
+        api.openWin({
+            name: 'gp-xuexi',
+            url: '../gpban/gp-xuexi.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    function jxdbl() {
+      api.openWin({
+          name: 'gp-jxdbl',
+          url: '../gpban/gp-jxdbl.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+    }
+    function kq() {
+      api.openWin({
+          name: 'zr_kq',
+          url: '../gpban/gp-kaoqin.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+    }
+</script>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont.css">
+</head>
+<style>
+    body {
+        background: #eee;
+        /*opacity: 0.5;*/
+        height: 98%;
+        background: transparent;
+        -webkit-touch-callout: none;
+        font-family: Tahoma, Geneva, sans-serif;
+        font-style: normal;
+    }
+
+    .pop {
+        position: relative;
+        width: 80%;
+        height: 9rem;
+        margin: 10rem auto;
+        background: #fff;
+    }
+
+    i {
+        position: absolute !important;
+        font-weight: 600;
+        right: 0;
+    }
+
+    .p1 {
+        padding-top: 1rem ;
+        padding-bottom: 0.5rem;
+        color: #333;
+    }
+
+    .con {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .fot {
+        text-align: center;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .f1 {
+        width: 50%;
+        float: left;
+    }
+</style>
+
+<body>
+    <div class="pop">
+        <i class="aui-iconfont aui-icon-close aui-text-right aui-padded-t-10 aui-padded-r-10 aui-font-size-18" onclick="gb()"></i>
+        <div class="po">
+            <p class="aui-text-center p1 aui-font-size-20 clo-33">科室未接收</p>
+        </div>
+        <div class="con">
+            <p class="aui-text-left aui-font-size-16 clo-33">该科室主任还未接收你，没有工作内容</p>
+        </div>
+        <div class="fot">
+            <div class="aui-hr"></div>
+            <div class="f1 aui-border-r clo-33 aui-font-size-18">提醒接收</div>
+            <div class="f1 clo-33 aui-font-size-18">选择其他科室</div>
+        </div>
+
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script>
+  function gb() {
+    api.closeFrame({
+        name: 'page2'
+    });
+
+  }
+</script>
+</html>

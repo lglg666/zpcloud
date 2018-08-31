@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href="../../css/aui.css">
+<link rel="stylesheet" type="text/css" href="../../css/iconfont/iconfont.css">
+<style media="screen">
+    .top {
+        margin-top: 1rem;
+    }
+
+    .sslb a {
+        padding: 0.2rem;
+        line-height: 2rem;
+        color: #333;
+        font-size: 0.8rem;
+        margin: 0 .5rem;
+    }
+
+    .lsss {
+        line-height: 2.5rem;
+    }
+
+    .lsss i {
+        font-size: 1.2rem;
+        padding-right: 1rem;
+    }
+</style>
+
+<body>
+    <div class="aui-searchbar top" id="search">
+        <div class="aui-searchbar-input aui-border-radius">
+            <i class="aui-iconfont aui-icon-search"></i>
+            <form action="javascript:search();">
+                <input type="search" placeholder="请输入搜索内容" id="search-input">
+            </form>
+        </div>
+        <div class="aui-searchbar-cancel clo-lan aui-padded-r-10 tapmod"  onclick=" clearinp() ">取消</div>
+
+    </div>
+    <div class="lsss aui-padded-l-15 aui-font-size-16 clo-99">历史搜索:
+        <i class="iconfont icon-del aui-pull-right  clo-99 " tapmod onclick="clearHistory()"></i>
+    </div>
+    <div class="sslb" id="lssslb">
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/aui-toast.js"></script>
+<script type="text/javascript">
+
+H.ready(function () {
+  var dd= H.getStorage("Record");
+  var ff = "<a >" + dd + "</a>";
+  $(".lssslb").append(ff);
+  console.log(dd);
+})
+    $("#search-input").on('keypress', function(e) {
+        var keycode = e.keyCode;
+        var searchName = $(this).val();
+        console.log(e.keyCode);
+        if (keycode == '13') {
+            e.preventDefault();
+            H.setStorage("Record",searchName)
+            //请求搜索接口
+            //  var sszd = $("#search-input").val();
+            var str = searchName;
+            var s = '';
+            console.log(str);
+            if (str == "") {
+                // s = '<div class="rmssts">暂无搜索记录...</div>';
+                // $("#lssslb").append(s);
+                $base.toast("搜索值不能为空")
+            } else {
+                var strs = new Array();
+                strs = str.split("|");
+                for (var i = 0; i < strs.length; i++) {
+                    s += "<a >" + strs[i] + "</a>";
+                }
+                $("#lssslb").append(s);
+                $(" #search-input").val("");
+            }
+        }
+
+        function setHistoryItems(keyword) {
+            let {
+                historyItems
+            } = localStorage;
+            if (historyItems === undefined) {
+                localStorage.historyItems = keyword;
+            } else {
+                historyItems = keyword + '|' + historyItems.split('|').filter(e => e != keyword).join('|');
+                localStorage.historyItems = historyItems;
+            }
+        };
+
+
+    });
+
+    function clearHistory() {
+        localStorage.removeItem('historyItems');
+        var div = document.getElementById("lssslb");
+        while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
+        {
+            div.removeChild(div.firstChild);
+        }
+        // $("#lssslb").append('<div class="rmssts">暂无搜索记录...</div>');
+    }
+
+    function clearinp() {
+        $(" #search-input").val("");
+    }
+</script>
+
+</html>

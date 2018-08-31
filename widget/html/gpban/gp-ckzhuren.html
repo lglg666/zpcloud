@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="../../css/aui.css">
+  <link rel="stylesheet" type="text/css" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+header {
+    position: fixed !important;
+    width: 100%;
+    font-size: 1rem;
+}
+
+header i {
+    color: #222222;
+    font-size: 1rem !important;
+    font-weight: 600;
+}
+
+.pad {
+    padding-top: 3.5rem;
+}
+
+.con{
+  background-color: #fff;
+}
+.con_tent p{
+  height: 1.5rem;
+  line-height: 1.5rem;
+}
+</style>
+<body>
+  <header class="aui-bar aui-bar-nav" id="header">
+      <a class="aui-pull-left" tapmode onclick="fh()">
+          <i class="iconfont icon-arrow-left aui-iconfont"></i>
+      </a>
+      <div class="aui-title">主任查看</div>
+      <p class="aui-pull-right clo-lan aui-font-size-16 aui-padded-r-15" tapmode onclick="addzr()">添加主任</p>
+  </header>
+  <div class="pad"></div>
+<div class="zr">
+  <div v-for="item in list">
+
+
+  <div class="con aui-margin-15">
+    <div class="con_tent aui-padded-10">
+      <p class="aui-font-size-16 clo-33">用户姓名：<span>{{item.username}}</span></p>
+      <p class="aui-font-size-16 clo-33">账号：<span>{{item.useraccount}}</span></p>
+      <p class="aui-font-size-16 clo-33">科室：<span>{{item.departmentname}}</span></p>
+      <p class="aui-font-size-16 clo-33">专业：<span>{{item.professionname}}</span></p>
+      <p class="aui-font-size-16 clo-33">学历：<span>{{item.educationname}}</span></p>
+      <p class="aui-font-size-16 clo-33">账号状态：<span>{{item.userstatus}}</span></p>
+    </div>
+  </div>
+
+</div>
+</div>
+</body>
+
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/aui-toast.js"></script>
+<script>
+var zr = new Vue({
+  el:".zr",
+  data:{
+    list:[]
+  }
+})
+  H.ready(function () {
+    var address = "/Hospital/index.php/api/office/user_list";
+    var token = H.getStorage('token');
+    $base.showLoading();
+    var ajaxData = {
+        token: token,
+        user_role:"3",
+    };
+    $base.get(address, ajaxData, function(ret) {
+        console.log(JSON.stringify(ret.data));
+        zr.list = ret.data;
+            $base.closeLoading();
+    }, function(err) {
+        console.log(JSON.stringify(err));
+    });
+
+    api.addEventListener({
+        name: 'gp-addzr'
+    }, function(ret, err) {
+        if (ret) {
+            location.reload();
+        } else {
+            alert(JSON.stringify(err));
+        }
+    });
+  })
+
+function fh() {
+  api.closeWin({});
+
+}
+  function addzr(){
+    api.openWin({
+        name: 'addzr',
+        url: '../gpban/gp-addzhuren.html',
+        pageParam: {
+            name: 'test'
+        }
+    });
+
+  }
+
+</script>
+</html>

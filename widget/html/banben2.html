@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/aui.css">
+    <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .logo {
+        padding-top: 4rem;
+    }
+
+    .logo img {
+        width: 5rem;
+        height: 5rem;
+        margin: 1rem auto;
+    }
+
+    .logo .p1 {
+        color: #4593DE;
+    }
+
+    .p2 {
+        margin: 1rem;
+    }
+
+    .bq {
+        position: absolute;
+        margin: 0 auto;
+        width: 100%;
+        bottom: 1rem;
+    }
+    .bq p {
+        color: #9e9e9e;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">版本</div>
+    </header>
+    <div class="aui-text-center logo">
+        <img src="../image/logo.png" alt="">
+        <p class="aui-font-size-16 p1">住培云 &nbsp &nbsp 1.0.1</p>
+        <p class="p2">目前是最新版本！</p>
+    </div>
+    <div class="aui-text-center bq">
+        <p class="aui-font-size-12">广州炬海科技有限公司版权所有</p>
+    </div>
+</body>
+<script src="../script/api.js"></script>
+<script src="../script/AHelper.js"></script>
+<script>
+    function fh() {
+        api.closeWin({
+            name: 'bb2'
+        });
+
+
+    }
+  H.ready(function () {
+
+  })
+</script>
+
+</html>

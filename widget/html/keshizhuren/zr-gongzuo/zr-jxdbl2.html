@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../../css/aui.css">
+    <link rel="stylesheet" href="../../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .mm {
+        background: #fff;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        font-family: PingFang-SC-Bold;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .gg {
+        background-color: #fff;
+    }
+
+    .gg .lin {
+        line-height: 2.5rem;
+        width: 100%;
+        border-bottom: #ddd 1px solid;
+    }
+
+    .gg textarea {
+        padding-top: .5rem;
+        height: 5rem
+    }
+
+    .nk {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        background: #fff;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .ng {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        background: #fff;
+    }
+
+    .ng input {
+        width: 60%;
+        line-height: 2.5rem;
+        height: 2.5rem;
+        text-align: right;
+        padding-right: 1rem;
+    }
+
+    .nk select {
+        /*width: 35%;*/
+        direction: rtl;
+        width: auto;
+        padding: 0 2%;
+        margin: 0;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    option {
+        text-align: right;
+        direction: ltr;
+    }
+
+    .title {
+        background-color: #f6f6f6;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .fk {
+        float: left;
+        width: 0.3rem;
+        height: 1.2rem;
+        margin: 0.6rem 0;
+        background-color: #4593de;
+    }
+
+    .nl {
+        background-color: #fff;
+    }
+
+    .nl p {
+        line-height: 2.5rem;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">查阅教学大病历</div>
+    </header>
+    <div class="pad"></div>
+
+    <div class="content">
+      <template v-for="item in list">
+        <div>
+            <div class="mm aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">患者姓名 <span class="clo-hong">*</span></div>
+                <div class="aui-pull-right aui-font-size-16 clo-99 "><input type="text" name="" value="" placeholder="请输入患者姓名" id="item" class="clo-99 aui-text-right aui-padded-r-10" v-model="item.name"></div>
+            </div>
+            <div class="nk">
+                <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">性别<span class="clo-hong">*</span></p>
+                <i class="iconfont icon-arrow-right aui-pull-right aui-font-size-16"></i>
+                <select name="" class="aui-pull-right" v-model="item.sex">
+          <option value="1" >男</option>
+          <option value="0">女</option>
+          </select>
+            </div>
+
+            <div class="mm aui-margin-b-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">年龄<span class="clo-hong">*</span></div>
+                <div class="aui-pull-right aui-font-size-16 clo-99 "><input type="text" name="" value="" placeholder="请输入年龄" id="item" class="clo-99 aui-text-right aui-padded-r-10"v-model="item.age"></div>
+            </div>
+        </div>
+
+        <div>
+            <div class="mm aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">民族<span class="clo-hong">*</span></div>
+                <div class="aui-pull-right aui-font-size-16 clo-99 "><input type="text" name="" value="" placeholder="请输入民族" id="item" class="clo-99 aui-text-right aui-padded-r-10"v-model="item.race"></div>
+            </div>
+            <div class="nk">
+                <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">婚否<span class="clo-hong">*</span></p>
+                <i class="iconfont icon-arrow-right aui-pull-right aui-font-size-16"></i>
+                <select name="" class="aui-pull-right" v-model="item.marital_status">
+                  <option value="0" >未婚</option>
+                  <option value="1">已婚</option>
+                  </select>
+            </div>
+
+            <div class="mm aui-margin-b-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">职业</div>
+                <div class="aui-pull-right aui-font-size-16 clo-99 "><input type="text" name="" value="" placeholder="请输入职业" id="item" class="clo-99 aui-text-right aui-padded-r-10"v-model="item.profession"></div>
+            </div>
+
+        </div>
+
+
+        <div>
+            <div class="mm aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">住院号<span class="clo-hong">*</span></div>
+                <div class="aui-pull-right aui-font-size-16 clo-99 "><input type="text" name="" value="" placeholder="请输入住院号" id="item" class="clo-99 aui-text-right aui-padded-r-10" v-model="item.hospitalized_number"></div>
+            </div>
+            <div class="mm ">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">病区 <span class="clo-hong">*</span></div>
+                <div class="aui-pull-right aui-font-size-16 clo-99 "><input type="text" name="" value="" placeholder="请输入病区" id="item" class="clo-99 aui-text-right aui-padded-r-10"v-model="item.district"></div>
+            </div>
+
+            <div class="mm ">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">床号 <span class="clo-hong">*</span></div>
+                <div class="aui-pull-right aui-font-size-16 clo-99 "><input type="text" name="" value="104" placeholder="请输入床号" id="item" class="clo-99 aui-text-right aui-padded-r-10" v-model="item.bed_number"></div>
+            </div>
+
+            <div class="mm aui-margin-b-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">出生地 <span class="clo-hong">*</span></div>
+                <div class="aui-pull-right aui-font-size-16 clo-99 "><input type="text" name="" value="广东省佛山市" placeholder="请输入出生地" id="item" class="clo-99 aui-text-right aui-padded-r-10" v-model="item.birthplace"></div>
+            </div>
+
+        </div>
+
+        <div>
+            <div class="mm aui-margin-t-15 ">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">入院日期 <span class="clo-hong">*</span></div>
+                <i class="aui-iconfont aui-icon-right aui-pull-right aui-padded-r-10"></i>
+                <div class="aui-pull-right aui-padded-r-10 aui-font-size-16"><input type="date" id="add-time" value="" style="padding: 0.7rem 0;" v-model="item.start_time" /></div>
+            </div>
+            <div class="mm">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">记录日期 <span class="clo-hong">*</span></div>
+                <i class="aui-iconfont aui-icon-right aui-pull-right aui-padded-r-10"></i>
+                <div class="aui-pull-right aui-padded-r-10 aui-font-size-16"><input type="date" id="add-time" value="" style="padding: 0.7rem 0;" v-model="item.record_time" /></div>
+            </div>
+        </div>
+        <div>
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16  lin clo-33">家庭住址<span class="clo-hong">*</span></div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="请输入家庭住址"v-model="item.address" ></textarea>
+            </div>
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">主诉内容</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="请输入主诉内容"v-model="item.action_in_chief" ></textarea>
+                <div class="aui-hr"></div>
+            </div>
+
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">现病史</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="请输入病历内容" v-model="item.case_now">
+                <div class="aui-hr"></div>
+            </div>
+        </div>
+
+        <div>
+            <div class="title aui-padded-l-15">
+                <div class="fk"></div>
+                <p class="aui-font-size-18 clo-22 aui-margin-l-15">既往史</p>
+            </div>
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">一般健康情况</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="请输入病历内容" v-model="item.principal_diagnosis">既往体健</textarea>
+                <div class="aui-hr"></div>
+            </div>
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">疾病史</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="请输入病历内容" v-model="item.principal_diagnosis">否认“肝炎”、“结核”等传染病史，</textarea>
+                <div class="aui-hr"></div>
+            </div>
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">传染病史</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="请输入病历内容" v-model="item.infect">否认“肝炎”、“结核”等传染病史，</textarea>
+                <div class="aui-hr"></div>
+            </div>
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">预防接种史</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="请输入病历内容" v-model="item.inoculate">否认药物、食物过敏史，</textarea>
+                <div class="aui-hr"></div>
+            </div>
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">手术外伤史</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="请输入病历内容" v-model="item.trauma">原籍地出生、长大，否认曾到血吸虫、疟疾等传染病 疫区，否认传染病接触史，否认肾性毒物、放射性物 质接触史，无嗜烟，无嗜酒，否认吸毒、性病史。</textarea>
+                <div class="aui-hr"></div>
+            </div>
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">输血史</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="请输入病历内容" v-model="item.transfusion">已婚，配偶及子女体健。</textarea>
+                <div class="aui-hr"></div>
+            </div>
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">药物过敏史</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="请输入病历内容" v-model="item.irritability">已婚，配偶及子女体健。家族中无类似病者，否认家 族遗传病史。</textarea>
+                <div class="aui-hr"></div>
+            </div>
+        </div>
+
+        <div>
+            <div class="title aui-padded-l-15">
+                <div class="fk"></div>
+                <p class="aui-font-size-18 clo-22 aui-margin-l-15">系统回顾</p>
+            </div>
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">呼吸系统</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="呼吸系统" v-model="item.respiratory"></textarea>
+                <div class="aui-hr"></div>
+            </div>
+
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">循环系统</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="循环系统" v-model="item.circulatory"></textarea>
+                <div class="aui-hr"></div>
+            </div>
+
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">消化系统</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="消化系统" v-model="item.digestion"></textarea>
+                <div class="aui-hr"></div>
+            </div>
+
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">呼吸系统</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="呼吸系统" v-model="item.urinary"></textarea>
+                <div class="aui-hr"></div>
+            </div>
+
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">造血系统</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="造血系统" v-model="item.hemopoietic"></textarea>
+                <div class="aui-hr"></div>
+            </div>
+
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">内分泌系统及代谢</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="内分泌系统及代谢" v-model="item.internal_secretion"></textarea>
+                <div class="aui-hr"></div>
+            </div>
+
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">神经精神系统</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="神经精神系统" v-model="item.nervous"></textarea>
+                <div class="aui-hr"></div>
+            </div>
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">肌肉骨骼系统</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="肌肉骨骼系统" v-model="item.muscular"></textarea>
+                <div class="aui-hr"></div>
+            </div>
+
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">个人史</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="" v-model="item.personal">呼吸系统：咳嗽，阵发性，咳痰，未见明显呼吸困难 或盗汗，否认与肺结核患者接触史。</textarea>
+                <div class="aui-hr"></div>
+            </div>
+
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">婚姻史</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="造血系统" v-model="item.marriage">循环系统：未见心悸、气促、咯血、发绀、心前疼痛、 晕厥、水肿及高血压，否认先天性心脏病、风湿热等 病史。</textarea>
+                <div class="aui-hr"></div>
+            </div>
+
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">女性月经史</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="内分泌系统及代谢" v-model="item.menstruation">内分泌系统：无恶寒、纳差、小便不利、无视力障碍、 肌肉震颤、性格异常、体重异常，毛发无异常及第二 性征改变。</textarea>
+                <div class="aui-hr"></div>
+            </div>
+
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">家族史</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="神经精神系统" v-model="item.family">神经系统：未见头痛、失眠、意识障碍、肢体麻木、 痉挛、肌肉萎缩、瘫痪、晕厥、视力障碍、感觉一运 动异常、记忆障碍、智力障碍等。</textarea>
+                <div class="aui-hr"></div>
+            </div>
+        </div>
+
+        <div>
+            <div class="title aui-padded-l-15">
+                <div class="fk"></div>
+                <p class="aui-font-size-18 clo-22 aui-margin-l-15">体格检查</p>
+            </div>
+            <div class="ng">
+                <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">体温</p>
+                <input type="text" name="" value="" placeholder="体温" class="aui-pull-right" v-model="item.animal_heat">
+                <div class="aui-hr"></div>
+            </div>
+            <div class="ng">
+                <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">脉搏</p>
+                <input type="text" name="" value="" placeholder="脉搏" class="aui-pull-right" v-model="item.pulse">
+                <div class="aui-hr"></div>
+            </div>
+            <div class="ng">
+                <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">呼吸</p>
+                <input type="text" name="" value="" placeholder="呼吸" class="aui-pull-right" v-model="item.breathe">
+                <div class="aui-hr"></div>
+            </div>
+            <div class="ng">
+                <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">血压</p>
+                <input type="text" name="" value="131mmHg" placeholder="请输入姓名" class="aui-pull-right" v-model="item.blood_pressure">
+                <div class="aui-hr"></div>
+            </div>
+
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">一般情况</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="一般情况" v-model="item.general_case"> 发育正常，营养中等，自主体位，表情自如，神志清， 查体合作。 </textarea>
+                <div class="aui-hr"></div>
+            </div>
+
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">皮肤粘膜</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="神经精神系统" v-model="item.skin_mucosa"> 皮肤粘膜未见苍白、黄染，未见皮疹，无皮下出血点， 皮肤弹性良好。 </textarea>
+                <div class="aui-hr"></div>
+            </div>
+
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">淋巴结</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="神经精神系统" v-model="item.lymph_gland">全身浅表淋巴结未扪及肿大。 </textarea>
+                <div class="aui-hr"></div>
+            </div>
+
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">头部及其器官</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="神经精神系统" v-model="item.head_apparatus">头颅无畸形。眼睑无水肿、下垂、倒睫，睑结膜无苍 白、充血，球结膜无充血、水肿，巩膜无黄染，角膜 透明，眼球双侧瞳孔等大等圆。 </textarea>
+                <div class="aui-hr"></div>
+            </div>
+
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">颈部</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="神经精神系统" v-model="item.neck"> 颈软，无抵抗，颈静脉无充盈，肝颈静脉回流征阴性， 气管居中，甲状腺不大。 </textarea>
+                <div class="aui-hr"></div>
+            </div>
+
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">胸部</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="神经精神系统" v-model="item.chest"> 胸廓对称无畸形、无局部膨隆或凹陷，无压痛。呼吸 平稳，节律规则。双侧呼吸对称。 </textarea>
+                <div class="aui-hr"></div>
+            </div>
+
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">肺</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="神经精神系统" v-model="item.lung"> 双肺叩诊清音。双肺呼吸音清，未闻及干湿性啰音。 </textarea>
+                <div class="aui-hr"></div>
+            </div>
+        </div>
+
+
+        <div>
+            <div class="title aui-padded-l-15">
+                <div class="fk"></div>
+                <p class="aui-font-size-18 clo-22 aui-margin-l-15">体格检查</p>
+            </div>
+
+            <div class="ng">
+                <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">视诊</p>
+                <input type="text" name="" value="心前区无隆起，" placeholder="请输入姓名" class="aui-pull-right" v-model="item.visual_examination">
+                <div class="aui-hr"></div>
+            </div>
+            <div class="ng">
+                <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">触诊</p>
+                <input type="text" name="" value="心前区无震颤，无心包摩擦感。" placeholder="请输入姓名" class="aui-pull-right" v-model="item.palpation">
+                <div class="aui-hr"></div>
+            </div>
+
+            <div class="nl aui-margin-t-15">
+                <p class=" aui-font-size-16 aui-padded-l-10 clo-33">叩诊</p>
+                <div class="aui-hr"></div>
+                <div class="aui-row aui-text-center">
+                    <p class="aui-col-xs-4 aui-font-size-16 clo-33">肋间</p>
+                    <p class="aui-col-xs-4 aui-font-size-16 clo-33">右界(cm)</p>
+                    <p class="aui-col-xs-4 aui-font-size-16 clo-33">左界(cm)</p>
+                </div>
+                <div class="aui-row aui-text-center">
+                    <p class="aui-col-xs-4 aui-font-size-16 clo-33">II</p>
+                    <p class="aui-col-xs-4 aui-font-size-16 clo-33"v-text="item.percussion_right_2">2</p>
+                    <p class="aui-col-xs-4 aui-font-size-16 clo-33"v-text="item.percussion_left_2">3</p>
+                </div>
+                <div class="aui-row aui-text-center">
+                    <p class="aui-col-xs-4 aui-font-size-16 clo-33">III</p>
+                    <p class="aui-col-xs-4 aui-font-size-16 clo-33"v-text="item.percussion_right_3">2</p>
+                    <p class="aui-col-xs-4 aui-font-size-16 clo-33"v-text="item.percussion_left_3">7</p>
+                </div>
+                <div class="aui-row aui-text-center">
+                    <p class="aui-col-xs-4 aui-font-size-16 clo-33">IV</p>
+                    <p class="aui-col-xs-4 aui-font-size-16 clo-33"v-text="item.percussion_right_4">2</p>
+                    <p class="aui-col-xs-4 aui-font-size-16 clo-33"v-text="item.percussion_left_4">6</p>
+                </div>
+                <div class="aui-row aui-text-center">
+                    <p class="aui-col-xs-4 aui-font-size-16 clo-33">v</p>
+                    <p class="aui-col-xs-4 aui-font-size-16 clo-33"v-text="item.percussion_right_5">2</p>
+                    <p class="aui-col-xs-4 aui-font-size-16 clo-33"v-text="item.percussion_left_5">5</p>
+                </div>
+            </div>
+            <div class="ng">
+                <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">左锁骨中线距离前正中线</p>
+                <p class="aui-pull-right aui-font-size-16 aui-padded-r-10 clo-33"v-text="item.clavicle_left">9cm</p>
+                <div class="aui-hr"></div>
+            </div>
+
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">听诊</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="神经精神系统" v-model="item.auscultation"> 心浊音界不大，心率81次/分，律齐，未闻及早搏，心 音有力，各瓣膜区未闻及病理性杂音。 </textarea>
+                <div class="aui-hr"></div>
+            </div>
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">周围血管征</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="神经精神系统" v-model="item.blood_vessel">周围血管征阴性。 </textarea>
+                <div class="aui-hr"></div>
+            </div>
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">腹部</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="神经精神系统" v-model="item.abdomen"> 腹平软，无压痛，无反跳痛，腹部未扪及包块，肝右 肋下、剑突下未及，脾未触及，Murphy征阴性，肝区 无叩痛，双肾区无叩痛，移动性浊音阴性。 </textarea>
+                <div class="aui-hr"></div>
+            </div>
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">直肠肛门,外生殖器</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="神经精神系统" v-model="item.genitals"> 肛门生殖器未查。 </textarea>
+                <div class="aui-hr"></div>
+            </div>
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">脊柱与四肢</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="神经精神系统" v-model="item.genitals"> 脊柱四肢见专科情况。 </textarea>
+                <div class="aui-hr"></div>
+            </div>
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">神经反射</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="神经精神系统" v-model="item.spine"> 生理反射存在，病理反射见专科情况。</textarea>
+                <div class="aui-hr"></div>
+            </div>
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">专科情况</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="神经精神系统" v-model="item.nervous_reflex"> 右足拇背伸肌力稍减弱。右小腿后外侧皮肤感觉减弱， 跟腱反射右（+）、左（+），膝腱反射左（++）、右 （++），巴彬斯基征双（-）。 </textarea>
+                <div class="aui-hr"></div>
+            </div>
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">辅助检查</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="神经精神系统" v-model="item.assist">X光检查1.腰椎退行性变，腰4/5、5/骶1椎间盘病变。 2.骶1腰化。 </textarea>
+                <div class="aui-hr"></div>
+            </div>
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">摘要</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="神经精神系统" v-model="item.digest">腰痛伴右下肢放射痛两天。缘患者于两天前，无明显 诱因突然出现腰痛，右下肢放射痛，活动不便，经推 拿、理疗、牵引、服西药等治疗后症状明显改善。 </textarea>
+                <div class="aui-hr"></div>
+            </div>
+            <div class="gg aui-margin-t-15">
+                <div class="aui-pull-left aui-padded-l-10 aui-font-size-16 lin clo-33">初步诊断</div>
+                <textarea name="a" class="aui-padded-l-10" placeholder="神经精神系统" v-model="item.tentative_diagnosis"> 1.腰椎间盘突出症 2.腰椎骨性关节炎</textarea>
+                <div class="aui-hr"></div>
+            </div>
+        </div>
+  </template>
+    </div>
+</body>
+<script src="../../../script/api.js"></script>
+<script src="../../../script/AHelper.js"></script>
+<script src="../../../script/base.js"></script>
+<script src="../../../script/vue/vue.min.js"></script>
+<script>
+    var vm = new Vue({
+        el: ".content",
+        data: {
+            list: {
+              start_time:"",
+              record_time:"",
+            }
+        }
+    })
+    H.ready(function() {
+        var token = H.getStorage('token');
+        var id = H.getStorage('zr_jxdbl1_id');
+        var address = "/Hospital/index.php/api/department/rotate_case_history";
+        var ajaxData = {
+            token: token,
+            action: "detail",
+            id: id,
+        };
+        $base.showLoading();
+        $base.get(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret))
+                vm.list = ret.data
+            $base.closeLoading();
+        }, function(err) {
+            console.log(err);
+        });
+    })
+
+    function fh() {
+        api.closeWin({});
+
+    }
+</script>
+
+</html>
