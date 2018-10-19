@@ -2652,19 +2652,32 @@
             if ($$com.isFunction(callback)) {
                 win.apiready = function() { //$$api.domAll('body', '.aui-bar').addCls(el, cls);;(header,"no-padding");
                     // console.log(api.systemType);
-										H.$
+                    H.$
                     var domHeader = $$api.byId('header');
-                    if ($$apicloud.systemType == 'android') {
-                        if (parseFloat($$api.systemVersion) >= 4.4) {
-                            $$api.addCls(domHeader, "aui-padded-t-2rem");
-                        } else {
-                            $$api.addCls(domHeader, "aui-padded-0");
-                        }
+                    // console.log(domHeader);
+                    if (domHeader == null) {
+                        //domHeader dom中没有元素
+                        console.log('等于null');
                     } else {
-                        $$api.addCls(domHeader, "aui-padded-t-1rem");
+                        if (api.systemType == 'android') {
+                            if (parseFloat(api.systemVersion) >= 4.4) {
+                                // $$api.addCls(domHeader, "aui-padded-t-2rem");
+                                var statusBar = api.require("statusBar");
+                                statusBar.getHeight(function(ret) {
+                                    console.log(ret.height)
+                                    domHeader.style.paddingTop = ret.height + "px";
+                                });
+
+                            } else {
+                                $$api.addCls(domHeader, "aui-padded-0");
+                            }
+                        } else {
+                            $$api.addCls(domHeader, "aui-padded-t-1rem");
+                        }
+
+
                     }
                     callback();
-
                 }
             }
         },

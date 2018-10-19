@@ -109,12 +109,12 @@
     var vm = new Vue({
         el: '.content',
         data: {
-            inputtext: {work_time:"2018-02-01"}
+            inputtext: {work_time:getnewDate(),}
         },
         methods: {
             submit: function() {
                 console.log(JSON.stringify(this.inputtext.diagnosis));
-                var address = "/Hospital/index.php/api/ys/rescuerecord";
+                var address = "/index.php/api/ys/rescuerecord";
                 var token = H.getStorage('token');
                 var ajaxData = {
                     token:token,

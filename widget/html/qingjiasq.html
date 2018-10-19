@@ -8,6 +8,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="../css/aui.css">
     <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+    <link rel="stylesheet" href="../css/style/style.css">
 </head>
 <style media="screen">
     header {
@@ -63,7 +64,14 @@
     </header>
     <div class="pad "></div>
     <div class="content">
-        <template v-for="item in list">
+      <!-- 无数据 -->
+      <template v-if="list == false">
+        <div class="aui-text-center "id="wsj">
+            <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+            <p class="aui-font-size-16">暂无数据</p>
+        </div>
+      </template>
+        <template v-for="item in list"v-else>
         <div class="list  aui-padded-10  aui-margin-15">
             <p class="clo-22 aui-font-size-16">所在科室：<span class="clo-99">{{item.departmentname}}</span></p>
             <p class="clo-22 aui-font-size-16">开始日期：<span class="clo-99">{{item.start_time}}</span></p>
@@ -76,8 +84,11 @@
             <div class="aui-hr"></div>
             <div class="btn aui-padded-t-10 aui-text-right">
                 <p class="clo-22 aui-font-size-16 aui-pull-left"><span v-bind:class="item.stauts==1 ? 'clo-hong' : 'clo-lan'">{{item.statustr}}</span></p>
-              <button type="button" name="button" class="btn_lan aui-margin-l-10" tapmode v-on:click="bj(item.id,item.start_time,item.end_time,item.days,item.type,item.cause,item.departmentname)">编辑</button>
-              <button type="button" name="button" class="btn_hong aui-margin-l-10" tapmode v-on:click="del(item.id)">删除</button>
+              <button type="button" name="button" class="btn_lan aui-margin-l-10" tapmode v-on:click="bj(item.id,item.start_time,item.end_time,item.days,item.type,item.cause,item.departmentname)"v-if="item.status ==0 ||item.status == 2">编辑</button>
+              <button type="button" name="button" class="btn_hong aui-margin-l-10" tapmode v-on:click="del(item.id)"v-if="item.status == 0||item.status == 2">删除</button>
+              <button type="button" name="button" class="btn_hong aui-margin-l-10" tapmode v-on:click="xj(item.id,item.end_time)"v-if="item.status ==1">销假</button>
+              <button type="button" name="button" class="btn_lan aui-margin-l-10" tapmode v-if="item.status ==4">销假成功</button>
+              <button type="button" name="button" class="btn_lan aui-margin-l-10" tapmode v-if="item.status ==3">等待同意销假</button>
             </div>
         </div>
       </template>
@@ -121,7 +132,7 @@
 
           },
           del:(id)=>{
-            var address = "/Hospital/index.php/api/ys/attend";
+            var address = "/index.php/api/ys/attend";
             var token = H.getStorage('token');
             var ajaxData = {
                 token: token,
@@ -142,12 +153,42 @@
             }, function(err) {
                 console.log(JSON.stringify(err));
             });
+          },
+          xj:(id,end_time)=>{
+            //获取当前时间并计算格式  YY-MM-DD
+           //判断当前时间是否大于请假时间，大于表示可以销假
+           if(getnewDate() > end_time){
+             var address = "/index.php/api/ys/attend";
+             var token = H.getStorage('token');
+             var ajaxData = {
+                 token: token,
+                 id:id,
+                 action:"destroy",
+             };
+             $base.submit(address, ajaxData, function(ret) {
+                 console.log(JSON.stringify(ret));
+                 if(ret.status == 1){
+                       $base.toast(ret.errmsg)
+                       setTimeout(function () {
+                         location.reload();
+                       },800)
+                 }else{
+                       $base.toast(ret.errmsg)
+                 }
+
+             }, function(err) {
+                 console.log(JSON.stringify(err));
+             });
+           }else {
+             $base.toast("请遵循销假规则")
+           }
+
           }
         }
 
     })
     H.ready(function() {
-        var address = "/Hospital/index.php/api/ys/attend";
+        var address = "/index.php/api/ys/attend";
         var token = H.getStorage('token');
         var ajaxData = {
             token: token,
@@ -175,6 +216,7 @@
                  alert( JSON.stringify( err ) );
             }
         });
+
     })
     function fh() {
         api.closeWin({});

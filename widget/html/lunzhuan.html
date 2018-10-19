@@ -24,7 +24,7 @@
     .aui-row {
         position: fixed;
         width: 100%;
-        top: 7.5rem;
+        top: 8.9rem;
         left: 0;
     }
 
@@ -226,7 +226,7 @@
     }
 
     .mar {
-        height: 10rem;
+        height: 11.5rem;
     }
 
     .ds p span,
@@ -284,7 +284,7 @@
 
 <body>
     <div class="lunzhuan">
-        <header class="">
+        <header class="" id="header">
             <div class="h_top aui-text-center aui-font-size-20 clo-33" onclick="sx()">
                 轮转
                 <div class="aui-hr"></div>
@@ -449,7 +449,7 @@
 <script src="../script/fastclick.js"></script>
 <script>
     H.ready(function() {
-        var address = "/Hospital/index.php/api/user/user_rotate_info";
+        var address = "/index.php/api/user/user_rotate_info";
         var token = H.getStorage('token');
         var userid = H.getStorage("user_id");
         // $base.showLoading();
@@ -512,6 +512,8 @@
         });
     });
 
+
+
     var vm_ing = new Vue({
         el: "#ks",
         data: {
@@ -520,7 +522,7 @@
         methods: {
             apply: (rid) => {
                 console.log(rid);
-                var address = "/Hospital/index.php/api/ys/apply";
+                var address = "/index.php/api/ys/apply";
                 var token = H.getStorage('token');
                 var ajaxData = {
                     token: token,

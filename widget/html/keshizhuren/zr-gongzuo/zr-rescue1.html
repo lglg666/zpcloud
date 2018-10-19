@@ -75,7 +75,8 @@
             <p class="clo-22 aui-font-size-16">科室审批：<span v-bind:class="item.d_stauts==1 ? 'clo-lan' : 'clo-hong'" v-text="item.d_stauts == 1?'已审核':'未审核'">未审核</span></p>
             <div class="aui-hr"></div>
             <div class="btn aui-padded-t-10 aui-text-right">
-                <button type="button" name="button" class="btn_lan " tapmode v-on:click="sh(item.id)">审核</button>
+              <button type="button" name="button" class="btn_lan " tapmode v-on:click="sh(item.id)">通过</button>
+              <button type="button" name="button" class="btn_hong " tapmode v-on:click="sh1(item.id)">不通过</button>
             </div>
         </div>
     </div>
@@ -102,7 +103,7 @@
       methods:{
         sh: (id) => {
           console.log(id);
-            var address = "/Hospital/index.php/api/department/rescuerecord";
+            var address = "/index.php/api/department/rescuerecord";
             var token = H.getStorage('token');
             var ajaxData = {
                 token: token,
@@ -113,6 +114,32 @@
                 console.log(JSON.stringify(ret));
                 if (ret.status == 1) {
                     $base.toast(ret.errmsg);
+                    setTimeout(function () {
+                      location.reload();
+                    },500)
+                } else {
+                    $base.toast(ret.errmsg);
+                }
+            }, function(err) {
+                console.log(JSON.stringify(err));
+            });
+        },
+        sh1: (id) => {
+          console.log(id);
+            var address = "/index.php/api/department/rescuerecord";
+            var token = H.getStorage('token');
+            var ajaxData = {
+                token: token,
+                action: "unpass",
+                uid: id
+            };
+            $base.submit(address, ajaxData, function(ret) {
+                console.log(JSON.stringify(ret));
+                if (ret.status == 1) {
+                    $base.toast(ret.errmsg);
+                    setTimeout(function () {
+                      location.reload();
+                    },500)
                 } else {
                     $base.toast(ret.errmsg);
                 }
@@ -124,7 +151,7 @@
 
     })
     H.ready(function() {
-        var address = "/Hospital/index.php/api/department/emergencytreatment";
+        var address = "/index.php/api/department/emergencytreatment";
         var token = H.getStorage('token');
         var id = H.getStorage('zr-rescue_id');
         $base.showLoading();

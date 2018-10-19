@@ -292,14 +292,14 @@
 <script>
 H.ready(function() {
     //请求数据
-    var address = "/Hospital/index.php/api/ys/sign";
+    var address = "/index.php/api/ys/sign";
     var token = H.getStorage('token');
     // $base.showLoading();
     var ajaxData = {
         token: token,
         action: 'list',
     };
-    $base.submit(address, ajaxData, function(ret) {
+    $base.get(address, ajaxData, function(ret) {
         console.log(JSON.stringify(ret));
         H.setStorage('day',ret.data.monthtotal)
         if(ret.data.today_sign == 1){
@@ -354,7 +354,7 @@ H.ready(function() {
 
 
     function sign(){
-      var address = "/Hospital/index.php/api/ys/sign";
+      var address = "/index.php/api/ys/sign";
       var token = H.getStorage('token');
       // $base.showLoading();
       var ajaxData = {

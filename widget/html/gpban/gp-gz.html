@@ -142,6 +142,14 @@
                     <img src="../../image/attendance_registration_btn.png" alt="">
                     <div class="aui-grid-label">考勤审批</div>
                 </div>
+                <div class="aui-col-xs-3" tapmode onclick="jysh()">
+                    <img src="../../image/closing-review.png" alt="">
+                    <div class="aui-grid-label">结业审核</div>
+                </div>
+                <div class="aui-col-xs-3" tapmode onclick="rkjy()">
+                    <img src="../../image/entry-education.png" alt="">
+                    <div class="aui-grid-label">入科教育</div>
+                </div>
             </div>
         </section>
     </div>
@@ -195,11 +203,11 @@
                     <img src="../../image/designated-exam.png" alt="">
                     <div class="aui-grid-label">技能考试</div>
                 </div>
-
                 <div class="aui-col-xs-3" tapmode onclick="ckks()">
                     <img src="../../image/exams_test_btn.png" alt="">
                     <div class="aui-grid-label">出科考试</div>
                 </div>
+
             </div>
         </section>
     </div>
@@ -495,6 +503,25 @@ function ckdj() {
       api.openWin({
           name: 'zr_kq',
           url: '../gpban/gp-kaoqin.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+    }
+
+    function jysh() {
+      api.openWin({
+          name: 'zr_jy',
+          url: '../gpban/gp-jysh.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+    }
+    function rkjy() {
+      api.openWin({
+          name: 'zr_rkjy',
+          url: '../gpban/gp-rkjy.html',
           pageParam: {
               name: 'test'
           }

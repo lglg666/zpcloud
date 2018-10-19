@@ -127,7 +127,7 @@
             },
             sh:(id)=>{
               console.log(id);
-              var address = "/Hospital/index.php/api/teacher/casehistory";
+              var address = "/index.php/api/teacher/casehistory";
               var token = H.getStorage('token');
               var ajaxData = {
                   token: token,
@@ -151,7 +151,7 @@
         }
     })
     H.ready(function() {
-      var address = "/Hospital/index.php/api/teacher/casehistory";
+      var address = "/index.php/api/teacher/casehistory";
       var token = H.getStorage('token');
       $base.showLoading();
       var ajaxData = {

@@ -266,7 +266,7 @@
     var toast = new auiToast({})
 
     function showDefault(type) {
-        var address = "/Hospital/index.php/api/user/course";
+        var address = "/index.php/api/user/course";
         var token = H.getStorage('token');
         var course_id = H.getStorage('course_id');
         var ajaxData = {
@@ -304,7 +304,7 @@
     }
 
     H.ready(function() {
-        var address = "/Hospital/index.php/api/user/course";
+        var address = "/index.php/api/user/course";
         var token = H.getStorage('token');
         var course_id = H.getStorage('course_id');
         $base.showLoading();

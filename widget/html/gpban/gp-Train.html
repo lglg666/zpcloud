@@ -8,6 +8,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="../../css/aui.css">
     <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+    <link rel="stylesheet" href="../../css/style/style.css">
 </head>
 <style media="screen">
     header {
@@ -63,7 +64,14 @@
     </header>
     <div class="pad "></div>
     <div id="vm">
-      <template v-for="item in list">
+      <!-- 无数据 -->
+      <template v-if="list == false">
+        <div class="aui-text-center "id="wsj">
+            <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+            <p class="aui-font-size-16">暂无数据</p>
+        </div>
+      </template>
+      <template v-for="item in list"v-else>
         <div class="content aui-margin-15">
             <div class="list  aui-padded-10">
                 <p class="clo-22 aui-font-size-16">账号：<span class="clo-99">{{item.account}}</span></p>
@@ -116,7 +124,7 @@
     })
     H.ready(function() {
       var token = H.getStorage('token');
-      var address = "/Hospital/index.php/api/office/trainactivity";
+      var address = "/index.php/api/office/trainactivity";
       var ajaxData = {
           token: token,
       };

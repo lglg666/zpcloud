@@ -180,7 +180,14 @@
 
         <div class="ksmb" style="display:none;">
             <div class="mb">
-                <div v-for="item in list">
+              <!-- 无数据 -->
+              <template v-if="list == false">
+                <div class="aui-text-center "id="wsj">
+                    <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+                    <p class="aui-font-size-16">暂无数据</p>
+                </div>
+              </template>
+                <div v-for="item in list" v-else>
                     <div class="main">
                         <div class="aui-padded-10">
                             <p class="aui-font-size-18 clo-33">《{{item.pname}}》</p>
@@ -190,7 +197,7 @@
                             <p class="aui-font-size-16 clo-99 aui-padded-l-5">结束时间：<span>{{item.pendtime}}</span></p>
                             <div class="btn aui-text-right aui-padded-10">
                                 <button class="btn_lan aui-margin-r-10" tapmode v-on:click="ckst(item.id)">查看试题</button>
-                                <button class="btn_lan aui-margin-r-10" tapmode onclick="">出科考试</button>
+                                <button class="btn_lan aui-margin-r-10" tapmode onclick="ckks()">出科考试</button>
                             </div>
                         </div>
                         <!-- 考试倒计时 -->
@@ -292,7 +299,7 @@
         api.closeWin({});
     }
     H.ready(function() {
-        var address = "/Hospital/index.php/api/department/rotate_message";
+        var address = "/index.php/api/department/rotate_message";
         var token = H.getStorage('token');
         var ajaxData = {
             token: token,
@@ -306,7 +313,7 @@
             console.log(JSON.stringify(err));
         });
 
-        var address = "/Hospital/index.php/api/department/exam";
+        var address = "/index.php/api/department/exam";
         var token = H.getStorage('token');
         var ajaxData = {
             token: token,

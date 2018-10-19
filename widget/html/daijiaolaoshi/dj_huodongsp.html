@@ -113,7 +113,7 @@
             sh: (id,status) => {
               console.log(status);
               if(status == 0){
-                var address = "/Hospital/index.php/api/teacher/teaching_activities";
+                var address = "/index.php/api/teacher/teaching_activities";
                 var token = H.getStorage('token');
                 var ajaxData = {
                     token: token,
@@ -142,7 +142,7 @@
     }
     })
     H.ready(function() {
-        var address = "/Hospital/index.php/api/teacher/teaching_activities";
+        var address = "/index.php/api/teacher/teaching_activities";
         var token = H.getStorage('token');
         var ajaxData = {
             token: token,

@@ -143,13 +143,13 @@
     }
 
     H.ready(function() {
-        var address = "/Hospital/index.php/api/ys/operationrecord";
+        var address = "/index.php/api/ys/operationrecord";
         var token = H.getStorage('token');
         $base.showLoading();
         var ajaxData = {
             token: token,
         };
-        $base.get2(address, ajaxData, function(ret) {
+        $base.get(address, ajaxData, function(ret) {
             console.log(JSON.stringify(ret));
             ss.list = ret.data;
             $base.closeLoading();

@@ -553,7 +553,7 @@
                     scores.push(dops.list[score].score)
                 }
                 console.log(scores);
-                var address = "/Hospital/index.php/api/teacher/dops";
+                var address = "/index.php/api/teacher/dops";
                 var token = H.getStorage('token');
                 var id = H.getStorage('dj_dops1_id');
                 console.log(id);
@@ -605,7 +605,7 @@
     H.ready(function() {
         var token = H.getStorage('token');
         var id = H.getStorage('dj_dops1_id');
-        var address = "/Hospital/index.php/api/teacher/dops";
+        var address = "/index.php/api/teacher/dops";
         var ajaxData = {
             token: token,
             action: "detail",

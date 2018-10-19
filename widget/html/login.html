@@ -173,7 +173,7 @@
 
         var hospital_ip = "" + H.getStorage("hospital_ip");
         console.log(H.getStorage("hospital_ip"));
-        var address = "/Hospital/index.php/api/login/verlogin";
+        var address = "/index.php/api/login/verlogin";
 
         function _baseUrl() {
             return H.$getStorage("hospital_ip");
@@ -213,7 +213,7 @@
             if (x == "" || y == "") {
                 $base.toast("账号或密码不能为空！！")
             } else {
-                var address = "/Hospital/index.php/api/login/verlogin";
+                var address = "/index.php/api/login/verlogin";
                 var ajaxData = {
                     login_name: x,
                     password: y
@@ -291,6 +291,32 @@
                             setTimeout(function() {
                                 H.$hideProgress();
                             }, 500)
+                        }else if (role == 7) {
+                          api.openWin({
+                              name: 'main4',
+                              url: './yyadmin/yy-main.html',
+                              reload: "true",
+                              slidBackEnabled: 'false',
+                              pageParam: {
+                                  name: 'test'
+                              }
+                          });
+                          setTimeout(function() {
+                              H.$hideProgress();
+                          }, 500)
+                        }else if (role == 8) {
+                          api.openWin({
+                              name: 'main5',
+                              url: '../zygly/zy-main.html',
+                              reload: "true",
+                              slidBackEnabled: 'false',
+                              pageParam: {
+                                  name: 'test'
+                              }
+                          });
+                          setTimeout(function() {
+                              H.$hideProgress();
+                          }, 500)
                         }
                     } else if (denglu == -1) {
                         $base.toast(msg)

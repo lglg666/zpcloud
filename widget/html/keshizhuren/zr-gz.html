@@ -157,6 +157,10 @@
                     <img src="../../image/attendance_registration_btn.png" alt="">
                     <div class="aui-grid-label">考勤审批</div>
                 </div>
+                <div class="aui-col-xs-3" tapmode onclick="rkjy()">
+                    <img src="../../image/entry-education.png" alt="">
+                    <div class="aui-grid-label">入科教育</div>
+                </div>
             </div>
         </section>
     </div>
@@ -237,6 +241,16 @@
 <script>
   H.ready(function () {
 $('#departmentname').text(H.getStorage('Now_Department'));
+api.addEventListener({
+    name: 'zr_qhks'
+}, function(ret, err){
+    if( ret ){
+    $('#departmentname').text(H.getStorage('Now_Department'));
+    }else{
+         alert( JSON.stringify( err ) );
+    }
+});
+
 })
     function tjdj() {
         api.openWin({
@@ -463,6 +477,15 @@ $('#departmentname').text(H.getStorage('Now_Department'));
       api.openWin({
           name: 'zr_kq',
           url: '../keshizhuren/zr-gongzuo/zr-kaoqin.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+    }
+    function rkjy() {
+      api.openWin({
+          name: 'zr_rkjy',
+          url: '../keshizhuren/zr-gongzuo/zr-rkjy.html',
           pageParam: {
               name: 'test'
           }

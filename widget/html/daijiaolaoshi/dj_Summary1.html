@@ -87,7 +87,8 @@
                 </div>
                 <div class="aui-hr aui-margin-t-10 aui-margin-b-15"></div>
                 <div class="btn">
-                    <button class="btn_lan aui-font-size-14" tapmode v-on:click="sh(item.id)">审核</button>
+                  <button type="button" name="button" class="btn_lan " tapmode v-on:click="sh(item.id)">通过</button>
+                  <button type="button" name="button" class="btn_hong " tapmode v-on:click="sh1(item.id)">不通过</button>
                 </div>
             </div>
         </div>
@@ -110,11 +111,33 @@
         methods: {
 
             sh: (id) => {
-                var address = "/Hospital/index.php/api/teacher/summarize";
+                var address = "/index.php/api/teacher/summarize";
                 var token = H.getStorage('token');
                 var ajaxData = {
                     token: token,
-                    action: "allpass",
+                    action: "pass",
+                    id: id,
+                };
+                $base.submit(address, ajaxData, function(ret) {
+                    console.log(JSON.stringify(ret));
+                    if (ret.status == 1) {
+                        $base.toast(ret.errmsg);
+                        setTimeout(function() {
+                            location.reload();
+                        }, 500)
+                    } else {
+                        $base.toast(ret.errmsg);
+                    }
+                }, function(err) {
+                    console.log(JSON.stringify(err));
+                });
+            },
+            sh1: (id) => {
+                var address = "/index.php/api/teacher/summarize";
+                var token = H.getStorage('token');
+                var ajaxData = {
+                    token: token,
+                    action: "unpass",
                     id: id,
                 };
                 $base.submit(address, ajaxData, function(ret) {
@@ -134,7 +157,7 @@
         }
     })
     H.ready(function() {
-        var address = "/Hospital/index.php/api/teacher/summarize";
+        var address = "/index.php/api/teacher/summarize";
         var token = H.getStorage('token');
         var id = H.getStorage('dj_Summary_id');
         console.log(id);

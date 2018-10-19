@@ -104,7 +104,7 @@
             },
             del: (id) => {
                 var token = H.getStorage('token');
-                var address = "/Hospital/index.php/api/office/ys_evalute_list";
+                var address = "/index.php/api/office/ys_evalute_list";
                 var ajaxData = {
                     token: token,
                     action: "delete",
@@ -139,7 +139,7 @@
         var token = H.getStorage('token');
         var id = H.getStorage('gp-djpjys_id');
         console.log(id);
-        var address = "/Hospital/index.php/api/office/ys_evalute_list";
+        var address = "/index.php/api/office/ys_evalute_list";
         var ajaxData = {
             token: token,
             action: "list",

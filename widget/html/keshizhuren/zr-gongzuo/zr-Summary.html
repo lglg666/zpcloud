@@ -116,7 +116,7 @@
         methods: {
             sh: (id) => {
               console.log(id);
-                var address = "/Hospital/index.php/api/department/summarize";
+                var address = "/index.php/api/department/summarize";
                 var token = H.getStorage('token');
                 var ajaxData = {
                     token: token,
@@ -127,7 +127,9 @@
                     console.log(JSON.stringify(ret));
                     if(ret.status == 1){
                         $base.toast(ret.errmsg);
-                        location.reload();
+                        setTimeout(function() {
+                            location.reload();
+                        }, 500)
                     }else{
                         $base.toast(ret.errmsg);
                     }
@@ -149,7 +151,7 @@
         }
     })
     H.ready(function() {
-        var address = "/Hospital/index.php/api/department/summarize";
+        var address = "/index.php/api/department/summarize";
         var token = H.getStorage('token');
         $base.showLoading();
         var ajaxData = {

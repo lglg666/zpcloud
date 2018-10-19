@@ -367,7 +367,7 @@
                 projects: projects,
             }
             console.log(JSON.stringify(data));
-            var url = '/Hospital/index.php/api/teacher/evaluate';
+            var url = '/index.php/api/teacher/evaluate';
             $base.ajax(url, data, function(ret) {
                 if (ret.status == 1) {
                     //输出成功信息
@@ -406,7 +406,7 @@
     H.ready(function() {
     var name=  H.getStorage("gp-djpjys1_ysname");
     document.getElementById("xy_name").innerHTML = name;
-        var address = "/Hospital/index.php/api/office/ys_evalute_list";
+        var address = "/index.php/api/office/ys_evalute_list";
         var token = H.getStorage('token');
         var id = H.getStorage("gp-djpjys1_id");
         var ajaxData = {

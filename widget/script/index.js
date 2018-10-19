@@ -275,6 +275,6 @@ function addscript() {
 		var script= document.createElement('script');
 		script.type= 'text/javascript';
 		var ip =  H.getStorage("ip");
-		script.src=ip+'./Hospital/index.php/api/config/index';
+		script.src=ip+'/index.php/api/config/index';
 		$.getScript(script.src);
 }

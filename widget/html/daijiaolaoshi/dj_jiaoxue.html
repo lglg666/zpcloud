@@ -8,6 +8,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="../../css/aui.css">
     <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+    <link rel="stylesheet" href="../../css/style/style.css">
 </head>
 <style media="screen">
     header {
@@ -98,7 +99,14 @@
     </header>
     <div class="pad"></div>
     <div id="vue">
-        <div v-for="item in list">
+      <!-- 无数据 -->
+      <template v-if="list == false">
+        <div class="aui-text-center "id="wsj">
+            <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+            <p class="aui-font-size-16">暂无数据</p>
+        </div>
+      </template>
+        <div v-for="item in list" v-else>
             <div class="aui-text-center aui-margin-t-15">
                 <a class="s" v-text="item.create_at">15:08</a>
             </div>
@@ -160,7 +168,7 @@
     }
 
     H.ready(function() {
-      var address = "/Hospital/index.php/api/teacher/teaching_activities";
+      var address = "/index.php/api/teacher/teaching_activities";
       var token = H.getStorage('token');
       var user_role = H.getStorage('user_role');
       $base.showLoading();

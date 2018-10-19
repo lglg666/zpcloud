@@ -8,6 +8,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="../../css/aui.css">
     <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+      <link rel="stylesheet" href="../../css/style/style.css">
 </head>
 <style media="screen">
     header {
@@ -111,7 +112,14 @@
     </header>
     <div class="mar"></div>
     <div id="jn">
-        <div v-for="item in list">
+      <!-- 无数据 -->
+      <template v-if="list == false">
+        <div class="aui-text-center "id="wsj">
+            <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+            <p class="aui-font-size-16">暂无数据</p>
+        </div>
+      </template>
+        <div v-for="item in list"  v-else>
             <div class="aui-margin-15  main">
                 <div class="aui-padded-10 lin">
                     <p class="clo-99 aui-font-size-16 ">住院医师： <span class="clo-459" v-text="item.username"> </span></p>
@@ -173,7 +181,7 @@
     }
 
     H.ready(function() {
-        var address = "/Hospital/index.php/api/office/skill_register";
+        var address = "/index.php/api/office/skill_register";
         var token = H.getStorage('token');
         $base.showLoading();
         var ajaxData = {

@@ -6,7 +6,7 @@
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title>Hello APP</title>
-    <link rel="stylesheet" type="text/css" href="./css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/api.css" />
     <style type="text/css">
         html,
         body {
@@ -80,66 +80,131 @@
 
 <script type="text/javascript">
     apiready = function() {
-      console.log(H.getStorage("token"));
-      var login_star = H.getStorage("token");
-      if(login_star == undefined){
-console.log("未登陆");
-api.openWin({
-    name: 'login',
-    url: './html/login.html',
-    slidBackEnabled: 'false',
-    pageParam: {
-        name: 'test'
-    }
-});
-      }else{
-        console.log("已登陆");
-        var role = H.getStorage("user_role")
-        if (role == 1) {
+        console.log(H.getStorage("token"));
+        var login_star = H.getStorage("token");
+        if (login_star == undefined) {
+            console.log("未登陆");
             api.openWin({
-                name: 'main',
-                url: './html/main.html',
+                name: 'login',
+                url: './html/login.html',
                 slidBackEnabled: 'false',
                 pageParam: {
                     name: 'test'
                 }
             });
+        } else {
+            console.log("已登陆");
+            var role = H.getStorage("user_role")
+            if (role == 1) {
+                api.openWin({
+                    name: 'main',
+                    url: './html/main.html',
+                    slidBackEnabled: 'false',
+                    pageParam: {
+                        name: 'test'
+                    }
+                });
 
-        } else if (role == 2) {
-            api.openWin({
-                name: 'main1',
-                url: './html/dj-main.html',
-                slidBackEnabled: 'false',
-                pageParam: {
-                    name: 'test'
-                }
-            });
-        } else if (role == 3) {
-            api.openWin({
-                name: 'main2',
-                url: './html/zr-main.html',
-                slidBackEnabled: 'false',
-                pageParam: {
-                    name: 'test'
-                }
-            });
-        } else if (role == 4) {
-            api.openWin({
-                name: 'main3',
-                url: './html/gp-main.html',
-                slidBackEnabled: 'false',
-                pageParam: {
-                    name: 'test'
-                }
-            });
+            } else if (role == 2) {
+                api.openWin({
+                    name: 'main1',
+                    url: './html/dj-main.html',
+                    slidBackEnabled: 'false',
+                    pageParam: {
+                        name: 'test'
+                    }
+                });
+            } else if (role == 3) {
+                api.openWin({
+                    name: 'main2',
+                    url: './html/zr-main.html',
+                    slidBackEnabled: 'false',
+                    pageParam: {
+                        name: 'test'
+                    }
+                });
+            } else if (role == 4) {
+                api.openWin({
+                    name: 'main3',
+                    url: './html/gp-main.html',
+                    slidBackEnabled: 'false',
+                    pageParam: {
+                        name: 'test'
+                    }
+                });
+            } else if (role == 7) {
+                api.openWin({
+                    name: 'main4',
+                    url: './html/yyadmin/yy-main.html',
+                    slidBackEnabled: 'false',
+                    pageParam: {
+                        name: 'test'
+                    }
+                });
+            } else if (role == 10) {
+                api.openWin({
+                    name: 'ksqd',
+                    url: './html/ksqd/qd_main.html',
+                    slidBackEnabled: 'false',
+                    pageParam: {
+                        name: 'test'
+                    }
+                });
+            } else if (role == 11) {
+                api.openWin({
+                    name: 'ksjy',
+                    url: './html/ksjy/jy_main.html',
+                    slidBackEnabled: 'false',
+                    pageParam: {
+                        name: 'test'
+                    }
+                });
+            } else if (role == 8) {
+                api.openWin({
+                    name: 'zygl',
+                    url: './html/zygly/zy-main.html',
+                    reload: "true",
+                    slidBackEnabled: 'false',
+                    pageParam: {
+                        name: 'test'
+                    }
+                });
+                setTimeout(function() {
+                    H.$hideProgress();
+                }, 500)
+            }
         }
-      }
-      api.setStatusBarStyle({
-          style: 'dark',
-          // color: '#f6f6f6'
-      });
-            // alert("登录页")
-
+        api.setStatusBarStyle({
+            style: 'dark',
+            // color: '#f6f6f6'
+        });
+        // alert("登录页")
+        var bMap = api.require('bMap');
+        bMap.getLocationServices(function(ret, err) {
+            if (ret.enable) {
+                bMap.getLocation({
+                    accuracy: '100m',
+                    autoStop: true,
+                    filter: 1
+                }, function(ret, err) {
+                    if (ret.status) {
+                        // alert(JSON.stringify(ret.lon));
+                        bMap.getNameFromCoords({
+                            lon:ret.lon,
+                            lat:ret.lat
+                        }, function(ret, err) {
+                            if (ret.status) {
+                                console.log(JSON.stringify(ret.city));
+                            }
+                        });
+                    } else {
+                        alert(err.code);
+                    }
+                });
+            } else {
+                console.log("未开启定位功能！");
+            }
+        });
 
     }
 </script>

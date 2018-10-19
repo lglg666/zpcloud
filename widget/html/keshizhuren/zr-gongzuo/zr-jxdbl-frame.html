@@ -101,7 +101,7 @@ var vm = new Vue({
         },
         sh:(id)=>{
           console.log(id);
-          var address = "/Hospital/index.php/api/department/rotate_case_history";
+          var address = "/index.php/api/department/rotate_case_history";
           var token = H.getStorage('token');
           var ajaxData = {
               token: token,
@@ -122,7 +122,7 @@ var vm = new Vue({
     }
 })
     H.ready(function() {
-      var address = "/Hospital/index.php/api/department/rotate_case_history";
+      var address = "/index.php/api/department/rotate_case_history";
       var token = H.getStorage('token');
       $base.showLoading();
       var ajaxData = {

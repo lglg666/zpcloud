@@ -27,31 +27,24 @@
     }
 
     .top {
+        float: left;
+        width: 100%;
         line-height: 2.5rem;
         background: #fff;
         color: #333;
         font-family: PingFangSC-Regular;
-        border-bottom: 1px solid #ddd;
+        /*border-bottom: 1px solid #ddd;*/
     }
-
-    .clo-99 {
-        color: #999999;
-        font-family: PingFangSC-Regular;
-    }
-
-    .clo-459 {
-        color: #4593DE;
-        font-family: PingFangSC-Regular;
-    }
-
-    .clo-33 {
-        color: #333333;
-        font-family: PingFangSC-Regular;
+    .top h4{
+      font-weight: 700;
     }
 
     .pj {
         width: 100%;
         height: 100%;
+        background: #fff;
+        float: left;
+        position: relative;
     }
 
     .pc {
@@ -60,55 +53,32 @@
         padding-top: 0.8rem;
     }
 
-    .uip {
-        background: #fff;
-        width: 100%;
-        line-height: 3rem;
-        float: left;
-        height: 100%;
-    }
-
     .dd {
         width: 90%;
         margin: 0 auto;
     }
 
-    a {
-        display: inline-block;
-        background: #F1F1F1;
-        padding: 0.5rem;
-        height: 2rem;
-        width: 100%;
-        line-height: 1rem;
-        color: #333333;
-    }
-
-    .a2 {
-        display: inline-block;
-        width: 8.5rem;
-        line-height: 1rem;
-        height: 2rem;
-    }
-
     .bt {
-        text-align: center;
-        float: left;
+        position: fixed;
+        bottom: 0;
         width: 100%;
-        margin-top: 0.5rem;
-        background: #fff;
-        padding: 0.5rem 0 0.5rem 0;
-    }
-
-    .bt button {
-        width: 80%;
-        text-align: center;
-        border-radius: 4px;
         height: 2.5rem;
-        font-size: 0.85rem;
-        outline: none;
-        border: 0;
+        line-height: 2.5rem;
+    }
+    .bg-lan {
         background: #4593DE;
         color: #fff;
+    }
+
+    .bg-bai {
+        background: #fff;
+    }
+
+    .col-h {
+        color: #FFBC2D;
+    }
+    .wid {
+        width: 100% !important;
     }
 
     .active {
@@ -124,6 +94,36 @@
     .mar {
         margin-top: 3.5rem;
     }
+
+    .bg {
+        background: url(../../image/evaluation_btn_s.png)no-repeat !important;
+        width: 1.3rem !important;
+        height: 1.3rem !important;
+        background-size: 100% !important;
+    }
+
+    .xx ul li {
+        float: left;
+        list-style: none;
+        width: 1.3rem;
+        height: 1.3rem;
+        background: url(../../image/evaluation_btn.png) no-repeat;
+        margin: 0 0.3rem;
+        margin-top: 0.5rem;
+        background-size: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .xx p {
+        position: absolute;
+        right: 5rem;
+        bottom: 0.6rem;
+    }
+    .mar-b{
+      float: left;
+      height:3.2rem;
+      width: 100%;
+    }
 </style>
 
 <body>
@@ -134,25 +134,30 @@
         <div class="aui-title">评价科室主任</div>
     </header>
     <div class="pad"></div>
+    <!-- 需要加一个当前科室 -->
     <div id="vm">
         <div v-for="item in list">
-            <div class="pj">
+            <div class="pj aui-margin-t-15">
                 <div class="top aui-padded-l-10">
-                    <!-- 劳动纪律情况 -->
-                    {{item.topname}} ({{item.score}}分)
+                    <h4>{{item.col}}.{{item.title}}</h4>
                 </div>
-                <div class="uip  aui-font-size-12">
-                    <div class="d1 dd  aui-col-xs-12 ">
-                        <!-- 能遵守医院及科室各项规章制度，按时上下班，有事能请假 -->
-                        <a :class="['ff',item.score==item1.score?'active':'']" v-for="item1 in item.list" v-tap=['setScore',item1.score] v-on:click="item.score=item1.score">{{item1.navname}}</a>
-                    </div>
+                <div class="xx aui-padded-l-10" id="star">
+                    <ul id="ul">
+                        <li v-for="i in [1,2,3,4,5]" v-on:click="item.score=i" v-bind:class="item.score>=i?'bg':''"></li>
+                    </ul>
+                    <p id="dd">{{item.score>0?(item.score+'分'):''}}</p>
                 </div>
 
             </div>
         </div>
-        <div class=" bt" tapmode v-on:click="submit()" v-if=" did == false">
-            <button>提交</button>
+        <div class="mar-b"></div>
+        <div class="bt aui-text-center">
+            <div class="aui-col-xs-8 bg-bai" v-bind:class="did==true?'wid':''">
+                <p class="aui-font-size-18 col-22"> 总得分：<span class="aui-font-size-20 col-h" id="defen">{{sum_score}}</span></p>
+            </div>
+            <div class="aui-col-xs-4 aui-font-size-18 bg-lan" tapmode v-if=" did == false" v-on:click="submit()">提交</div>
         </div>
+
     </div>
 
 
@@ -166,246 +171,55 @@
 <script src="../../script/AHelper.js"></script>
 <script src="../../script/fastclick.js"></script>
 <script>
-    _list = [{
-        topname: "科室对培训学员的管理",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '严格要求,并有专人负责',
-            score: 10,
-        }, {
-            id: 0,
-            navname: '一般',
-            score: 8,
-        }, {
-            id: 0,
-            navname: '较差',
-            score: 6,
-        }, {
-            id: 0,
-            navname: '无人管',
-            score: 4,
-        }]
-    }, {
-        topname: "教学查房",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '1次/周',
-            score: 10,
-        }, {
-            id: 0,
-            navname: '1次/2周',
-            score: 8,
-        }, {
-            id: 0,
-            navname: '1次/月',
-            score: 6,
-        }, {
-            id: 0,
-            navname: '无',
-            score: 4,
-        }]
-    }, {
-        topname: "科室讲座",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '1次/周',
-            score: 10,
-        }, {
-            id: 0,
-            navname: '1次/2周',
-            score: 8,
-        }, {
-            id: 0,
-            navname: '1次/月',
-            score: 6,
-        }, {
-            id: 0,
-            navname: '无',
-            score: 4,
-        }]
-    }, {
-        topname: "疑难病例讨论",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '1次/周',
-            score: 10,
-        }, {
-            id: 0,
-            navname: '次/2周',
-            score: 8,
-        }, {
-            id: 0,
-            navname: '1次/月',
-            score: 6,
-        }, {
-            id: 0,
-            navname: '无',
-            score: 4,
-        }]
-    }, {
-        topname: "病史书写要求",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '严格要求,上级医师认真修改',
-            score: 10,
-        }, {
-            id: 0,
-            navname: '一般',
-            score: 8,
-        }, {
-            id: 0,
-            navname: '较差',
-            score: 6,
-        }, {
-            id: 0,
-            navname: '无人管',
-            score: 4,
-        }]
-    }, {
-        topname: "指导老师教书育人",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '认真负责,言传身教',
-            score: 10,
-        }, {
-            id: 0,
-            navname: '一般',
-            score: 8,
-        }, {
-            id: 0,
-            navname: '较差',
-            score: 6,
-        }, {
-            id: 0,
-            navname: '无人管',
-            score: 4,
-        }]
-    }, {
-        topname: "操作指导",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '认真负责	',
-            score: 10,
-        }, {
-            id: 0,
-            navname: '一般',
-            score: 8,
-        }, {
-            id: 0,
-            navname: '较差	',
-            score: 6,
-        }, {
-            id: 0,
-            navname: '无	',
-            score: 4,
-        }]
-    }, {
-        topname: "抢救指导",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '认真负责',
-            score: 10,
-        }, {
-            id: 0,
-            navname: '一般',
-            score: 8,
-        }, {
-            id: 0,
-            navname: '较差',
-            score: 6,
-        }, {
-            id: 0,
-            navname: '无',
-            score: 4,
-        }]
-    }, {
-        topname: "出科考试评语",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '考试,评语认真及时',
-            score: 10,
-        }, {
-            id: 0,
-            navname: '一般',
-            score: 8,
-        }, {
-            id: 0,
-            navname: '有考试无评语',
-            score: 6,
-        }, {
-            id: 0,
-            navname: '无',
-            score: 4,
-        }]
-    }]
     var vm = new Vue({
         el: "#vm",
         data: {
-            list: _list,
-            did:false,
+            list: "",
+            did: false,
         },
         methods: {
-          setScore:function (t,score) {
-            t.score = score;
-          },
-          submit:function () {
-            console.log(this.list[0].list[0].score);
-            var ids = [];
-            var scores = [];
-            var content = "";
-            var projects = [];
-            var sum = 0;
-            var _this = this;
-            for (var item in vm.list) {
-              console.log(item.score);
-                // for (var item2 in vm.list[item].list) {
-                  console.log(item.score);
-                    var scitem = vm.list[item];
-                    projects.push(vm.list[item].score);
-                // }
-            }
-            projects.push(vm.content);
-            console.log(projects);
-            var token = H.getStorage('token');
-            var data = {
-                token: token,
-                action:'dey',
-                projects: projects,
-            }
-            console.log(JSON.stringify(data));
-            var url = '/Hospital/index.php/api/ys/evaluate';
-            $base.ajax(url, data, function(ret) {
-                if (ret.status == 1) {
-                    //输出成功信息
-                    $base.toast(ret.errmsg);
-                    setTimeout(function() {
-                        api.closeWin({});
-                    },500)
-
-                } else {
-                    //输出错误信息
-                    $base.toast(ret.errmsg);
+            setScore: function(t, score) {
+                t.score = score;
+            },
+            submit: function() {
+                var content = {};
+                var sum = 0;
+                var _this = this;
+                for (var item in vm.list) {
+                    console.log(JSON.stringify(vm.list[item].score))
+                    content[vm.list[item].col] = vm.list[item].score;
                 }
-            })
-          }
+                var token = H.getStorage('token');
+                var data = {
+                    token: token,
+                    action: 'insert',
+                    content: content,
+                }
+                console.log(JSON.stringify(data));
+                var url = '/index.php/api/ys/evaluate_ys_to_department';
+                $base.ajax(url, data, function(ret) {
+                    console.log(ret);
+                    if (ret.status == 1) {
+                        //输出成功信息
+                        $base.toast(ret.errmsg);
+                        setTimeout(function() {
+                            api.closeWin({});
+                        }, 500)
+
+                    } else {
+                        //输出错误信息
+                        $base.toast(ret.errmsg);
+                    }
+                })
+            }
         },
-        computed:{
-          sum_score: function() {
+        computed: {
+            sum_score: function() {
               var sum = 0;
-              this.list.forEach(function(t) {
-                  vm.list.forEach(function(v) {
-                      sum += v.score;
-                  })
-              })
+              for ( a in this.list) {
+                      sum += this.list[a].score;
+              }
+              console.log(sum);
               return sum + "分";
           }
         }
@@ -419,43 +233,45 @@
 
 
     H.ready(function() {
-      var address = "/Hospital/index.php/api/ys/evaluate";
-      var token = H.getStorage('token');
-      var ajaxData = {
-          token: token,
-      };
-      $base.get(address, ajaxData, function(ret) {
-        console.log(JSON.stringify(ret.data));
-          if (ret.data.department_evaluate_ys.id > 0) {
-              //已评价
-              //一维数组
-              var scoreitems = ret.data.department_evaluate_ys.score_item;
+        var address = "/index.php/api/ys/evaluate_ys_to_department";
+        var token = H.getStorage('token');
+        var ajaxData = {
+            token: token,
+        };
+        $base.get(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret));
+            var obj = ret.config.items;
+            obj.forEach(function(a) {
+                a.score = 0;
+            })
+            vm.list = obj;
+            if (ret.data.is_evaluated == 1) {
+                //已评价
+                //一维数组
+                var scoreitems = ret.data.content;
 
-
-console.log(scoreitems);
-              var scoreitems_index = 0;
-              for (var item in vm.list) {
-                      var scitem = vm.list[item];
-                      vm.list[item].score = scoreitems[scoreitems_index++];
-              }
-              vm.did = true;
-              //vm._list
-          } else {
-              //未评价
-          }
-      }, function(err) {
-          console.log(JSON.stringify(err));
-      });
-      api.addEventListener({
-          name: 'rotate_change'
-      }, function(ret, err) {
-        console.log(JSON.stringify(ret));
+                var scoreitems_index = 1;
+                for (var item in vm.list) {
+                    vm.list[item].score = scoreitems[scoreitems_index++];
+                }
+                vm.did = true;
+                //vm._list
+            } else {
+                //未评价
+            }
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+        api.addEventListener({
+            name: 'rotate_change'
+        }, function(ret, err) {
+            console.log(JSON.stringify(ret));
             $("#in_department").html(ret.value.data.d_name);
-      });
-      //处理点击延迟
-      $(function() {
-          FastClick.attach(document.body);
-      })
+        });
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        })
     })
 
     var toast = new auiToast({})

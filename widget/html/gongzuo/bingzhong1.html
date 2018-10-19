@@ -101,6 +101,7 @@
     .pad {
         padding-top: 6.5rem;
     }
+
 </style>
 
 <body>
@@ -118,7 +119,7 @@
             </div>
         </div>
         <p>搜索</p>
-        <div class="aui-tab aui-row" id="tab">
+        <div class="aui-tab aui-row aui-col-xs-12" id="tab">
             <div class="aui-tab-item aui-active aui-col-xs-4">全部</div>
             <div class="aui-tab-item aui-col-xs-4">未审批</div>
             <div class="aui-tab-item aui-col-xs-4"> 已审批</div>
@@ -241,7 +242,7 @@
 
   H.ready(function () {
     //全部
-    var address = "/Hospital/index.php/api/ys/disease_register";
+    var address = "/index.php/api/ys/disease_register";
     var token = H.getStorage('token');
     var d_id = H.getStorage('d_id');
     $base.showLoading();

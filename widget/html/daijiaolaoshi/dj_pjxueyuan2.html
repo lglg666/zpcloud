@@ -367,7 +367,7 @@
                 projects: projects,
             }
             console.log(JSON.stringify(data));
-            var url = '/Hospital/index.php/api/teacher/evaluate';
+            var url = '/index.php/api/teacher/evaluate';
             $base.ajax(url, data, function(ret) {
               console.log(JSON.stringify(ret));
                 if (ret.status == 1) {
@@ -411,9 +411,9 @@
 
 
     H.ready(function() {
-    var name=  H.getStorage("pjxy_name");
+    var name=  H.getStorage("xy_name");
     document.getElementById("xy_name").innerHTML = name;
-        var address = "/Hospital/index.php/api/teacher/evaluate";
+        var address = "/index.php/api/teacher/evaluate";
         var token = H.getStorage('token');
         var id = H.getStorage("xy_yeid");
         var ajaxData = {

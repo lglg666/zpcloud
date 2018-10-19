@@ -210,7 +210,7 @@
       console.log(H.getStorage('user_role'));
       var role = H.getStorage('user_role');
       if(role == 1){
-        var address = "/Hospital/index.php/api/ys/exam";
+        var address = "/index.php/api/ys/exam";
         var token = H.getStorage('token');
         var rid = H.getStorage('ys_ksrid');
         var ajaxData = {
@@ -228,7 +228,7 @@
             console.log(JSON.stringify(err));
         });
       }else if(role == 3){
-        var address = "/Hospital/index.php/api/department/exam";
+        var address = "/index.php/api/department/exam";
         var token = H.getStorage('token');
         var rid = H.getStorage('zr_ksrid');
         var ajaxData = {
@@ -246,7 +246,7 @@
             console.log(JSON.stringify(err));
         });
       } else if(role == 4){
-        var address = "/Hospital/index.php/api/office/exam";
+        var address = "/index.php/api/office/exam";
         var token = H.getStorage('token');
         var rid = H.getStorage('gp-ckksrid');
         var ajaxData = {

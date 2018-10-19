@@ -81,7 +81,7 @@
                 </div>
                 <div class="sum_top2">
                     <p class="aui-font-size-16 clo-33">科室：<span>{{item.departmentname}}</span></p>
-                    <p class="aui-font-size-16 clo-33">科室评语：<span>{{item.d_content}}</span></p>
+                    <p class="aui-font-size-16 clo-33">科室评语：<span class="clo-99">{{item.d_content}}</span></p>
                     <p class="aui-font-size-16 clo-33">科室主任签名：<span>{{item.d_name}}</span></p>
                     <p class="aui-font-size-16 clo-33">记录日期：<span>{{item.work_time}}</span></p>
                 </div>
@@ -111,7 +111,7 @@ var vm = new Vue({
     H.ready(function() {
       var token = H.getStorage('token');
       var id = H.getStorage('gp-Summary_id');
-      var address = "/Hospital/index.php/api/office/summarize";
+      var address = "/index.php/api/office/summarize";
       var ajaxData = {
           token: token,
           action:"student_list",

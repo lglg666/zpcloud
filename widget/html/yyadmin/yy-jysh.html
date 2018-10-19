@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+    <link rel="stylesheet" href="../../css/style/style.css">
+</head>
+
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .content {
+        border-radius: 0.2rem;
+        line-height: 1.5rem;
+        background: #FFF;
+    }
+
+    .btn button {
+        margin-top: .5rem;
+        border-radius: 0.1rem;
+    }
+
+    .btn_lan {
+        background: #fff;
+        border: 1px solid #289BD8;
+        color: #289BD8;
+    }
+
+    .btn_hong {
+        background: #FF7F7F;
+        border: 1px solid #FF7F7F;
+        color: #fff;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <!-- <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a> -->
+        <div class="aui-title">结业审核</div>
+    </header>
+    <div class="pad"></div>
+    <div id="vm">
+        <!-- 无数据 -->
+        <template v-if="list == false">
+  <div class="aui-text-center "id="wsj">
+      <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+      <p class="aui-font-size-16">暂无数据</p>
+  </div>
+</template>
+        <template v-for="item in list" v-else>
+    <div class="content aui-margin-15 aui-padded-10">
+        <p class="aui-font-size-16 clo-99">用户姓名: <span class="clo-33">{{item.name}}</span></p>
+        <p class="aui-font-size-16 clo-99">账号: <span class="clo-33"> {{item.account}}</span></p>
+        <p class="aui-font-size-16 clo-99">专业: <span class="clo-33">{{item.outline}}</span></p>
+        <p class="aui-font-size-16 clo-99">届数: <span class="clo-33">{{item.grade}}</span></p>
+        <p class="aui-font-size-16 clo-99">学历: <span class="clo-33"> {{item.education_name}}</span></p>
+        <p class="aui-font-size-16 clo-99">用户类别: <span class="clo-33"> {{item.class_name}}</span></p>
+        <p class="aui-font-size-16 clo-99">用户类型: <span class="clo-33">{{item.type_name}}</span></p>
+        <p class="aui-font-size-16 clo-99">手机：<span class="clo-33"> {{item.phone}}</span></p>
+        <p class="aui-font-size-16 clo-99">身份证：<span class="clo-33"> {{item.id_num}}</span></p>
+        <p class="aui-font-size-16 clo-99">职称：<span class="clo-33">{{item.title}}</span></p>
+        <p class="aui-font-size-16 clo-99">执业证注册状态：<span class="clo-33" v-text="item.is_register == 0 ? '未注册':'已注册'"></span></p>
+        <p class="aui-font-size-16 clo-99">规培状态：<span class="clo-33">{{item.is_rotate_name}}</span></p>
+        <p class="aui-font-size-16 clo-99">账号状态：<span class="clo-33">{{item.status_name}}</span></p>
+        <div class="btn aui-text-right aui-padded-t-10 aui-padded-b-10">
+          <div v-if="item.status2 == 0">
+            <button class="btn_lan aui-margin-r-10" tapmode v-on:click="Agree(item.uid)">同意结业</button>
+            <button class="btn_hong " tapmode v-on:click="Reject(item.uid)">驳回重申</button>
+          </div>
+            <div v-else-if="item.status == 1">
+              <button class="btn_lan " tapmode >已通过审核</button>
+            </div>
+            <div v-else >
+              <button class="btn_lan " tapmode >审核已驳回</button>
+            </div>
+
+        </div>
+    </div>
+  </template>
+    </div>
+</body>
+<script src="../../script/aui-dialog.js"></script>
+<script src="../../script/api.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#vm",
+        data: {
+            list: []
+        },
+        methods: {
+            Agree: (uid) => {
+              var token = H.getStorage('token');
+              var address = "/index.php/apimanage/end_rotate_apply";
+              var ajaxData = {
+                  token: token,
+                  uid:uid,
+                  action:"pass"
+              };
+              $base.get(address, ajaxData, function(ret) {
+                  console.log(JSON.stringify(ret))
+                  if (ret.status == 1) {
+                      $base.toast(ret.errmsg);
+                      location.reload();
+                  } else {
+                      $base.toast(ret.errmsg);
+                  }
+              }, function(err) {
+                  console.log(err);
+              });
+            },
+            Reject: (uid) => {
+                var token = H.getStorage('token');
+                var address = "/index.php/apimanage/end_rotate_apply";
+                var ajaxData = {
+                    token: token,
+                    uid:uid,
+                    action:'reject',
+                };
+                $base.get(address, ajaxData, function(ret) {
+                    console.log(JSON.stringify(ret))
+                    if (ret.status == 1) {
+                        $base.toast(ret.errmsg);
+                        location.reload();
+                    } else {
+                        $base.toast(ret.errmsg);
+                    }
+                }, function(err) {
+                    console.log(err);
+                });
+            }
+        }
+    })
+
+    function fh() {
+        api.closeWin({});
+
+    }
+    H.ready(function() {
+        var token = H.getStorage('token');
+        console.log(token);
+        var address = "/index.php/apimanage/end_rotate_apply";
+        var ajaxData = {
+            token: token,
+        };
+        $base.showLoading();
+        $base.get(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret))
+            vm.list = ret.errmsg
+            $base.closeLoading();
+        }, function(err) {
+            console.log(err);
+        });
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        });
+    })
+</script>
+
+</html>

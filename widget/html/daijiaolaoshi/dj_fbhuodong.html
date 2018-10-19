@@ -151,14 +151,14 @@
         data: {
             inputval: {
               xs:'',
-              create_at_date:"2018-05-24T16:00",
-              date:"2018-05-24T16:00",
+              create_at_date:getnewDate()+"T00:00",
+              date:getnewDate()+"T00:00",
             }
         },
         methods: {
             fb: function() {
                 console.log(JSON.stringify(this.inputval));
-                var address = "/Hospital/index.php/api/teacher/teaching_activities";
+                var address = "/index.php/api/teacher/teaching_activities";
                 var token = H.getStorage('token');
                 var ajaxData = {
                     token: token,

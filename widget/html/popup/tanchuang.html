@@ -58,10 +58,14 @@
         width: 50%;
         float: left;
     }
+    img{
+      width: 5rem;
+      height: 5rem;
+    }
 </style>
 
 <body>
-    <div class="pop">
+    <!-- <div class="pop">
         <i class="aui-iconfont aui-icon-close aui-text-right aui-padded-t-10 aui-padded-r-10 aui-font-size-18" onclick="gb()"></i>
         <div class="po">
             <p class="aui-text-center p1 aui-font-size-20 clo-33">科室未接收</p>
@@ -75,15 +79,62 @@
             <div class="f1 clo-33 aui-font-size-18">选择其他科室</div>
         </div>
 
-    </div>
+    </div> -->
+    <div id="img"></div>
+    <!-- <img src="../../image/gril.jpg" alt="" id="img"> -->
 </body>
 <script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
 <script>
+H.ready(function () {
+  var FNScanner = api.require('FNScanner');
+  FNScanner.encodeImg({
+    content: 'http://www.apicloud.com/',
+    saveToAlbum: true,
+    saveImg: {
+        path: 'fs://album.png',
+        w: 200,
+        h: 200
+    }
+  }, function(ret, err) {
+    if (ret.status) {
+      console.log(JSON.stringify(ret));
+      console.log("准备执行！！！！");
+      setTimeout(function () {
+          $api.byId('img').innerHTML = '<img src="widget://storage/emulated/0/DCIM/Camera/1539759998481.jpg">';
+        document.getElementById("img").src ="../ret.imgPath";
+      },1000)
+           $api.attr($api.byId('img'), 'src', "../../image/demo3.png");
+    } else {
+        alert(JSON.stringify(err));
+    }
+  });
+//   api.getPicture({
+//     sourceType: 'library ',
+//     encodingType: 'jpg',
+//     mediaValue: 'pic',
+//     destinationType: 'url',
+//     allowEdit: true,
+//     quality: 50,
+//     targetWidth: 100,
+//     targetHeight: 100,
+//     saveToPhotoAlbum: false
+// }, function(ret, err) {
+//     if (ret) {
+//         alert(JSON.stringify(ret));
+//         $api.attr($api.byId('img'), 'src', ret.data);
+//     } else {
+//         alert(JSON.stringify(err));
+//     }
+// });
+})
   function gb() {
     api.closeFrame({
         name: 'page2'
     });
 
   }
+
+
 </script>
 </html>

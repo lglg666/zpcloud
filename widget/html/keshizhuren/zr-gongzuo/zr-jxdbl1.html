@@ -62,12 +62,13 @@
 </style>
 
 <body>
-    <header class="aui-bar aui-bar-nav" id="header">
-        <a class="aui-pull-left" tapmode onclick="fh()">
-            <i class="iconfont icon-arrow-left aui-iconfont"></i>
-        </a>
-        <div class="aui-title">教学大病历</div>
-    </header>
+  <header class="aui-bar aui-bar-nav" id="header">
+      <a class="aui-pull-left" tapmode onclick="fh()">
+          <i class="iconfont icon-arrow-left aui-iconfont"></i>
+      </a>
+      <div class="aui-title">教学大病历</div>
+        <p class="aui-pull-right clo-lan" id="sen" tapmode onclick="fb()">发公告</p>
+  </header>
     <div class="pad"></div>
     <div id="vm">
       <!-- 无数据 -->
@@ -120,7 +121,7 @@ var vm = new Vue({
       });
     },
     sh:(id)=>{
-      var address = "/Hospital/index.php/api/department/rotate_case_history";
+      var address = "/index.php/api/department/rotate_case_history";
       var token = H.getStorage('token');
       var ajaxData = {
           token: token,
@@ -130,7 +131,10 @@ var vm = new Vue({
       $base.submit(address, ajaxData, function(ret) {
           console.log(JSON.stringify(ret));
           if(ret.status == 1){
-            $base.toast(ret.errmsg)
+            $base.toast(ret.errmsg);
+            setTimeout(function() {
+                location.reload();
+            }, 500)
           }else{
               $base.toast(ret.errmsg)
           }
@@ -141,7 +145,7 @@ var vm = new Vue({
   }
 })
     H.ready(function() {
-      var address = "/Hospital/index.php/api/department/rotate_case_history";
+      var address = "/index.php/api/department/rotate_case_history";
       var token = H.getStorage('token');
       var id = H.getStorage("zr_jxdbl_id");
       console.log(id);

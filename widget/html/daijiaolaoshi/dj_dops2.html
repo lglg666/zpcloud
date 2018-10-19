@@ -197,8 +197,8 @@
                     <div class="aui-pull-left  aui-font-size-16 aui-padded-l-10">职位：</div>
                     <i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-18"></i>
                     <div class="aui-pull-right aui-padded-r-10 aui-font-size-16 clo-99 hei"> <select name="" class="aui-pull-right" v-model="inp.teacher_title">
-                    <option value=""  selected="selected">请选择</option>
-             <option value="主任医师" selected="selected">主任医师</option>
+              <option value="" >请选择</option>
+             <option value="主任医师" >主任医师</option>
              <option value="副主任医师">副主任医师</option>
              <option value="主治医师">主治医师</option>
              <option value="高年资住院医师">高年资住院医师</option>
@@ -376,14 +376,15 @@
 <script src="../../script/base.js"></script>
 <script src="../../script/zepto.min.js"></script>
 <script src="../../script/vue/vue.min.js"></script>
-<script src="../../script/fastclick.min.js"></script>
+<script src="../../script/fastclick.js"></script>
 <script>
     var vm = new Vue({
         el: '.dops',
         data: {
           inp:{
             teacher_name: "",
-            create_at:"2018-07-20T00:00",
+            teacher_title:"",
+            create_at:getnewDate()+"T00:00",
             place: "",
             sex: "",
             patient_name: "",
@@ -552,7 +553,7 @@
                 scores.push(vm.list[score].score)
             }
             console.log(scores);
-            var address = "/Hospital/index.php/api/teacher/dops";
+            var address = "/index.php/api/teacher/dops";
             var token = H.getStorage('token');
             var rid   = H.getStorage('dj_dops_rid');
             var ajaxData = {

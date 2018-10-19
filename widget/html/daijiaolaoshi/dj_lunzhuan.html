@@ -281,7 +281,7 @@
               if( ret ){
                    console.log( JSON.stringify( ret ) );
                     if(ret.buttonIndex == 1){
-                      var address = "/Hospital/index.php/api/teacher/rotate_message";
+                      var address = "/index.php/api/teacher/rotate_message";
                       var token = H.getStorage('token');
                       var ajaxData = {
                           token: token,
@@ -333,7 +333,7 @@
 
 
     apiready = function() {
-        var address = "/Hospital/index.php/api/teacher/rotate_message";
+        var address = "/index.php/api/teacher/rotate_message";
         var token = H.getStorage('token');
         var ajaxData = {
             token: token,

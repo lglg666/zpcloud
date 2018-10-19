@@ -1,0 +1,171 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>规培系统</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        header {
+            /*padding-top: 1rem;*/
+        }
+
+        .aui-searchbar {
+            background: transparent;
+        }
+
+        .aui-bar-nav .aui-searchbar-input {
+            background-color: #ffffff;
+        }
+
+        .aui-bar-light .aui-searchbar-input {
+            background-color: #f5f5f5;
+        }
+
+        .aui-bar-tab-item svg {
+            margin-top: 0.5rem;
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+
+        .index1 {
+            background: url(../../image/home_nav_btn_s.png)
+        }
+
+        .icon {
+            font-size: 1rem;
+            width: 1rem;
+            height: 1rem;
+            vertical-align: -0.15em;
+            fill: currentColor;
+            overflow: hidden;
+        }
+
+        .dis {
+            display: block !important;
+        }
+
+        .none {
+            display: none !important;
+        }
+
+        #footer i {
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="header">
+
+    </header>
+
+
+    <div class="main">
+    </div>
+
+    <footer class="aui-bar aui-bar-tab  ff aui-border-t" id="footer" tapmode>
+        <div class="aui-bar-tab-item aui-active" tapmode onclick="qqq(0)">
+            <i toggle-icon=" icon-home|icon-home-s " class="iconfont icon-home "></i>
+            <div class="aui-bar-tab-label ">医师</div>
+        </div>
+        <div class="aui-bar-tab-item  ff" tapmode onclick="qqq(1)">
+            <i toggle-icon=" icon-schedule|icon-schedule-s " class="iconfont icon-schedule "></i>
+            <div class="aui-bar-tab-label ">带教</div>
+        </div>
+        <div class="aui-bar-tab-item  ff" tapmode onclick="qqq(2)">
+              <i toggle-icon=" icon-work|icon-work-s " class="iconfont icon-work "></i>
+            <div class="aui-bar-tab-label ">入科</div>
+        </div>
+        <div class="aui-bar-tab-item ff" tapmode onclick="qqq(3)">
+            <!-- <div class="aui-dot"></div> -->
+            <i toggle-icon=" icon-my|icon-my-s " class="iconfont icon-my "></i>
+            <div class="aui-bar-tab-label ">我的</div>
+        </div>
+    </footer>
+</body>
+<script type="text/javascript" src="../../script/AHelper.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script src="../../css/iconfont/iconfont.js"></script>
+<script src="../../script/base.js"></script>
+<script type="text/javascript">
+    function qqq(index) {
+        fgh(index)
+        api.setFrameGroupIndex({
+            name: 'index_group',
+            index: index,
+            scroll: false
+        });
+    }
+
+    function fgh(index) {
+        $(".aui-bar-tab-item").eq(index).addClass("aui-active").siblings().removeClass("aui-active");
+        $(".aui-bar-tab-item").each(function() {
+            var $this = $(this);
+            var $icon = $this.find("[toggle-icon]");
+            // console.log($icon);
+            var icons = $icon.attr("toggle-icon").replace(/\s/g, '').split("|");
+            if ($this.hasClass("aui-active")) {
+                $icon.addClass(icons[1]).removeClass(icons[0]);
+            } else {
+                $icon.addClass(icons[0]).removeClass(icons[1]);
+            }
+        })
+    }
+
+
+    H.ready(function() {
+        var header = $api.byId('header');
+        // panduan();
+        H.$dblclickToCloseApp();
+        frames = [{
+            name: '医师',
+            url: '../zygly/zy-yshd.html'
+        }, {
+            name: '带教',
+            url: '../zygly/zy-djhd.html'
+        },{
+            name: '入科',
+            url: '../zygly/zy-rkjy.html'
+        },{
+            name: '我的',
+            url: '../keshizhuren/zr-wode.html'
+        }]
+
+
+        H.$openFrameGroupWithNav(function(ret) {
+            fgh(ret.index);
+        }, "header", {
+            name: "index_group",
+            frames: frames,
+            scrollEnabled: false
+        }, "footer");
+
+        api.addEventListener({
+            name: 'tuichu'
+        }, function(ret, err) {
+            var tc = JSON.stringify(ret.value.tc);
+            console.log(tc);
+            if (tc == 'true') {
+                console.log("关闭main");
+                api.closeWin({});
+            } else {}
+
+            console.log(ret.value);
+        });
+
+    })
+</script>
+
+</html>

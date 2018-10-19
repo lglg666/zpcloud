@@ -133,9 +133,7 @@
             }
         }, function(ret, err) {
             if (ret) {
-                // alert( JSON.stringify( ret ) );
                 vm.list = ret.data;
-                // console.log(ret.data[0].ip);
                 console.log(JSON.stringify(ret.data));
 
                 vm.$nextTick(function() {

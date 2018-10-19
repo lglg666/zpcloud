@@ -115,7 +115,7 @@
         },
         methods: {
             sc: (id) => {
-                var address = "/Hospital/index.php/api/teacher/summarize";
+                var address = "/index.php/api/teacher/summarize";
                 var token = H.getStorage('token');
                 var ajaxData = {
                     token: token,
@@ -149,7 +149,7 @@
         }
     })
     H.ready(function() {
-        var address = "/Hospital/index.php/api/teacher/summarize";
+        var address = "/index.php/api/teacher/summarize";
         var token = H.getStorage('token');
         var ajaxData = {
             token: token,

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    body {
+        width: 100%;
+        height: 100%;
+    }
+
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .jx {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .evaluate {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        background: #fff;
+    }
+
+    .bt {
+        background: #fff;
+        position: relative;
+        width: 80%;
+        margin: 2rem auto;
+    }
+
+    .bt button {
+        width: 100%;
+        margin: 0 auto;
+        border-radius: 4px;
+        height: 2.5rem;
+        font-size: 0.85rem;
+        outline: none;
+        border: 0;
+        background: #4593DE;
+        color: #fff;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .top {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        background: #fff;
+    }
+
+    .top p {
+        line-height: 2.5rem;
+        font-family: PingFang-SC-Medium;
+        font-weight: 500;
+    }
+
+    .kuai {
+        height: 1rem;
+        width: 0.3rem;
+        top: .7rem;
+        position: relative;
+        background: #4593de;
+    }
+
+    .con p {
+        width: 90%;
+        height: auto;
+    }
+
+    .text textarea {
+        height: 5rem;
+        width: 100%;
+    }
+
+    .inp {
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .inp input {
+        width: 60% !important;
+        height: 100%;
+    }
+
+    .yj {
+        background: #fff;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">活动评价</div>
+    </header>
+    <div class="pad"></div>
+    <div class="pj" id="pj">
+    </div>
+    <div class="bt">
+        <button type="button" name="button" onclick="submit()">提交</button>
+    </div>
+</body>
+<script src="../../script/jxpj_data.js"></script>
+<script src="../../script/Zepto.min.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/jxpj_data.js"></script>
+
+<script>
+
+    function submit() {
+        let eleList = document.querySelectorAll('input')
+        console.log(eleList.length);
+        let scores = {}
+        for (item in eleList) {
+            if (eleList[item].value == undefined) {
+                break;
+            } else {
+                var index = 0;
+                var value = Number(eleList[item].value);
+                scores[Number(item) + 1] = value;
+            }
+
+        }
+        console.log(JSON.stringify(scores));
+        var address = "/index.php/api/R11/skill_theory_assessment_list";
+        var token = H.getStorage('token');
+        var id = H.getStorage("ksjy1_id");
+        var rid = H.getStorage("ksjy1_rid");
+        var vid = rid + "," + id;
+        var ajaxData = {
+            token: token,
+            id: vid,
+            action: "submit",
+            scores: scores
+        };
+        console.log(JSON.stringify(ajaxData));
+        $base.submit(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret));
+            $base.toast(ret.data);
+            setTimeout(function() {
+                api.closeWin({});
+            }, 500)
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+    }
+    H.ready(function() {
+        var address = "/index.php/api/R11/skill_theory_assessment_list";
+        var token = H.getStorage('token');
+        var id = H.getStorage("ksjy1_id");
+        var rid = H.getStorage("ksjy1_rid");
+        var vid = rid + "," + id;
+        var ajaxData = {
+            token: token,
+            id: vid,
+            action: "detail",
+        };
+        console.log(JSON.stringify(ajaxData));
+        $base.get(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret));
+            $("#pj").html(ret.data.detailed);
+            var values = JSON.parse(ret.data.json_post);
+
+            //json_post
+            let eleList = document.querySelectorAll('input')
+            console.log();
+            console.log(eleList.length);
+            let scores = {};
+            eleList[0].value = '1';
+            for (item in eleList) {
+                var index2 = Number(item) + 1;
+                console.log(index2);
+                eleList[item].value = values[index2];
+            }
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+
+    })
+
+    function fh() {
+        api.closeWin({});
+    }
+</script>
+
+</html>

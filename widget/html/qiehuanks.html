@@ -8,7 +8,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="../css/aui.css">
     <link rel="stylesheet" href="../css/iconfont/iconfont.css">
-      <link rel="stylesheet" href="../css/style/style.css">
+    <link rel="stylesheet" href="../css/style/style.css">
 </head>
 <style>
     body {
@@ -47,8 +47,8 @@
     <div class="pad"></div>
 
     <div class="content">
-      <!-- 无数据 -->
-      <template v-if="list == false">
+        <!-- 无数据 -->
+        <template v-if="list == false">
         <div class="aui-text-center "id="wsj">
             <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
             <p class="aui-font-size-16">暂无可切换的角色</p>
@@ -70,12 +70,19 @@
 <script src="../script/fastclick.js"></script>
 <script>
     H.ready(function() {
-          var userlist       =    H.getStorage('userlist');
-          vm.list            =    userlist;
-          //处理点击延迟
-          $(function() {
-              FastClick.attach(document.body);
-          })
+      //登录的时候取得值，没有就没有
+        var userlist = H.getStorage('userlist');
+        console.log(JSON.stringify(userlist));
+        if(userlist == undefined){
+          vm.list = "";
+        }else {
+            vm.list = userlist;
+        }
+
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        })
     });
 
     vm = new Vue({
@@ -84,78 +91,125 @@
             list: []
         },
         methods: {
-          select: function(index) {
-              // alert(_ip);
-              //根据选择的用户信息去登录系统
-              var address = "/Hospital/index.php/api/login/select_user_index";
-              var ajaxData = {
-                  index: index
-              };
+            select: function(index) {
+                // alert(_ip);
+                //根据选择的用户信息去登录系统
+                var address = "/index.php/api/login/select_user_index";
+                var ajaxData = {
+                    index: index
+                };
 
-              $base.submit(address, ajaxData, function(ret) {
-                  var status = ret.status;
-                  console.log(JSON.stringify(ret));
-                  if (status == 1) {
-                    H.setStorage("token", ret.data.token);
-                    H.setStorage("user_role", ret.data.user_role);
-                    H.setStorage("user_id", ret.data.userid);
-                    H.setStorage("Now_Department", ret.data.d_name);
+                $base.submit(address, ajaxData, function(ret) {
+                    var status = ret.status;
+                    console.log(JSON.stringify(ret));
+                    if (status == 1) {
+                        H.setStorage("token", ret.data.token);
+                        H.setStorage("user_role", ret.data.user_role);
+                        H.setStorage("user_id", ret.data.user_id);
+                        H.setStorage("Now_Department", ret.data.d_name);
 
-                    var role = ret.data.user_role ;
+                        var role = ret.data.user_role;
 
-                    if (role == 1) {
-                        api.openWin({
-                            name: 'main',
-                            url: './main.html',
-                            slidBackEnabled: 'false',
-                            pageParam: {
-                                name: 'test'
-                            }
-                        });
-                        setTimeout(function() {
-                            H.$hideProgress();
-                        }, 500)
+                        if (role == 1) {
+                            api.openWin({
+                                name: 'main',
+                                url: './main.html',
+                                slidBackEnabled: 'false',
+                                pageParam: {
+                                    name: 'test'
+                                }
+                            });
+                            setTimeout(function() {
+                                H.$hideProgress();
+                            }, 500)
 
-                    } else if (role == 2) {
-                        console.log("这个是带教老师");
-                        api.openWin({
-                            name: 'main1',
-                            url: './dj-main.html',
-                            slidBackEnabled: 'false',
-                            pageParam: {
-                                name: 'test'
-                            }
-                        });
-                        setTimeout(function() {
-                            H.$hideProgress();
-                        }, 500)
-                    } else if (role == 3) {
-                        api.openWin({
-                            name: 'main2',
-                            url: './zr-main.html',
-                            slidBackEnabled: 'false',
-                            pageParam: {
-                                name: 'test'
-                            }
-                        });
-                        setTimeout(function() {
-                            H.$hideProgress();
-                        }, 500)
+                        } else if (role == 2) {
+                            console.log("这个是带教老师");
+                            api.openWin({
+                                name: 'main1',
+                                url: './dj-main.html',
+                                slidBackEnabled: 'false',
+                                pageParam: {
+                                    name: 'test'
+                                }
+                            });
+                            setTimeout(function() {
+                                H.$hideProgress();
+                            }, 500)
+                        } else if (role == 3) {
+                            api.openWin({
+                                name: 'main2',
+                                url: './zr-main.html',
+                                slidBackEnabled: 'false',
+                                pageParam: {
+                                    name: 'test'
+                                }
+                            });
+                            setTimeout(function() {
+                                api.closeWin({
+                                    name: 'select'
+                                });
+                            }, 500)
+                            api.sendEvent({
+                                name: 'zr_qhks',
+                                extra: {
+                                    key1: 'value1',
+                                }
+                            });
+
+                        }else if (role == 8) {
+                            api.openWin({
+                                name: 'main5',
+                                url: './zygly/zy-main.html',
+                                slidBackEnabled: 'false',
+                                pageParam: {
+                                    name: 'test'
+                                }
+                            });
+                            setTimeout(function() {
+                                api.closeWin({
+                                    name: 'select'
+                                });
+                            }, 500)
+                            api.sendEvent({
+                                name: 'zr_qhks',
+                                extra: {
+                                    key1: 'value1',
+                                }
+                            });
+
+                        } else if (role == 10) {
+                            api.openWin({
+                                name: 'ksqd',
+                                url: './ksqd/qd_main.html',
+                                slidBackEnabled: 'false',
+                                pageParam: {
+                                    name: 'test'
+                                }
+                            });
+                            setTimeout(function() {
+                                H.$hideProgress();
+                            }, 500)
+                        }else if (role == 11) {
+                          api.openWin({
+                              name: 'ksjy',
+                              url: './ksjy/jy_main.html',
+                              slidBackEnabled: 'false',
+                              pageParam: {
+                                  name: 'test'
+                              }
+                          });
+                        }
+
+                    } else {
+
                     }
+                }, function(err) {
+                    console.log(err);
+                });
 
-                  } else {
 
-                  }
-              }, function(err) {
-                  console.log(err);
-              });
-
-              setTimeout(function() {
-                  api.closeWin({
-                      name: 'select'
-                  });
-              }, 500)
-          }
+            }
         }
     })
 

@@ -113,7 +113,7 @@
         methods: {
 
             tj: (rid) => {
-                var address = "/Hospital/index.php/api/ys/rotate_list";
+                var address = "/index.php/api/ys/rotate_list";
                 var token = H.getStorage('token')
                 var ajaxData = {
                     token: token,
@@ -169,7 +169,7 @@
     })
 
     H.ready(function() {
-        var address = "/Hospital/index.php/api/ys/rotate_list";
+        var address = "/index.php/api/ys/rotate_list";
         var token = H.getStorage('token');
         $base.showLoading();
         var ajaxData = {

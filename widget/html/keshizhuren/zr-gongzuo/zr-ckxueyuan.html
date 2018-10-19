@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../../../css/aui.css">
     <link rel="stylesheet" href="../../../css/iconfont/iconfont.css">
+      <link rel="stylesheet" href="../../../css/style/style.css">
     <title>Document</title>
 </head>
 <style media="screen">
@@ -46,7 +47,14 @@
     </header>
     <div class="pad"></div>
     <div class="content ">
-        <div v-for="item in list" class="aui-margin-15 co">
+      <!-- 无数据 -->
+      <template v-if="list == false">
+        <div class="aui-text-center "id="wsj">
+            <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+            <p class="aui-font-size-16">暂无数据</p>
+        </div>
+      </template>
+        <div v-for="item in list" class="aui-margin-15 co" v-else>
             <div class="aui-padded-10">
                 <p class="aui-font-size-16 clo-99">住院医师：<span class="clo-33">{{item.username}}</span></p>
                 <p class="aui-font-size-16 clo-99">账号：<span class="clo-33">{{item.useraccount}}</span></p>
@@ -78,7 +86,7 @@
 
     }
     H.ready(function () {
-      var address = "/Hospital/index.php/api/department/teacher";
+      var address = "/index.php/api/department/teacher";
       var token = H.getStorage('token');
       var tid = H.getStorage('dj_id');
       console.log(tid);

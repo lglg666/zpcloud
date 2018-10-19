@@ -152,46 +152,47 @@
         });
 
     }
+    // Vue 初始化组件
+    var kssm = new Vue({
+        el: "#kssm",
+        data: {
+            apply: 0,
+            papername: '究规培生出科考试卷',
+            pusetime: '150',
+            qscore: '100',
+            passcore: '60',
+            qtype_name: ['单选题', '多选题', '填空', '客观题'],
+            qt_list: [{
+                title: '单选题',
+                score: '1',
+                num: '30',
+            }, {
+                title: '多选题',
+                score: '1',
+                num: '30',
+            }, {
+                title: '填空',
+                score: '1',
+                num: '30',
+            }, {
+                title: '客观题',
+                score: '1',
+                num: '30',
+            }],
+        },
+        methods: {}
+    });
     var toast = new auiToast({});
     H.ready(function() {
-        // Vue 初始化组件
-        var kssm = new Vue({
-            el: "#kssm",
-            data: {
-                apply: 0,
-                papername: '究规培生出科考试卷',
-                pusetime: '150',
-                qscore: '100',
-                passcore: '60',
-                qtype_name: ['单选题', '多选题', '填空', '客观题'],
-                qt_list: [{
-                    title: '单选题',
-                    score: '1',
-                    num: '30',
-                }, {
-                    title: '多选题',
-                    score: '1',
-                    num: '30',
-                }, {
-                    title: '填空',
-                    score: '1',
-                    num: '30',
-                }, {
-                    title: '客观题',
-                    score: '1',
-                    num: '30',
-                }],
-            },
-            methods: {}
-        });
+
         //ajax 获取试卷的信息
-        var address = "/Hospital/index.php/api/ys/examination";
+        var address = "/index.php/api/ys/examination";
         var ajaxData = {
             token: H.getStorage('token')
         };
 
         $base.get(address, ajaxData, function(ret) {
-
+      console.log(JSON.stringify(ret));
             if (ret.status == 0) {
                 // api.closeWin({
                 //     name: 'kssm'

@@ -141,7 +141,7 @@
 
             },
             del: (id) => {
-                var address = "/Hospital/index.php/api/teacher/mini_cex";
+                var address = "/index.php/api/teacher/mini_cex";
                 var token = H.getStorage('token');
                 var ajaxData = {
                     token: token,
@@ -173,7 +173,7 @@
         }
     })
     H.ready(function() {
-        var address = "/Hospital/index.php/api/teacher/mini_cex";
+        var address = "/index.php/api/teacher/mini_cex";
         var token = H.getStorage('token');
         var id = H.getStorage('dj_minipg_id');
         $base.showLoading();

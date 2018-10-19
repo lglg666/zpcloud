@@ -8,6 +8,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="../../css/aui.css">
     <link rel="stylesheet" type="text/css" href="../../css/iconfont/iconfont.css">
+    <link rel="stylesheet" href="../../css/style/style.css">
 </head>
 <style media="screen">
     header {
@@ -94,6 +95,7 @@
     </header>
     <div class="pad"></div>
     <div class="" id="notice_info">
+
         <div class="" v-for="item in list">
             <div class=" aui-text-center">
                 <a class="s">15:16</a>
@@ -168,7 +170,7 @@
         }
     })
     H.ready(function() {
-        var address = "/Hospital/index.php/api/office/feedback";
+        var address = "/index.php/api/office/feedback";
         var token = H.getStorage('token');
         $base.showLoading();
         var ajaxData = {

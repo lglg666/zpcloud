@@ -116,7 +116,7 @@
 <script type="text/javascript">
     H.ready(function() {
 
-        var address = "/Hospital/index.php/api/user/mailbox";
+        var address = "/index.php/api/user/mailbox";
         var token = H.getStorage('token');
         var userid = H.getStorage("user_id");
         var fid = H.getStorage("fid");
@@ -147,7 +147,7 @@
         }, function(ret, err) {
                 console.log(JSON.stringify(ret));
                 if (ret.buttonIndex == 1) {
-                    var address = "/Hospital/index.php/api/user/mailbox";
+                    var address = "/index.php/api/user/mailbox";
                     var token = H.getStorage('token');
                     var fid = H.getStorage("fid");
                     var ajaxData = {

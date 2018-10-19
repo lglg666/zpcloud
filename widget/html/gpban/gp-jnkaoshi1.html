@@ -115,7 +115,7 @@
         console.log(score);
         var sz = /^([1-9]\d?|100)$/;
         if (sz.test(score)) {
-            var address = "/Hospital/index.php/api/office/skill_exam";
+            var address = "/index.php/api/office/skill_exam";
             var token = H.getStorage('token');
             var id = H.getStorage('gpks_id');
             var ajaxData = {

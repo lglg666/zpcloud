@@ -48,6 +48,10 @@
         font-weight: 600;
     }
 
+    .l1 select {
+        width: 70%
+    }
+
     .btn {
         width: 80%;
         margin: 0 auto;
@@ -78,148 +82,125 @@
     <div class="aui-text-left xs aui-font-size-18 aui-padded-l-10">
         学生信息
     </div>
+    <div id="ysinfo">
+        <div class="l1">
+            <p class="aui-font-size-16 clo-99 aui-padded-l-10">姓名：<span class="clo-33">{{username}}</span> </p>
+            <div class="aui-hr"></div>
+            <p class="aui-font-size-16 clo-99 aui-padded-l-10">账号： <span class="clo-33">{{useraccount}}</span></p>
+            <div class="aui-hr"></div>
+            <p class="aui-font-size-16 clo-99 aui-padded-l-10">科室：<span class="clo-33"> {{departmentname}}</span></p>
+        </div>
 
-    <div class="l1" id="ysinfo">
-        <p class="aui-font-size-16 clo-99 aui-padded-l-10">姓名：<span class="clo-33">{{username}}</span> </p>
-        <div class="aui-hr"></div>
-        <p class="aui-font-size-16 clo-99 aui-padded-l-10">账号： <span class="clo-33">{{useraccount}}</span></p>
-        <div class="aui-hr"></div>
-        <p class="aui-font-size-16 clo-99 aui-padded-l-10">科室：<span class="clo-33"> {{departmentname}}</span></p>
-    </div>
+        <div class="aui-text-left xs1 aui-font-size-18 aui-padded-l-10">
+            试卷设置
+        </div>
 
-    <div class="aui-text-left xs1 aui-font-size-18 aui-padded-l-10">
-        试卷设置
-    </div>
+        <div class="l1">
+            <p class="aui-font-size-16 clo-99 aui-padded-l-10 aui-pull-left">试卷选择：</p>
+            <select name="" id="" v-model="selid":change="xz()" >
+            <option value="" selected="selected" >请选择</option>
+            <option :value="item.id" v-for="item in list" class="aui-font-size-18">{{item.pname}}</option>
+            </select>
+                <!-- <p class="aui-font-size-16 clo-99 aui-padded-l-10 aui-pull-left">试题数：<span>60</span></p> -->
+                <!-- <p class="aui-font-size-16 clo-99 aui-padded-l-10 aui-pull-left">考试时间：<span>60</span></p> -->
+        </div>
 
-    <div class="l1">
-        <p class="aui-font-size-16 clo-99 aui-padded-l-10">试卷名称：<span class="clo-33">《2017年第三季度考试》</span> </p>
-        <div class="aui-hr"></div>
-        <p class="aui-font-size-16 clo-99 aui-padded-l-10" tapmode onclick="s1()">考试用时： <span class="clo-33" id="s1">60</span><i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-18 clo-33"></i></p>
-        <div class="aui-hr"></div>
-        <p class="aui-font-size-16 clo-99 aui-padded-l-10">试卷类型：<span class="clo-33"> 出科考试</span></p>
-        <div class="aui-hr"></div>
-        <p class="aui-font-size-16 clo-99 aui-padded-l-10" tapmode onclick="s2()">查看分数：<span class="clo-33" id="s2">拒绝</span><i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-18 clo-33"></i></p>
-        <div class="aui-hr"></div>
-        <p class="aui-font-size-16 clo-99 aui-padded-l-10" tapmode onclick="s3()">查看答案：<span class="clo-33" id="s3">拒绝</span><i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-18 clo-33"></i></p>
-        <div class="aui-hr"></div>
-        <p class="aui-font-size-16 clo-99 aui-padded-l-10" tapmode onclick="s4()">是否导出：<span class="clo-33" id="s4">拒绝</span><i class="iconfont icon-arrow-right aui-pull-right aui-padded-r-10 aui-font-size-18 clo-33"></i></p>
-    </div>
-
-    <div class="btn" tapmode onclick="showDefault('success')">
-        <button>确定考试</button>
+        <div class="btn" tapmode v-on:click="submit()">
+            <button>确定考试</button>
+        </div>
     </div>
 </body>
-<script src="../../script/aui-tab.js"></script>
-<script src="../../script/aui-toast.js"></script>
-<script src="../../script/aui-dialog.js"></script>
 <script src="../../script/api.js"></script>
 <script src="../../script/base.js"></script>
 <script src="../../script/AHelper.js"></script>
 <script src="../../script/zepto.min.js"></script>
 <script src="../../script/vue/vue.min.js"></script>
 <script src="../../script/fastclick.js"></script>
-<script src="../../script/aui-actionsheet.js"></script>
 <script>
-    new Vue({
+    var vm = new Vue({
         el: '#ysinfo',
         data: {
-          ysid:H.getStorage('ysid'),
-          username:H.getStorage('username'),
-          useraccount:H.getStorage('useraccount'),
-          departmentname:H.getStorage('departmentname')
+            username: H.getStorage('username'),
+            useraccount: H.getStorage('useraccount'),
+            departmentname: H.getStorage('departmentname'),
+            selid: "",
+            list: [],
+        },
+        methods: {
+            xz: () => {
+                console.log("dddd");
+            },
+            submit: () => {
+              api.confirm({
+                  title: '出科考试',
+                  msg: '确定为该学员设置出科考试',
+                  buttons: ['确定', '取消']
+              }, function(ret, err){
+                  if( ret.buttonIndex == 1 ){
+                       console.log( JSON.stringify( ret ) );
+                       var address = "/index.php/api/department/rotate_message";
+                       var token = H.getStorage('token');
+                       var rid = H.getStorage('rid');
+                       var uid = H.getStorage('ysid');
+                       var ajaxData = {
+                           token: token,
+                           action: "choosepaper",
+                           paperid: vm.selid,
+                           rid: rid,
+                           uid: uid,
+
+                       };
+                       console.log(JSON.stringify(ajaxData));
+                       $base.submit(address, ajaxData, function(ret) {
+                           console.log(JSON.stringify(ret.status));
+                           if(ret.status ==1){
+                             $base.toast(ret.errmsg);
+                             setTimeout(function () {
+                               api.closeWin({});
+                             },520)
+                             api.sendEvent({
+                                 name: 'zr_szsj',
+                                 extra: {
+                                     key1: 'value1',
+                                 }
+                             });
+
+                           }else {
+                              $base.toast(ret.errmsg);
+                           }
+                       }, function(err) {
+                           console.log(JSON.stringify(err));
+                       });
+                  }else{
+                       console.log( JSON.stringify( err ) );
+                  }
+              });
+
+
+            }
         }
     });
-    var actionsheet = new auiActionsheet();
 
-    function s1() {
-        actionsheet.init({
-            frameBounces: true, //当前页面是否弹动，（主要针对安卓端）
-            // title:"这里是标题",
-            cancelTitle: '取消',
-            // destructiveTitle:'红色警告按钮',
-            buttons: ['60', '90', '120']
-        }, function(ret) {
-            if (ret.buttonIndex == 1) {
-                document.getElementById('s1').innerHTML = "60"
-            }
-            if (ret.buttonIndex == 2) {
-                document.getElementById('s1').innerHTML = "90"
-            }
-            if (ret.buttonIndex == 3) {
-                document.getElementById('s1').innerHTML = "120"
-            }
-        })
-    }
+    H.ready(function() {
+        var address = "/index.php/api/department/rotate_message";
+        var token = H.getStorage('token');
+        var ajaxData = {
+            token: token,
+            action: "paperlist",
 
-    function s2() {
-        actionsheet.init({
-            frameBounces: true, //当前页面是否弹动，（主要针对安卓端）
-            // title:"这里是标题",
-            cancelTitle: '取消',
-            // destructiveTitle:'红色警告按钮',
-            buttons: ['拒绝', '允许']
-        }, function(ret) {
-            if (ret.buttonIndex == 1) {
-                document.getElementById('s2').innerHTML = "拒绝"
-            }
-            if (ret.buttonIndex == 2) {
-                document.getElementById('s2').innerHTML = "允许"
-            }
-        })
-    }
-
-    function s3() {
-        actionsheet.init({
-            frameBounces: true, //当前页面是否弹动，（主要针对安卓端）
-            // title:"这里是标题",
-            cancelTitle: '取消',
-            // destructiveTitle:'红色警告按钮',
-            buttons: ['拒绝', '允许']
-        }, function(ret) {
-            if (ret.buttonIndex == 1) {
-                document.getElementById('s3').innerHTML = "拒绝"
-            }
-            if (ret.buttonIndex == 2) {
-                document.getElementById('s3').innerHTML = "允许"
-            }
-        })
-    }
-
-    function s4() {
-        actionsheet.init({
-            frameBounces: true, //当前页面是否弹动，（主要针对安卓端）
-            // title:"这里是标题",
-            cancelTitle: '取消',
-            // destructiveTitle:'红色警告按钮',
-            buttons: ['拒绝', '允许']
-        }, function(ret) {
-            if (ret.buttonIndex == 1) {
-                document.getElementById('s4').innerHTML = "拒绝"
-            }
-            if (ret.buttonIndex == 2) {
-                document.getElementById('s4').innerHTML = "允许"
-            }
-        })
-    }
-
-    H.ready(function () {
-      //处理点击延迟
-      $(function() {
-          FastClick.attach(document.body);
-      });
+        };
+        $base.get(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret));
+            vm.list = ret.data
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        });
     })
-    var toast = new auiToast({})
 
-    function showDefault(type) {
-        switch (type) {
-            case "success":
-                toast.success({
-                    title: "出题成功",
-                    duration: 2000
-                });
-                break;
-        }
-    }
 
 
     function fh() {

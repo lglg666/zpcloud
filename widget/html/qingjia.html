@@ -196,8 +196,8 @@
         el: ".qj",
         data: {
             list: {
-                k_date: "2018-02-01",
-                j_date: "2018-02-25",
+                k_date:getnewDate(),
+                j_date:getnewDate(),
                 lx: "0",
                 day: '',
             }
@@ -205,7 +205,7 @@
         methods: {
             submit: function() {
                 console.log(JSON.stringify(this.list));
-                var address = "/Hospital/index.php/api/ys/attend";
+                var address = "/index.php/api/ys/attend";
                 var token = H.getStorage('token');
                 var ajaxData = {
                     token: token,

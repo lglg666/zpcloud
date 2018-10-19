@@ -122,7 +122,7 @@ var sum = new Vue({
   },
   methods:{
     del:(id)=>{
-      var address = "/Hospital/index.php/api/ys/summarize";
+      var address = "/index.php/api/ys/summarize";
       var token = H.getStorage('token');
       var ajaxData = {
           token: token,
@@ -152,7 +152,7 @@ var sum = new Vue({
   }
 })
     H.ready(function() {
-        var address = "/Hospital/index.php/api/ys/summarize";
+        var address = "/index.php/api/ys/summarize";
         var token = H.getStorage('token');
         var ajaxData = {
             token: token,

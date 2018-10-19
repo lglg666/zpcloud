@@ -9,6 +9,7 @@
 </head>
 <link rel="stylesheet" href="../../css/aui.css">
 <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+<link rel="stylesheet" href="../../css/style/style.css">
 <style>
     header {
         position: fixed !important;
@@ -63,7 +64,14 @@
     </header>
     <div class="pad"></div>
     <div class="content" id="content">
-        <div class="aui-margin-15  main aui-padded-10" v-for="item in list">
+      <!-- 无数据 -->
+      <template v-if="list == false">
+        <div class="aui-text-center "id="wsj">
+            <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+            <p class="aui-font-size-16">暂无数据</p>
+        </div>
+      </template>
+        <div class="aui-margin-15  main aui-padded-10" v-for="item in list"v-else>
             <div class=" lin">
                 <p class="clo-99 aui-font-size-16 ">带教姓名:<span class="clo-33" v-text="item.name"> </span></p>
                 <p class="clo-99 aui-font-size-16 ">带教账号:<span class="clo-33" v-text="item.account"> </span></p>
@@ -115,14 +123,14 @@
 
     }
     H.ready(function () {
-        var address = "/Hospital/index.php/api/office/teaching_activities";
+        var address = "/index.php/api/office/teaching_activities";
         var token = H.getStorage('token');
         var ajaxData = {
             token : token,
             type  : 2,
         };
         $base.get(address, ajaxData, function(ret) {
-          console.log(address);
+          console.log(JSON.stringify(ret));
           content.list = ret.data;
         }, function(err) {
             console.log(JSON.stringify(err));

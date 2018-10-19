@@ -124,7 +124,7 @@
             </div>
         </div>
         <p>搜索</p>
-        <div class="aui-tab aui-row" id="tab">
+        <div class="aui-tab aui-row aui-col-xs-12" id="tab">
             <div class="aui-tab-item aui-active aui-col-xs-4">全部</div>
             <div class="aui-tab-item aui-col-xs-4">
                 未审批</div>
@@ -162,8 +162,8 @@
                       <p class="clo-99 aui-font-size-16 ">备注：<span class="clo-33" v-text="item.remark"></span></p>
                       <p class="clo-99 aui-font-size-16 ">带教审批：<span class="clo-33 aui-padded-l-10" v-text="item.t_stauts_name"></span></p>
                       <p class="clo-99 aui-font-size-16 ">主任审批：<span class="clo-33 aui-padded-l-10" v-text="item.d_stauts_name"></span></p>
-                      <div class="btn aui-text-right aui-padded-10">
-                          <button class="btn_lan aui-margin-r-10" tapmode v-on:click="sp(item.mcid)">工作审批</button>
+                      <div class="btn aui-text-right aui-padded-10"v-on:click="sp(item.mcid)">
+                          <button class="btn_lan aui-margin-r-10" tapmode onclick="openDialog('text')">工作审批</button>
                       </div>
                     </div>
                 </div>
@@ -199,8 +199,8 @@
                     <p class="clo-99 aui-font-size-16 ">备注：<span class="clo-33" v-text="item.remark"></span></p>
                     <p class="clo-99 aui-font-size-16 ">带教审批：<span class="clo-33 aui-padded-l-10" v-text="item.t_stauts_name"></span></p>
                     <p class="clo-99 aui-font-size-16 ">主任审批：<span class="clo-33 aui-padded-l-10" v-text="item.d_stauts_name"></span></p>
-                    <div class="btn aui-text-right aui-padded-10">
-                    <button class="btn_lan aui-margin-r-10" tapmode v-on:click="sp(item.mcid)">工作审批</button>
+                    <div class="btn aui-text-right aui-padded-10"v-on:click="sp(item.mcid)">
+                    <button class="btn_lan aui-margin-r-10" tapmode onclick="openDialog('text')">工作审批</button>
                     </div>
                   </div>
               </div>
@@ -259,24 +259,7 @@ var total = new Vue({
   },
   methods:{
     sp: (id) => {
-        var address = "/Hospital/index.php/api/department/operation_register";
-        var token = H.getStorage('token');
-        var ajaxData = {
-            token: token,
-            action: 'pass',
-            id: id
-        };
-        $base.submit(address, ajaxData, function(ret) {
-            console.log(JSON.stringify(ret));
-            if (ret.status == 1) {
-                $base.toast(ret.errmsg);
-                location.reload();
-            } else {
-                $base.toast(ret.errmsg);
-            }
-        }, function(err) {
-            console.log(JSON.stringify(err));
-        });
+      H.setStorage('zr_rid',id)
     }
   }
 
@@ -296,24 +279,7 @@ var Unapproved = new Vue({
   },
   methods:{
     sp: (id) => {
-        var address = "/Hospital/index.php/api/department/operation_register";
-        var token = H.getStorage('token');
-        var ajaxData = {
-            token: token,
-            action: 'pass',
-            id: id
-        };
-        $base.submit(address, ajaxData, function(ret) {
-            console.log(JSON.stringify(ret));
-            if (ret.status == 1) {
-                $base.toast(ret.errmsg);
-                location.reload();
-            } else {
-                $base.toast(ret.errmsg);
-            }
-        }, function(err) {
-            console.log(JSON.stringify(err));
-        });
+      H.setStorage('zr_rid',id)
     }
   }
 
@@ -345,7 +311,7 @@ var Unapproved = new Vue({
     H.ready(function() {
       //全部
       $base.showLoading();
-      var address = "/Hospital/index.php/api/department/operation_register";
+      var address = "/index.php/api/department/operation_register";
       var token = H.getStorage('token');
       var ajaxData = {
           token: token,
@@ -385,6 +351,62 @@ var Unapproved = new Vue({
           FastClick.attach(document.body);
       });
     })
+
+    var dialog = new auiDialog({})
+
+    function openDialog(type) {
+        switch (type) {
+            case "text":
+                dialog.alert({
+                    title: "工作内容",
+                    msg: '确定要审批？',
+                    buttons: ['不同意', '同意']
+                }, function(ret) {
+                    console.log(ret)
+                    if(ret.buttonIndex == 2){
+                      var address = "/index.php/api/department/operation_register";
+                      var token = H.getStorage('token');
+                      var id = H.getStorage('zr_rid');
+                      var ajaxData = {
+                          token: token,
+                          action: 'pass',
+                          id: id
+                      };
+                      $base.submit(address, ajaxData, function(ret) {
+                          console.log(JSON.stringify(ret));
+                          if (ret.status == 1) {
+                              $base.toast(ret.errmsg);
+                              location.reload();
+                          } else {
+                              $base.toast(ret.errmsg);
+                          }
+                      }, function(err) {
+                          console.log(JSON.stringify(err));
+                      });
+                    }else{
+                      var address = "/index.php/api/department/operation_register";
+                      var token = H.getStorage('token');
+                      var id = H.getStorage('zr_rid');
+                      var ajaxData = {
+                          token: token,
+                          action: 'unpass',
+                          id: id
+                      };
+                      $base.submit(address, ajaxData, function(ret) {
+                          console.log(JSON.stringify(ret));
+                          if (ret.status == 1) {
+                              $base.toast(ret.errmsg);
+                              location.reload();
+                          } else {
+                              $base.toast(ret.errmsg);
+                          }
+                      }, function(err) {
+                          console.log(JSON.stringify(err));
+                      });
+                    }
+                })
+        }
+    }
 </script>
 
 </html>

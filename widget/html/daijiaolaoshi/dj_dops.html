@@ -8,6 +8,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="../../css/aui.css">
     <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+      <link rel="stylesheet" href="../../css/style/style.css">
 </head>
 <style media="screen">
     header {
@@ -59,7 +60,14 @@
     </header>
     <div class="pad "></div>
     <div id="vm">
-      <template v-for="item in list">
+      <!-- 无数据 -->
+      <template v-if="list == false">
+        <div class="aui-text-center "id="wsj">
+            <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+            <p class="aui-font-size-16">暂无数据</p>
+        </div>
+      </template>
+      <template v-for="item in list"v-else>
         <div class="content aui-margin-15">
             <div class="list  aui-padded-10">
               <p class="clo-22 aui-font-size-16">住院医师：<span class="clo-99">{{item.name}}</span></p>
@@ -75,7 +83,7 @@
                 <div class="aui-hr"></div>
                 <div class="btn aui-padded-t-10 aui-text-right">
                     <button type="button" name="button" class="btn_lan btn-bg"tapmode v-on:click="check(item.id,item.name,item.professioname,item.departmentname)">查看</button>
-                    <button type="button" name="button" class="btn_lan aui-margin-l-10" tapmode v-on:click="xz(item.rid)">新增</button>
+                    <button type="button" name="button" class="btn_lan aui-margin-l-10" tapmode v-on:click="xz(item.rid,item.name,item.professioname,item.departmentname)">新增</button>
                 </div>
             </div>
         </div>
@@ -114,8 +122,11 @@
           });
 
         },
-        xz:(rid) => {
+        xz:(rid,name,professioname,departmentname) => {
           H.setStorage("dj_dops_rid",rid);
+          H.setStorage("dj_dpname",name);
+            H.setStorage("dj_dppro",professioname);
+              H.setStorage("dj_dpdep",departmentname);
           api.openWin({
               name: 'dj_dops2',
               url: '../daijiaolaoshi/dj_dops2.html',
@@ -128,7 +139,7 @@
       }
     })
     H.ready(function () {
-      var address = "/Hospital/index.php/api/teacher/dops";
+      var address = "/index.php/api/teacher/dops";
       var token = H.getStorage('token');
       var ajaxData = {
           token: token,

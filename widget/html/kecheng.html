@@ -8,6 +8,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="../css/aui.css">
     <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+    <link rel="stylesheet" href="../css/style/style.css">
 </head>
 <style media="screen">
     header {
@@ -32,7 +33,6 @@
         margin-top: 0.6rem;
         font-size: 0.7rem;
     }
-
     /*.q {
         padding-top: 2.5rem;
     }*/
@@ -93,26 +93,33 @@
     </header>
     <div class="pad"></div>
     <div class="course">
-      <div v-for="item in list">
-    <div class="aui-text-center q">
-        <div class="s">15:08</div>
-    </div>
+      <!-- 无数据 -->
+      <template v-if="list == false">
+        <div class="aui-text-center "id="wsj">
+            <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+            <p class="aui-font-size-16">暂无数据</p>
+        </div>
+      </template>
+        <div v-for="item in list" v-else>
+            <div class="aui-text-center q">
+                <div class="s">15:08</div>
+            </div>
 
-    <div class="db aui-margin-15 ">
-        <div class="kl">
-            <p class="aui-font-size-18 color-22 aui-padded-10 chu">{{item.name}}</p>
-            <p class="aui-font-size-16 color-99 aui-padded-l-10">发布日期：<span class="color-22"> {{item.release_time}}</span></p>
-            <p class="aui-font-size-16 color-99 aui-padded-l-10">主讲人：<span class="color-22"> {{item.course_teacher}}</span></p>
-            <p class="aui-font-size-16 color-99 aui-padded-l-10">地点：<span class="color-22"> {{item.place}}</span></p>
-            <div class="aui-hr"></div>
-            <div class="main_2"  tapmode v-on:click="select(item.id)">
-                <i class="aui-iconfont iconfont icon-arrow-right"></i>
-                <p class="aui-text-left aui-padded-l-10">查看详情</p>
+            <div class="db aui-margin-15 ">
+                <div class="kl">
+                    <p class="aui-font-size-18 color-22 aui-padded-10 chu">{{item.name}}</p>
+                    <p class="aui-font-size-16 color-99 aui-padded-l-10">发布日期：<span class="color-22"> {{item.release_time}}</span></p>
+                    <p class="aui-font-size-16 color-99 aui-padded-l-10">主讲人：<span class="color-22"> {{item.course_teacher}}</span></p>
+                    <p class="aui-font-size-16 color-99 aui-padded-l-10">地点：<span class="color-22"> {{item.place}}</span></p>
+                    <div class="aui-hr"></div>
+                    <div class="main_2" tapmode v-on:click="select(item.id)">
+                        <i class="aui-iconfont iconfont icon-arrow-right"></i>
+                        <p class="aui-text-left aui-padded-l-10">查看详情</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    </div>
-</div>
 </body>
 <script src="../script/api.js "></script>
 <script src="../script/AHelper.js "></script>
@@ -121,25 +128,26 @@
 <script src="../script/vue/vue.min.js "></script>
 <script src="../script/fastclick.js "></script>
 <script>
-var vm = new Vue({
-  el:".course",
-  data:{
-  list: []
-},
-methods:{
-   select: function(id) {
-      // alert(id);
-      H.setStorage("course_id", id);
-      api.openWin({
-          name: 'kc1',
-          url: './kecheng1.html',
-          pageParam: {
-              name: 'test'
-          }
-      });
-  }
-},
-})
+    var vm = new Vue({
+        el: ".course",
+        data: {
+            list: []
+        },
+        methods: {
+            select: function(id) {
+                // alert(id);
+                H.setStorage("course_id", id);
+                api.openWin({
+                    name: 'kc1',
+                    url: './kecheng1.html',
+                    pageParam: {
+                        name: 'test'
+                    }
+                });
+            }
+        },
+    })
+
     function fh() {
         api.closeWin({});
     }
@@ -164,7 +172,7 @@ methods:{
             $("#fb").hide();
         }
 
-        var address = "/Hospital/index.php/api/user/course";
+        var address = "/index.php/api/user/course";
         var token = H.getStorage('token');
         $base.showLoading();
         var ajaxData = {
@@ -172,7 +180,7 @@ methods:{
         };
         $base.get(address, ajaxData, function(ret) {
             console.log(JSON.stringify(ret));
-              vm.list = ret.data;
+            vm.list = ret.data;
             $base.closeLoading();
         }, function(err) {
             console.log(JSON.stringify(err));
@@ -181,6 +189,17 @@ methods:{
         $(function() {
             FastClick.attach(document.body);
         });
+
+        api.addEventListener({
+            name: 'gp-kc'
+        }, function(ret, err){
+            if( ret ){
+              location.reload();
+            }else{
+                 alert( JSON.stringify( err ) );
+            }
+        });
+
     })
 </script>
 

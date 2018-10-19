@@ -201,7 +201,7 @@
 <script src="../../script/base.js"></script>
 <script>
     H.ready(function() {
-        var address = "/Hospital/index.php/api/user/index_info";
+        var address = "/index.php/api/user/index_info";
         var token = H.getStorage('token');
         var userid = H.getStorage("user_id");
         var user_role = H.getStorage("user_role");
@@ -246,7 +246,7 @@
     function tz() {
         var userid = H.getStorage("user_id");
 
-        var address = "/Hospital/index.php/api/user/update_user_time";
+        var address = "/index.php/api/user/update_user_time";
         var ajaxData = {
             userid: userid,
             key: "notice_time"

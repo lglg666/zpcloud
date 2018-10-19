@@ -69,23 +69,28 @@
     H.ready(function() {
         $('#title').html(H.getStorage('dgxz2_title'));
         var url = H.getStorage('dgxz_url')
-        api.openFrame({
-            name: 'page2',
-            url: url,
-            rect: {
-                x: 0,
-                y: $api.offset(header).h,
-                w: 'auto',
-                h: "auto"
-            },
-            pageParam: {
-                name: 'test'
-            },
-            bounces: true,
-            bgColor: 'rgba(0,0,0,0)',
-            vScrollBarEnabled: true,
-            hScrollBarEnabled: false
+        var statusBar = api.require("statusBar");
+        statusBar.getHeight(function(ret) {
+            console.log(ret.height)
+            api.openFrame({
+                name: 'page2',
+                url: url,
+                rect: {
+                    x: 0,
+                    y: $api.offset(header).h,
+                    w: 'auto',
+                    h: "auto"
+                },
+                pageParam: {
+                    name: 'test'
+                },
+                bounces: true,
+                bgColor: 'rgba(0,0,0,0)',
+                vScrollBarEnabled: true,
+                hScrollBarEnabled: false
+            });
         });
+
 
     })
 </script>

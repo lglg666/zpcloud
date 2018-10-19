@@ -168,8 +168,9 @@
         methods: {
             submit: function() {
                 console.log(JSON.stringify(this.inputtext));
-                var address = '/Hospital/index.php/api/office/notice';
+                var address = '/index.php/api/office/notice';
                 var token = H.getStorage('token');
+                console.log(token);
                 var ajaxData = {
                     token: token,
                     action: "pub",
@@ -189,7 +190,7 @@
                         api.sendEvent({
                             name: 'fbgg',
                             extra: {
-                                key1: 'value1', 
+                                key1: 'value1',
                             }
                         });
 

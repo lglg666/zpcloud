@@ -241,7 +241,7 @@
 <script src="../../script/api.js"></script>
 <script>
     H.ready(function() {
-        var address = "/Hospital/index.php/api/user/user_info";
+        var address = "/index.php/api/user/user_info";
         var token = H.getStorage('token');
         var userid = H.getStorage("user_id");
         // $base.showLoading();
@@ -250,6 +250,7 @@
             userid: userid
         };
         $base.get(address, ajaxData, function(ret) {
+          console.log(JSON.stringify(ret));
             $("#user_name").html(ret.data.user_name);
             $("#hospital_name").html(ret.data.hospital_name);
             $("#user_role").html(ret.data.role_name);
@@ -417,10 +418,10 @@
             //上传剪辑后的图像到服务器
 
             // var hospital_ip = H.getStorage("hospital_ip");
-            // var address = "/Hospital/index.php/api/user/user_image";
+            // var address = "/index.php/api/user/user_image";
             // var url = hospital_ip+address;
             var userid = H.getStorage("user_id");
-            var address = "/Hospital/index.php/api/user/user_image";
+            var address = "/index.php/api/user/user_image";
             var ajaxData = {
                 file: tx,
                 userid: userid
@@ -436,7 +437,7 @@
                     });
                 } else if (ret.status == 1) {
                     $api.byId('tx').innerHTML = '<img src="' + ret.path + ret.name + '">';
-                    //$api.byId('tx').innerHTML = '<img src="http://192.168.1.27/Hospital/www/user_head_img/201805051009-33.jpg">';
+                    //$api.byId('tx').innerHTML = '<img src="http://192.168.1.27/www/user_head_img/201805051009-33.jpg">';
                     api.toast({
                         msg: '上传成功',
                         duration: 3000,
@@ -483,6 +484,7 @@
       api.openWin({
           name: 'sz',
           url: '../shezhi.html',
+          reload: true,
           pageParam: {
               name: 'test'
           }

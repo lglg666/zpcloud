@@ -105,12 +105,12 @@
     var vm = new Vue({
         el: '.sum',
         data: {
-            inp: {}
+            inp: {work_time:getnewDate(),}
         },
         methods: {
             submit: function() {
                 console.log(JSON.stringify(this.inp));
-                var address = "/Hospital/index.php/api/ys/summarize";
+                var address = "/index.php/api/ys/summarize";
                 var token = H.getStorage('token');
                 var ajaxData = {
                     token: token,

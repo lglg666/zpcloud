@@ -8,6 +8,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="../../css/aui.css">
     <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+    <link rel="stylesheet" href="../../css/style/style.css">
 </head>
 <style media="screen">
     header {
@@ -62,7 +63,14 @@
     </header>
     <div class="pad "></div>
     <div class="content">
-        <template v-for="item in list">
+      <!-- 无数据 -->
+      <template v-if="list == false">
+        <div class="aui-text-center "id="wsj">
+            <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+            <p class="aui-font-size-16">暂无数据</p>
+        </div>
+      </template>
+        <template v-for="item in list"v-else>
         <div class="list  aui-padded-10  aui-margin-15">
             <p class="clo-22 aui-font-size-16">账号：<span class="clo-99">{{item.account}}</span></p>
             <p class="clo-22 aui-font-size-16">住院医生：<span class="clo-99">{{item.name}}</span></p>
@@ -75,8 +83,9 @@
             <p class="clo-22 aui-font-size-16">审批状态：<span :class="item.status == 1?'clo-lan':'clo-hong'">{{item.statustr}}</span></p>
             <div class="aui-hr"></div>
             <div class="btn aui-padded-t-10 aui-text-right">
-                <button type="button" name="button" class="btn_hong aui-margin-l-10" tapmode v-on:click="sh(item.id)" v-if="item.status == 1">拒绝</button>
-                <button type="button" name="button" class="btn_lan aui-margin-l-10" tapmode v-on:click="sh1(item.id)" v-if="item.status == 2">同意</button>
+                <button type="button" name="button" class="btn_hong aui-margin-l-10" tapmode v-on:click="sh(item.id)" v-if="item.status == 1 || item.status == 0">拒绝</button>
+                <button type="button" name="button" class="btn_lan aui-margin-l-10" tapmode v-on:click="sh1(item.id)" v-if="item.status == 2 || item.status == 0">同意</button>
+                <button type="button" name="button" class="btn_lan aui-margin-l-10" tapmode v-on:click="sh2(item.id)" v-if="item.status == 3">通过销假</button>
             </div>
         </div>
       </template>
@@ -103,7 +112,7 @@
         },
         methods:{
           sh:(id)=>{
-            var address = "/Hospital/index.php/api/office/attend";
+            var address = "/index.php/api/office/attend";
             var token = H.getStorage('token');
             var ajaxData = {
                 token: token,
@@ -124,7 +133,7 @@
             });
           },
           sh1:(id)=>{
-            var address = "/Hospital/index.php/api/office/attend";
+            var address = "/index.php/api/office/attend";
             var token = H.getStorage('token');
             var ajaxData = {
                 token: token,
@@ -144,12 +153,33 @@
             }, function(err) {
                 console.log(JSON.stringify(err));
             });
+          },
+          sh2:(id)=>{
+            var address = "/index.php/api/office/attend";
+            var token = H.getStorage('token');
+            var ajaxData = {
+                token: token,
+                id:id,
+                action:"passdestroy",
+            };
+            $base.submit(address, ajaxData, function(ret) {
+                console.log(JSON.stringify(ret));
+                if(ret.status == 1){
+                      $base.toast(ret.errmsg);
+                        location.reload();
+                }else{
+                      $base.toast(ret.errmsg)
+                }
+
+            }, function(err) {
+                console.log(JSON.stringify(err));
+            });
           }
         }
     });
 
     H.ready(function() {
-        var address = "/Hospital/index.php/api/office/attend";
+        var address = "/index.php/api/office/attend";
         var token = H.getStorage('token');
         var ajaxData = {
             token: token,

@@ -217,7 +217,7 @@
         methods: {
             submit: function() {
                 console.log(JSON.stringify(this.inputtext));
-                var address = "/Hospital/index.php/api/ys/rotate_case_history";
+                var address = "/index.php/api/ys/rotate_case_history";
                 var token = H.getStorage('token');
                 var id = H.getStorage('ys_jxdbl_id');
                 var ajaxData = {
@@ -262,7 +262,7 @@
         }
     })
     H.ready(function() {
-      var address = "/Hospital/index.php/api/ys/rotate_case_history";
+      var address = "/index.php/api/ys/rotate_case_history";
       var token = H.getStorage('token');
       var id = H.getStorage('ys_jxdbl_id');
       $base.showLoading();

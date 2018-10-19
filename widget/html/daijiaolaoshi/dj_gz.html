@@ -142,6 +142,10 @@
                     <img src="../../image/activity-approval.png" alt="">
                     <div class="aui-grid-label">活动审批</div>
                 </div>
+                <div class="aui-col-xs-3" tapmode onclick="rkjy()">
+                    <img src="../../image/entry-education.png" alt="">
+                    <div class="aui-grid-label">入科教育</div>
+                </div>
             </div>
         </section>
     </div>
@@ -455,6 +459,16 @@ $('#departmentname').text(dd);
         api.openWin({
             name: 'dj_hdsp',
             url: '../daijiaolaoshi/dj_huodongsp.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+    function rkjy() {
+        api.openWin({
+            name: 'dj_rkjy',
+            url: '../daijiaolaoshi/dj_rkjy.html',
             pageParam: {
                 name: 'test'
             }

@@ -99,6 +99,9 @@
     .pad {
         padding-top: 6.5rem;
     }
+    #tab{
+      width: 100%;
+    }
 </style>
 
 <body>
@@ -241,7 +244,7 @@
     }
 
     H.ready(function() {
-        var address = "/Hospital/index.php/api/ys/skill_register";
+        var address = "/index.php/api/ys/skill_register";
         var token = H.getStorage('token');
         var s_id = H.getStorage('s_id');
         $base.showLoading();

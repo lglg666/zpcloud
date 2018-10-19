@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .mm {
+        background: #fff;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        font-family: PingFang-SC-Bold;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .bt {
+        text-align: center;
+        float: left;
+        width: 100%;
+        margin: 1rem auto auto auto;
+        background: #fff;
+        padding: 0.5rem 0 0.5rem 0;
+        position: fixed;
+        bottom: 0;
+    }
+
+    .bt button {
+        width: 80%;
+        text-align: center;
+        border-radius: 4px;
+        height: 2.5rem;
+        font-size: 0.85rem;
+        outline: none;
+        border: 0;
+        background: #4593DE;
+        color: #fff;
+    }
+
+    .nk {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        background: #fff;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .nk select {
+        /*width: 35%;*/
+        direction: rtl;
+        width: auto;
+        padding: 0 2%;
+        margin: 0;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    option {
+        text-align: right;
+        direction: ltr;
+    }
+
+    .gg {
+        width: 100%;
+        float: left;
+        background: #fff;
+        line-height: 2.5rem;
+        font-family: PingFang-SC-Bold;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .ll {
+        float: left;
+        margin-bottom: 5.5rem;
+        height: 2rem;
+    }
+
+    .gg textarea {
+        height: 6rem;
+    }
+
+    .gg input {
+        width: 80%;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <a class="aui-pull-left" tapmode onclick="fh()">
+            <i class="iconfont icon-arrow-left aui-iconfont"></i>
+        </a>
+        <div class="aui-title">入科教育</div>
+    </header>
+    <div class="pad"></div>
+    <div class="content">
+        <template v-for="item in inputtext">
+          <div class="gg aui-margin-t-15" >
+              <div class="aui-pull-left aui-padded-l-10 aui-font-size-16">{{item.title}}</div>
+              <textarea name="a" class="aui-padded-l-10" placeholder="请输入内容" v-model="item.default"v-if="item.datatype == 'longtext'"></textarea>
+              <input type="text" name="" value="" placeholder="字符串" id="inp" class="clo-99 aui-text-right aui-padded-r-10 auip" v-model="item.default" v-if="item.datatype == 'text'">
+              <input type="number" name="" value="" placeholder="整数" id="inp" class="clo-99 aui-text-right aui-padded-r-10" v-model="item.default" v-if="item.datatype == 'number'">
+              <input type="date" id="inp" value="" style="padding: 0.7rem 0;" class="clo-99 aui-text-right aui-padded-r-10"v-model="item.default" v-if="item.datatype == 'date'"/>
+          </div>
+        </template>
+        <div class="ll"></div>
+        <div class=" bt" tapmode v-on:click="submit()">
+            <button>提交</button>
+        </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/aui-dialog.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+
+<script>
+    function fh() {
+        api.closeWin({});
+    }
+    var vm = new Vue({
+        el: '.content',
+        data: {
+            inputtext: {}
+        },
+        methods: {
+            submit: function() {
+                console.log(JSON.stringify(this.inputtext));
+                var kk = []
+                for (item in this.inputtext) {
+                    console.log(JSON.stringify(this.inputtext[item].default));
+                    kk.push(this.inputtext[item].default)
+                }
+                console.log(JSON.stringify(kk[0]));
+                var address = "/index.php/api/ys/beforerotate";
+                var token = H.getStorage('token');
+                var id = H.getStorage('ys_rkjy_id');
+                var ajaxData = {
+                    token: token,
+                    action: "update",
+                    id:id,
+                    content: {
+                        hospitalsituation: kk[0],
+                        rules: kk[1],
+                        ethics: kk[2],
+                        text: kk[3],
+                        number: kk[4],
+                        date: kk[5]
+                    }
+
+                };
+                console.log(JSON.stringify(ajaxData));
+                $base.submit(address, ajaxData, function(ret) {
+                    console.log(JSON.stringify(ret));
+                    if (ret.status == 1) {
+                        $base.toast(ret.errmsg);
+                        api.sendEvent({
+                            name: 'rkjy',
+                            extra: {
+                                key1: true,
+                            }
+                        });
+                        setTimeout(function() {
+                            api.closeWin({});
+                        }, 500)
+                    } else {
+                        $base.toast(ret.errmsg);
+                    }
+                }, function(err) {
+                    console.log(JSON.stringify(err));
+                });
+            }
+        },
+    })
+    H.ready(function() {
+        var address = "/index.php/api/ys/beforerotate";
+        var token = H.getStorage('token');
+        var ajaxData = {
+            token: token,
+        };
+        $base.get(address, ajaxData, function(ret) {
+            // console.log(JSON.stringify(ret));
+            var rk_ind = H.getStorage('ys_rkjy_ind');
+            var ii = []
+            var index = 0;
+            for (kk in ret.data[rk_ind].content) {
+                console.log(JSON.stringify(ret.data[rk_ind].content[kk]))
+                ii.push(ret.data[rk_ind].content[kk])
+            }
+
+            for (item in ret.config.items) {
+                console.log(JSON.stringify(ret.config.items[item].default));
+                ret.config.items[item].default = ii[index++]
+            }
+            console.log(JSON.stringify(ret.config.items));
+            vm.inputtext = ret.config.items;
+
+
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        })
+    })
+</script>
+
+</html>

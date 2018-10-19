@@ -8,6 +8,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="../../css/aui.css">
     <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+    <link rel="stylesheet" href="../../css/style/style.css">
 </head>
 
 <style media="screen">
@@ -53,8 +54,15 @@
         <div class="aui-title">医师对科室</div>
     </header>
     <div class="pad"></div>
-<div id="vm">
-  <template v-for="item in list">
+    <div id="vm">
+        <!-- 无数据 -->
+        <template v-if="list == false">
+    <div class="aui-text-center "id="wsj">
+        <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+        <p class="aui-font-size-16">暂无数据</p>
+    </div>
+  </template>
+        <template v-for="item in list" v-else>
     <div class="content aui-margin-15 aui-padded-10">
         <p class="aui-font-size-16 clo-99">科室: <span class="clo-33">{{item.name}}</span></p>
         <p class="aui-font-size-16 clo-99">账号: <span class="clo-33">{{item.account}}</span></p>
@@ -66,7 +74,7 @@
         </div>
     </div>
   </template>
-</div>
+    </div>
 </body>
 <script src="../../script/aui-dialog.js"></script>
 <script src="../../script/api.js"></script>
@@ -77,55 +85,56 @@
 <script src="../../script/zepto.min.js"></script>
 <script>
     var vm = new Vue({
-      el:"#vm",
-      data:{
-        list:[]
-      },
-      methods:{
-      check:(id)=>{
-        console.log(id);
-        H.setStorage("gp-yspjks_id",id)
-        api.openWin({
-            name: 'gp-yspjks',
-            url: '../gpban/gp-yspjks1.html',
-            pageParam: {
-                name: 'test'
+        el: "#vm",
+        data: {
+            list: []
+        },
+        methods: {
+            check: (id) => {
+                console.log(id);
+                H.setStorage("gp-yspjks_id", id)
+                api.openWin({
+                    name: 'gp-yspjks',
+                    url: '../gpban/gp-yspjks1.html',
+                    pageParam: {
+                        name: 'test'
+                    }
+                });
             }
-        });
-      }
-      }
+        }
     })
+
     function fh() {
         api.closeWin({});
 
     }
     H.ready(function() {
-      var token = H.getStorage('token');
-      var address = "/Hospital/index.php/api/office/department_evalute_list";
-      var ajaxData = {
-          token: token,
-      };
+        var token = H.getStorage('token');
+        var address = "/index.php/api/office/department_evalute_list";
+        var ajaxData = {
+            token: token,
+        };
         $base.showLoading();
-      $base.get(address, ajaxData, function(ret) {
-          console.log(JSON.stringify(ret))
-          vm.list = ret.data
-          $base.closeLoading();
-      }, function(err) {
-          console.log(err);
-      });
-      api.addEventListener({
-          name: 'gp-yspjks'
-      }, function(ret, err) {
-          if (ret) {
-              location.reload();
-          } else {
-              alert(JSON.stringify(err));
-          }
-      });
-      //处理点击延迟
-      $(function() {
-          FastClick.attach(document.body);
-      });
+        $base.get(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret))
+            vm.list = ret.data
+            $base.closeLoading();
+        }, function(err) {
+            console.log(err);
+        });
+        api.addEventListener({
+            name: 'gp-yspjks'
+        }, function(ret, err) {
+            if (ret) {
+                location.reload();
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        });
     })
 </script>
 

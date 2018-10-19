@@ -193,7 +193,7 @@
                     contents.push(vm.list[item].text);
                 }
                 contents.push(vm.yijian);
-                var address = "/Hospital/index.php/api/ys/teaching_activities";
+                var address = "/index.php/api/ys/teaching_activities";
                 var token = H.getStorage('token');
                 var id = H.getStorage("jx_id");
                 var tauid = H.getStorage("jx_tauid");
@@ -218,6 +218,14 @@
                       setTimeout(function () {
                         api.closeWin({});
                       },800)
+
+                      api.sendEvent({
+                          name: 'jxpj',
+                          extra: {
+                              key1: 'value1',
+                          }
+                      });
+
                     }else{
                         $base.toast(ret.errmsg);
                     }

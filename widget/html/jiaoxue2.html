@@ -287,7 +287,7 @@
                     buttons: ['确定', '取消']
                 }, function(ret, err) {
                     if (ret.buttonIndex == 1) {
-                        var address = "/Hospital/index.php/api/ys/teaching_activities";
+                        var address = "/index.php/api/ys/teaching_activities";
                         var token = H.getStorage('token');
                         var jx_id = H.getStorage('jx_id');
                         var ajaxData = {
@@ -328,7 +328,7 @@
                             var token = H.getStorage("token");
                             var id = H.getStorage("jx_id")
                             console.log(id);
-                            var address = "/Hospital/index.php/api/ys/teaching_activities";
+                            var address = "/index.php/api/ys/teaching_activities";
                             var ajaxData = {
                                 token: token,
                                 photoimg: ret.data,
@@ -389,7 +389,7 @@
 
 
     H.ready(function() {
-        var address = "/Hospital/index.php/api/ys/teaching_activities";
+        var address = "/index.php/api/ys/teaching_activities";
         var token = H.getStorage('token');
         var id = H.getStorage("jx_id");
         console.log(id);
@@ -414,6 +414,18 @@
         }, function(err) {
             console.log(JSON.stringify(err));
         });
+
+        api.addEventListener({
+            name: 'jxpj'
+        }, function(ret, err){
+            if( ret ){
+                 console.log( JSON.stringify( ret ) );
+                 location.reload();
+            }else{
+                 alert( JSON.stringify( err ) );
+            }
+        });
+
     })
 </script>
 

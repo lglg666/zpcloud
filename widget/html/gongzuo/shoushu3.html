@@ -170,7 +170,7 @@ var ss = new Vue({
   methods:{
     sub:function () {
       console.log(JSON.stringify(this.input));
-      var address = "/Hospital/index.php/api/ys/operationrecord";
+      var address = "/index.php/api/ys/operationrecord";
       var token = H.getStorage('token');
       var id = H.getStorage('ys_ss1_id');
       var ajaxData = {

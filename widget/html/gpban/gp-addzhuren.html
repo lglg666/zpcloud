@@ -54,7 +54,7 @@
             margin: 0;
             height: 2.5rem;
             line-height: 2.5rem;
-            font-size: 0.7rem;
+            font-size: 0.5rem;
         }
 
         option {
@@ -119,11 +119,10 @@
             <div class="nk">
                 <p class="aui-pull-left aui-font-size-16 aui-padded-l-10 clo-22">所属科室：<span class="clo-hong">*</span></p>
                 <i class="iconfont icon-arrow-right aui-pull-right aui-font-size-16"></i>
-                <select class="form-control aui-pull-right" id="deptment" name="deptment" v-model="add.department">
+                <select class="form-control aui-pull-right ks" id="deptment" name="deptment" v-model="add.department">
           <option value="">请选择</option>
-          <option v-for="department in config.departments" :value="department.id" >{{department.name}}</option>
+          <option v-for="department in config.departments" :value="department.id" class="aui-title">{{department.name}}</option>
         </select>
-
             </div>
         </div>
         <div class="nk aui-text-center" tapmode onclick="add_Department()" id="tj">
@@ -175,44 +174,49 @@
     var vm = new Vue({
         el: ".content",
         data: {
-          config: {
-              departments: [],
-              educations: [],
-              professions: [],
-              user_types: [],
-              user_titles: [],
-              user_classs: [],
-              schools: [],
-              companys: []
-          },
+            config: {
+                departments: [],
+                educations: [],
+                professions: [],
+                user_types: [],
+                user_titles: [],
+                user_classs: [],
+                schools: [],
+                companys: []
+            },
             add: {
                 profession: "",
                 department: "",
                 education: "",
-                is_tutor:"0",
-                is_teacher:"0",
+                is_tutor: "0",
+                is_teacher: "0",
             }
         },
         methods: {
             submit: function() {
                 console.log(JSON.stringify(this.add));
                 var token = H.getStorage('token');
-                var address = "/Hospital/index.php/api/office/user_list";
+                var address = "/index.php/api/office/user_list";
                 var dep = [];
-                dep.push(this.add.department);
+                var departments = document.getElementsByClassName('ks')
+                console.log(departments.length);
+                for (var i = 0; i < departments.length; i++) {
+                    dep.push(departments[i].value);
+                }
+
                 console.log(JSON.stringify(dep));
                 var ajaxData = {
                     token: token,
                     action: 'add',
                     user_role: 3,
-                    name:this.add.name,
-                    account:this.add.account,
-                    password:this.add.password,
-                    profession:parseInt(this.add.profession),
-                    department:dep,
-                    education:parseInt(this.add.education),
-                    is_tutor:parseInt(this.add.is_tutor),
-                    is_teacher:parseInt(this.add.is_teacher),
+                    name: this.add.name,
+                    account: this.add.account,
+                    password: this.add.password,
+                    profession: parseInt(this.add.profession),
+                    department: dep,
+                    education: parseInt(this.add.education),
+                    is_tutor: parseInt(this.add.is_tutor),
+                    is_teacher: parseInt(this.add.is_teacher),
                 };
                 console.log(JSON.stringify(ajaxData));
                 $base.submit(address, ajaxData, function(ret) {
@@ -239,20 +243,20 @@
     })
     H.ready(function() {
 
-        //处理点击延迟
-        $(function() {
-            FastClick.attach(document.body);
-        });
-        addscript();
-    })
-//增加所属科室
+            //处理点击延迟
+            $(function() {
+                FastClick.attach(document.body);
+            });
+            addscript();
+        })
+        //增加所属科室
     function add_Department() {
         // var ks = document.getElementById("sz");
         // var dd = ks.innerHTML;
         // $api.before(tj, dd);
 
-        var itm=document.getElementById("sz").lastChild;
-        var cln=itm.cloneNode(true);
+        var itm = document.getElementById("sz").lastChild;
+        var cln = itm.cloneNode(true);
         document.getElementById("sz").appendChild(cln);
     }
 

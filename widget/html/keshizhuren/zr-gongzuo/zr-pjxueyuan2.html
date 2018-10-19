@@ -324,7 +324,7 @@
                     data.push(vm.list[item].score);
                     data.push(vm.list[item].value);
                 }
-                var address = "/Hospital/index.php/api/department/department_evaluate";
+                var address = "/index.php/api/department/department_evaluate";
                 var token = H.getStorage('token');
                 var id = H.getStorage('zr_pjxy_id');
                 var ajaxData = {
@@ -379,7 +379,7 @@
     }
 
     H.ready(function() {
-        var address = "/Hospital/index.php/api/department/department_evaluate";
+        var address = "/index.php/api/department/department_evaluate";
         $base.showLoading();
         var token = H.getStorage('token');
         console.log(token);

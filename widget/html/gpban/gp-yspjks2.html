@@ -382,7 +382,7 @@
                 projects: projects,
             }
             console.log(JSON.stringify(data));
-            var url = '/Hospital/index.php/api/ys/evaluate';
+            var url = '/index.php/api/ys/evaluate';
             $base.ajax(url, data, function(ret) {
                 if (ret.status == 1) {
                     //输出成功信息
@@ -419,7 +419,7 @@
 
 
     H.ready(function() {
-      var address = "/Hospital/index.php/api/office/department_evalute_list";
+      var address = "/index.php/api/office/department_evalute_list";
       var token = H.getStorage('token');
       var id = H.getStorage('gp-yspjks1_id');
       var ajaxData = {

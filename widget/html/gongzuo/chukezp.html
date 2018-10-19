@@ -33,6 +33,7 @@
         font-family: PingFangSC-Regular;
         border-bottom: 1px solid #ddd;
     }
+
     .tt {
         line-height: 2.5rem;
         background: #fff;
@@ -77,20 +78,20 @@
     }
 
     .dd {
-        width: 90%;
+        width: 100%;
         margin: 0 auto;
     }
 
     a {
-      display: inline-block;
-background: #F1F1F1;
-padding: 0.5rem;
-height: 2rem;
-margin: 0 0.6rem;
-width: 42%;
-text-align: center;
-line-height: 1rem;
-color: #333333;
+        display: inline-block;
+        background: #F1F1F1;
+        padding: 0.5rem;
+        height: 2rem;
+        margin: 0 0.6rem;
+        width: 42%;
+        text-align: center;
+        line-height: 1rem;
+        color: #333333;
     }
 
     .a2 {
@@ -134,6 +135,7 @@ color: #333333;
     .mar {
         margin-top: 3.5rem;
     }
+
     textarea {
         height: 6rem;
         padding-top: 0.5rem;
@@ -152,28 +154,35 @@ color: #333333;
     </header>
     <div class="pad"></div>
     <div id="vm">
-        <div v-for="item in list">
+        <div v-for="(item,index) in list">
             <div class="pj aui-margin-b-15">
-              <div class="tt aui-padded-l-10">
-                  {{item.top}}
-              </div>
-                <div class="top aui-padded-l-10">
-                    {{item.topname}} ({{item.score}}分)
+                <div class="tt aui-padded-l-10">
+                    {{item.title}}
                 </div>
-                <div class="uip  aui-font-size-12">
-                    <div class="d1 dd  aui-col-xs-12 ">
-                        <!-- 能遵守医院及科室各项规章制度，按时上下班，有事能请假 -->
-                        <a :class="['ff',item.score==item1.score?'active':'']" v-for="item1 in item.list" v-tap=['setScore',item1.score] v-on:click="item.score=item1.score">{{item1.navname}}</a>
-                    </div>
+                <div class="top aui-padded-l-10" v-for="(item1,index1) in item.groups">
+                    <h3>{{item1.title}}</h3>
+                    <template id="tit2" v-for="(item2,index2) in item1.items">
+                      <h4>{{item2.title}}</h4>
+                      <div class="uip  aui-font-size-12">
+                          <div class="d1 dd  aui-col-xs-12"v-if="item2.datatype =='radio'">
+                              <a :class="['ff',item2.answer==index3?'active':'']" v-for="(item3,index3) in item2.choices" v-on:click="item2.answer = index3">{{item3}}</a>
+                          </div>
+                          <div class="d1 dd  aui-col-xs-12"v-if="item2.datatype =='input'">
+                              <input type="text">
+                          </div>
+                      </div>
+                    </template>
+
                 </div>
             </div>
+
         </div>
-        <div class="aui-margin-t-15 " >
-          <p class=" aui-margin-t-15 aui-font-size-18 aui-padded-l-10 clo-33">自评填写</p>
-            <textarea v-model="content" class="aui-padded-l-10" placeholder="对自己做出全面的评价"></textarea>
-        </div>
-        <div class="aui-margin-t-15 " >
-            <textarea v-model="content1" class="aui-padded-l-10" placeholder="对完善其表现可能有帮助的方法/资源"></textarea>
+
+        <div class="aui-margin-t-15">
+            <p class=" aui-margin-t-15 aui-font-size-18 aui-padded-l-10 clo-33">自评填写</p>
+            <div class="aui-margin-t-15" v-for='kk in list1.items'>
+                <textarea v-model="kk.default" class="aui-padded-l-10" :placeholder=kk.title></textarea>
+            </div>
         </div>
         <div class=" bt" tapmode v-on:click="submit()" v-if="dd == false">
             <button>提交</button>
@@ -191,632 +200,61 @@ color: #333333;
 <script src="../../script/AHelper.js"></script>
 <script src="../../script/fastclick.js"></script>
 <script>
-    _list = [{
-      top:"A.职业道德",
-        topname: "1.对患者表示尊敬:a.文化",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '从不',
-            score: 1,
-        }, {
-            id: 0,
-            navname: '有时',
-            score: 2,
-        }, {
-            id: 0,
-            navname: '一半',
-            score: 3,
-        }, {
-            id: 0,
-            navname: '经常',
-            score: 4,
-        }, {
-            id: 0,
-            navname: '总是',
-            score: 5,
-        }, {
-            id: 0,
-            navname: '无法评估',
-            score: 6,
-        }]
-    },{
-      top:"1.对患者表示尊敬",
-        topname: "b.性别 ",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '从不',
-            score: 1,
-        }, {
-            id: 0,
-            navname: '有时',
-            score: 2,
-        }, {
-            id: 0,
-            navname: '一半',
-            score: 3,
-        }, {
-            id: 0,
-            navname: '经常',
-            score: 4,
-        }, {
-            id: 0,
-            navname: '总是',
-            score: 5,
-        }, {
-            id: 0,
-            navname: '无法评估',
-            score: 6,
-        }]
-    },{
-      top:"1.对患者表示尊敬",
-        topname: "c.残废",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '从不',
-            score: 1,
-        }, {
-            id: 0,
-            navname: '有时',
-            score: 2,
-        }, {
-            id: 0,
-            navname: '一半',
-            score: 3,
-        }, {
-            id: 0,
-            navname: '经常',
-            score: 4,
-        }, {
-            id: 0,
-            navname: '总是',
-            score: 5,
-        }, {
-            id: 0,
-            navname: '无法评估',
-            score: 6,
-        }]
-    },{
-      top:"1.对患者表示尊敬",
-        topname: "d.年龄",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '从不',
-            score: 1,
-        }, {
-            id: 0,
-            navname: '有时',
-            score: 2,
-        }, {
-            id: 0,
-            navname: '一半',
-            score: 3,
-        }, {
-            id: 0,
-            navname: '经常',
-            score: 4,
-        }, {
-            id: 0,
-            navname: '总是',
-            score: 5,
-        }, {
-            id: 0,
-            navname: '无法评估',
-            score: 6,
-        }]
-    },{
-      top:"1.对患者表示尊敬",
-        topname: "e.宗教信仰 ",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '从不',
-            score: 1,
-        }, {
-            id: 0,
-            navname: '有时',
-            score: 2,
-        }, {
-            id: 0,
-            navname: '一半',
-            score: 3,
-        }, {
-            id: 0,
-            navname: '经常',
-            score: 4,
-        }, {
-            id: 0,
-            navname: '总是',
-            score: 5,
-        }, {
-            id: 0,
-            navname: '无法评估',
-            score: 6,
-        }]
-    },{
-        topname: "2.对护士表示尊敬",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '从不',
-            score: 1,
-        }, {
-            id: 0,
-            navname: '有时',
-            score: 2,
-        }, {
-            id: 0,
-            navname: '一半',
-            score: 3,
-        }, {
-            id: 0,
-            navname: '经常',
-            score: 4,
-        }, {
-            id: 0,
-            navname: '总是',
-            score: 5,
-        }, {
-            id: 0,
-            navname: '无法评估',
-            score: 6,
-        }]
-    },{
-        topname: "3.对支持人员表示尊敬(医疗服务同行)",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '从不',
-            score: 1,
-        }, {
-            id: 0,
-            navname: '有时',
-            score: 2,
-        }, {
-            id: 0,
-            navname: '一半',
-            score: 3,
-        }, {
-            id: 0,
-            navname: '经常',
-            score: 4,
-        }, {
-            id: 0,
-            navname: '总是',
-            score: 5,
-        }, {
-            id: 0,
-            navname: '无法评估',
-            score: 6,
-        }]
-    },{
-        topname: "4.对患者寄家属保持自信",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '从不',
-            score: 1,
-        }, {
-            id: 0,
-            navname: '有时',
-            score: 2,
-        }, {
-            id: 0,
-            navname: '一半',
-            score: 3,
-        }, {
-            id: 0,
-            navname: '经常',
-            score: 4,
-        }, {
-            id: 0,
-            navname: '总是',
-            score: 5,
-        }, {
-            id: 0,
-            navname: '无法评估',
-            score: 6,
-        }]
-    },{
-        topname: "5.对患者及家属富有同情心",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '从不',
-            score: 1,
-        }, {
-            id: 0,
-            navname: '有时',
-            score: 2,
-        }, {
-            id: 0,
-            navname: '一半',
-            score: 3,
-        }, {
-            id: 0,
-            navname: '经常',
-            score: 4,
-        }, {
-            id: 0,
-            navname: '总是',
-            score: 5,
-        }, {
-            id: 0,
-            navname: '无法评估',
-            score: 6,
-        }]
-    },{
-        topname: "6.在适当的时候寻找协商和指导",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '从不',
-            score: 1,
-        }, {
-            id: 0,
-            navname: '有时',
-            score: 2,
-        }, {
-            id: 0,
-            navname: '一半',
-            score: 3,
-        }, {
-            id: 0,
-            navname: '经常',
-            score: 4,
-        }, {
-            id: 0,
-            navname: '总是',
-            score: 5,
-        }, {
-            id: 0,
-            navname: '无法评估',
-            score: 6,
-        }]
-    },{
-        topname: "7.有效地与他人团结协作",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '从不',
-            score: 1,
-        }, {
-            id: 0,
-            navname: '有时',
-            score: 2,
-        }, {
-            id: 0,
-            navname: '一半',
-            score: 3,
-        }, {
-            id: 0,
-            navname: '经常',
-            score: 4,
-        }, {
-            id: 0,
-            navname: '总是',
-            score: 5,
-        }, {
-            id: 0,
-            navname: '无法评估',
-            score: 6,
-        }]
-    },{
-        topname: "8.富有责任感",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '从不',
-            score: 1,
-        }, {
-            id: 0,
-            navname: '有时',
-            score: 2,
-        }, {
-            id: 0,
-            navname: '一半',
-            score: 3,
-        }, {
-            id: 0,
-            navname: '经常',
-            score: 4,
-        }, {
-            id: 0,
-            navname: '总是',
-            score: 5,
-        }, {
-            id: 0,
-            navname: '无法评估',
-            score: 6,
-        }]
-    },{
-        topname: "9.能够完成指派的任务",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '从不',
-            score: 1,
-        }, {
-            id: 0,
-            navname: '有时',
-            score: 2,
-        }, {
-            id: 0,
-            navname: '一半',
-            score: 3,
-        }, {
-            id: 0,
-            navname: '经常',
-            score: 4,
-        }, {
-            id: 0,
-            navname: '总是',
-            score: 5,
-        }, {
-            id: 0,
-            navname: '无法评估',
-            score: 6,
-        }]
-    },{
-        topname: "10.能够控制协调自身压力",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '从不',
-            score: 1,
-        }, {
-            id: 0,
-            navname: '有时',
-            score: 2,
-        }, {
-            id: 0,
-            navname: '一半',
-            score: 3,
-        }, {
-            id: 0,
-            navname: '经常',
-            score: 4,
-        }, {
-            id: 0,
-            navname: '总是',
-            score: 5,
-        }, {
-            id: 0,
-            navname: '无法评估',
-            score: 6,
-        }]
-    },{
-        topname: "11.及时处理案头工作",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '从不',
-            score: 1,
-        }, {
-            id: 0,
-            navname: '有时',
-            score: 2,
-        }, {
-            id: 0,
-            navname: '一半',
-            score: 3,
-        }, {
-            id: 0,
-            navname: '经常',
-            score: 4,
-        }, {
-            id: 0,
-            navname: '总是',
-            score: 5,
-        }, {
-            id: 0,
-            navname: '无法评估',
-            score: 6,
-        }]
-    },{
-      top:"B.人际关系和交流能力",
-        topname: "1.与患者有效地沟通",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '从不',
-            score: 1,
-        }, {
-            id: 0,
-            navname: '有时',
-            score: 2,
-        }, {
-            id: 0,
-            navname: '一半',
-            score: 3,
-        }, {
-            id: 0,
-            navname: '经常',
-            score: 4,
-        }, {
-            id: 0,
-            navname: '总是',
-            score: 5,
-        }, {
-            id: 0,
-            navname: '无法评估',
-            score: 6,
-        }]
-    },{
-        topname: "2.与患者家属有效地交流",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '从不',
-            score: 1,
-        }, {
-            id: 0,
-            navname: '有时',
-            score: 2,
-        }, {
-            id: 0,
-            navname: '一半',
-            score: 3,
-        }, {
-            id: 0,
-            navname: '经常',
-            score: 4,
-        }, {
-            id: 0,
-            navname: '总是',
-            score: 5,
-        }, {
-            id: 0,
-            navname: '无法评估',
-            score: 6,
-        }]
-    },{
-        topname: "3.与其他医务工作者有效地交流",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '从不',
-            score: 1,
-        }, {
-            id: 0,
-            navname: '有时',
-            score: 2,
-        }, {
-            id: 0,
-            navname: '一半',
-            score: 3,
-        }, {
-            id: 0,
-            navname: '经常',
-            score: 4,
-        }, {
-            id: 0,
-            navname: '总是',
-            score: 5,
-        }, {
-            id: 0,
-            navname: '无法评估',
-            score: 6,
-        }]
-    },{
-        topname: "4.与患者交流有关信息",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '从不',
-            score: 1,
-        }, {
-            id: 0,
-            navname: '有时',
-            score: 2,
-        }, {
-            id: 0,
-            navname: '一半',
-            score: 3,
-        }, {
-            id: 0,
-            navname: '经常',
-            score: 4,
-        }, {
-            id: 0,
-            navname: '总是',
-            score: 5,
-        }, {
-            id: 0,
-            navname: '无法评估',
-            score: 6,
-        }]
-    },{
-        topname: "5.保存完整的医疗记录",
-        score:0,
-        list: [{
-            id: 0,
-            navname: '从不',
-            score: 1,
-        }, {
-            id: 0,
-            navname: '有时',
-            score: 2,
-        }, {
-            id: 0,
-            navname: '一半',
-            score: 3,
-        }, {
-            id: 0,
-            navname: '经常',
-            score: 4,
-        }, {
-            id: 0,
-            navname: '总是',
-            score: 5,
-        }, {
-            id: 0,
-            navname: '无法评估',
-            score: 6,
-        }]
-    }]
     var vm = new Vue({
         el: "#vm",
         data: {
-            list: _list,
-            content:"",
-            content1:"",
-            dd:false,
+            list: "",
+            list1: "",
+            content: "",
+            content1: "",
+            dd: false,
+            ind: ''
         },
         methods: {
-          setScore:function (t,score) {
-            t.score = score;
-          },
-          submit:function () {
-            var ids = [];
-            var scores = [];
-            var content = "";
-            var projects = [];
-            var sum = 0;
-            var _this = this;
-            for (var item in vm.list) {
-                    var scitem = vm.list[item];
-                    projects.push(vm.list[item].score);
-            }
-            projects.push(vm.content);
-            projects.push(vm.content1);
-            console.log(projects);
-            var token = H.getStorage('token');
-            var data = {
-                token: token,
-                action:'a3e',
-                projects: projects,
-            }
-            console.log(JSON.stringify(data));
-            var url = '/Hospital/index.php/api/ys/evaluate';
-            $base.ajax(url, data, function(ret) {
-                if (ret.status == 1) {
-                    //输出成功信息
-                    $base.toast(ret.errmsg);
-                    setTimeout(function() {
-                        api.closeWin({});
-                    },500)
-
-                } else {
-                    //输出错误信息
-                    $base.toast(ret.errmsg);
+            submit: function() {
+                var ids = [];
+                var scores = [];
+                var content={};
+                var sum = 0;
+                var _this = this;
+                //循环取到选择的答案，增加到content里面
+                for ( item in vm.list) {
+                    for ( item1 in vm.list[item].groups) {
+                        for ( item2 in vm.list[item].groups[item1].items) {
+                              // console.log(JSON.stringify(vm.list[item].groups[item1].items[item2].col));
+                              content[vm.list[item].groups[item1].items[item2].col] = vm.list[item].groups[item1].items[item2].answer;
+                        }
+                    }
                 }
-            })
-          }
-        },
-        computed:{
-          sum_score: function() {
-              var sum = 0;
-              this.list.forEach(function(t) {
-                  vm.list.forEach(function(v) {
-                      sum += v.score;
-                  })
-              })
-              return sum + "分";
-          }
+                //填空答案
+                for( i in vm.list1.items){
+                  console.log(JSON.stringify(vm.list1.items[i]).col);
+                    content[vm.list1.items[i].col] = vm.list1.items[i].default;
+                }
+                console.log(JSON.stringify(content));
+                var token = H.getStorage('token');
+                var data = {
+                    token: token,
+                    action: 'insert',
+                    content: content,
+                }
+                console.log(JSON.stringify(data));
+                var url = '/index.php/api/ys/evaluate_self';
+                $base.submit(url, data, function(ret) {
+                  console.log(JSON.stringify(ret));
+                    if (ret.status == 1) {
+                        //输出成功信息
+                        $base.toast(ret.errmsg);
+                        setTimeout(function() {
+                            api.closeWin({});
+                        }, 500)
+
+                    } else {
+                        //输出错误信息
+                        $base.toast(ret.errmsg);
+                    }
+                })
+            },
         }
 
     })
@@ -828,55 +266,64 @@ color: #333333;
 
 
     H.ready(function() {
-      var address = "/Hospital/index.php/api/ys/evaluate";
-      var token = H.getStorage('token');
-      var ajaxData = {
-          token: token,
-      };
-      $base.get(address, ajaxData, function(ret) {
-        console.log(JSON.stringify(ret.data));
-          if (ret.data.apply_360eval.id > 0) {
-              //已评价
-              //一维数组
-              var scoreitems = ret.data.apply_360eval.score_item;
+        var address = "/index.php/api/ys/evaluate";
+        var token = H.getStorage('token');
+        var ajaxData = {
+            token: token,
+        };
+        $base.showLoading();
+        $base.get(address, ajaxData, function(ret) {
+            console.log(JSON.stringify(ret));
+            //ajax请求到数据，循环数组在items下增加answer
+            var obj = ret.config.self_eva.groups;
+            obj.forEach(function(v) {
+                v.groups.forEach(function(t) {
+                    t.items.forEach(function(y) {
+                        y.answer = null
+                    })
+                })
+            })
+            vm.list = obj;
+            vm.list1 = ret.config.self_eva;
+            if (ret.data.self_eva !== null) {
+                //已评价
+                //一维数组
+                //循环数组，
+                var score = [];
+                for ( k in ret.data.self_eva) {
+                    score.push(ret.data.self_eva[k])
+                }
+                console.log(score);
+                var score_index = 0;
+                for ( item in vm.list) {
+                    // console.log(JSON.stringify(vm.list[item]));
+                    for ( item1 in vm.list[item].groups) {
+                        // console.log(JSON.stringify(vm.list[item].groups[item1]));
+                        for ( item2 in vm.list[item].groups[item1].items) {
+                            // console.log(JSON.stringify(vm.list[item].groups[item1].items[item2].answer));
+                            vm.list[item].groups[item1].items[item2].answer = score[score_index++];
+                        }
+                    }
+                }
+                vm.dd = true;
+                  //自评填写
+                vm.list1.items[0].default = ret.data.self_eva.c;
+                vm.list1.items[1].default= ret.data.self_eva.d;
+                //vm._list
+            } else {
+                //未评价
+                console.log("未评价");
+            }
+           $base.closeLoading();
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
 
-
-console.log(scoreitems);
-              var scoreitems_index = 0;
-              for (var item in vm.list) {
-                      var scitem = vm.list[item];
-                      vm.list[item].score = scoreitems[scoreitems_index++];
-              }
-              vm.dd = true;
-                  vm.content = ret.data.apply_360eval.eval_c;
-                    vm.content1 = ret.data.apply_360eval.eval_d;
-              //vm._list
-          } else {
-              //未评价
-          }
-      }, function(err) {
-          console.log(JSON.stringify(err));
-      });
-
-      //处理点击延迟
-      $(function() {
-          FastClick.attach(document.body);
-      })
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        })
     })
-
-    var toast = new auiToast({})
-
-    function showDefault(type) {
-        switch (type) {
-            case "success":
-                toast.success({
-                    title: "提交成功",
-                    duration: 2000
-                });
-
-        }
-
-    }
 </script>
 
 </html>

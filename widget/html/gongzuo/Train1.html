@@ -171,14 +171,14 @@
         el: '.content',
         data: {
             inputtext: {
-                work_time: "2018-02-01",
+                work_time:getnewDate(),
                 train_form:""
             }
         },
         methods: {
             submit: function() {
                 console.log(JSON.stringify(this.inputtext));
-                var address = "/Hospital/index.php/api/ys/trainactivity";
+                var address = "/index.php/api/ys/trainactivity";
                 var token = H.getStorage('token');
                 var ajaxData = {
                     token: token,

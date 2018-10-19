@@ -169,13 +169,13 @@
             data: {
 
                 inp: {
-                    date: "2018-06-22",
+                    date: getnewDate(),
                 }
             },
             methods: {
                 submit: function() {
                     console.log(JSON.stringify(this.inp));
-                    var address = "/Hospital/index.php/api/ys/disease_register";
+                    var address = "/index.php/api/ys/disease_register";
                     var token = H.getStorage('token');
                     var dis_id = H.getStorage("d_id");
                     var ajaxData = {

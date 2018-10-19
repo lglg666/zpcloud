@@ -124,7 +124,7 @@
             </div>
         </div>
         <p>搜索</p>
-        <div class="aui-tab aui-row" id="tab">
+        <div class="aui-tab aui-row aui-col-xs-12" id="tab">
             <div class="aui-tab-item aui-active aui-col-xs-4">全部</div>
             <div class="aui-tab-item aui-col-xs-4">
                 未审批</div>
@@ -162,7 +162,7 @@
                         <p class="clo-99 aui-font-size-16 ">备注: <span>{{item.remark}}</span></p>
                         <p class="clo-99 aui-font-size-16 ">带教审批:<span class="clo-33 ">{{item.t_stauts}}</span></p>
                         <p class="clo-99 aui-font-size-16 ">主任审批:<span class="clo-33">{{item.d_stauts}}</span></p>
-                        <div class="btn aui-text-right aui-padded-10" tapmode v-on:click="jn(item.id)">
+                        <div class="btn aui-text-right aui-padded-10" tapmode v-on:click="jn(item.id)" v-if="item.d_stauts_index = '0'">
                             <button class="btn_lan aui-margin-r-10" tapmode onclick="openDialog('text')">工作审批</button>
                         </div>
                     </div>
@@ -294,11 +294,11 @@ var Approved = new Vue({
           dialog.alert({
               title: "工作内容",
               msg: '确定要审批？',
-              buttons: ['取消', '确定']
+              buttons: ['不同意', '同意']
           }, function(ret) {
                   console.log(ret)
                   if(ret.buttonIndex == 2){
-                      var address = "/Hospital/index.php/api/department/skill_register";
+                      var address = "/index.php/api/department/skill_register";
                       var token = H.getStorage('token');
                       var zrsr_id = H.getStorage('zrsr_id');
                       var ajaxData = {
@@ -318,7 +318,25 @@ var Approved = new Vue({
                           console.log(JSON.stringify(err));
                       });
                   }else{
-
+                    var address = "/index.php/api/department/skill_register";
+                    var token = H.getStorage('token');
+                    var zrsr_id = H.getStorage('zrsr_id');
+                    var ajaxData = {
+                        token: token,
+                        action:"unpass",
+                        sr_id:zrsr_id,
+                    };
+                    $base.submit(address, ajaxData, function(ret) {
+                  console.log(JSON.stringify(ret));
+                  if(ret.status ==1 ){
+                    $base.toast(ret.errmsg);
+                    location.reload();
+                  }else{
+                    $base.toast(ret.errmsg);
+                  }
+                    }, function(err) {
+                        console.log(JSON.stringify(err));
+                    });
                   }
               })
         }
@@ -350,7 +368,7 @@ var Approved = new Vue({
         }
     });
     H.ready(function() {
-        var address = "/Hospital/index.php/api/department/skill_register";
+        var address = "/index.php/api/department/skill_register";
         var token = H.getStorage('token');
         var ajaxData = {
             token: token,
@@ -364,7 +382,7 @@ var Approved = new Vue({
 
         ajaxData['d_status'] = 0;
         $base.get(address, ajaxData, function(ret) {
-            console.log(JSON.stringify(ret));
+            // console.log(JSON.stringify(ret));
             Unapproved.list = ret.data;
         }, function(err) {
             console.log(JSON.stringify(err));
@@ -372,7 +390,7 @@ var Approved = new Vue({
 
         ajaxData['d_status'] = 1;
         $base.get(address, ajaxData, function(ret) {
-            console.log(JSON.stringify(ret));
+            // console.log(JSON.stringify(ret));
             Approved.list = ret.data;
         }, function(err) {
             console.log(JSON.stringify(err));

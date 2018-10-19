@@ -281,7 +281,7 @@
                 var token = H.getStorage("token");
                 var id = H.getStorage("dj_jx_id")
                 console.log(id);
-                var address = "/Hospital/index.php/api/teacher/teaching_activities";
+                var address = "/index.php/api/teacher/teaching_activities";
                 var ajaxData = {
                     token: token,
                     photoimg: ret.data,
@@ -314,7 +314,7 @@
             if (ret) {
                 console.log(JSON.stringify(ret));
                 if (ret.buttonIndex == 1) {
-                    var address = "/Hospital/index.php/api/teacher/teaching_activities";
+                    var address = "/index.php/api/teacher/teaching_activities";
                     var token = H.getStorage('token');
                     var id = H.getStorage("dj_jx_id")
                     var ajaxData = {
@@ -351,7 +351,7 @@
     }
 
     H.ready(function() {
-        var address = "/Hospital/index.php/api/teacher/teaching_activities";
+        var address = "/index.php/api/teacher/teaching_activities";
         var token = H.getStorage('token');
         var id = H.getStorage("dj_jx_id");
         console.log(id);

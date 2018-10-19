@@ -131,7 +131,7 @@
         },
         methods: {
             submit: (msg) => {
-                var address = "/Hospital/index.php/api/office/feedback";
+                var address = "/index.php/api/office/feedback";
                 var token = H.getStorage('token');
                 var id = H.getStorage('gp_yjfk_id');
                 var ajaxData = {
@@ -155,7 +155,7 @@
         }
     })
     H.ready(function() {
-        var address = "/Hospital/index.php/api/office/feedback";
+        var address = "/index.php/api/office/feedback";
         var token = H.getStorage('token');
         var id = H.getStorage('gp_yjfk_id');
         $base.showLoading();

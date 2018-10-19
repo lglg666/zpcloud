@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/aui.css">
+    <link rel="stylesheet" href="../../css/iconfont/iconfont.css">
+    <link rel="stylesheet" href="../../css/style/style.css">
+</head>
+<style media="screen">
+    header {
+        position: fixed !important;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    header i {
+        color: #222222;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .db {
+        background: #fff;
+        line-height: 1.5rem;
+    }
+
+    .color-33 {
+        color: #333;
+    }
+
+    .color-99 {
+        color: #999;
+    }
+
+    .color-22 {
+        color: #222;
+    }
+
+    .aui-hr {
+        margin-top: 0.6rem;
+    }
+
+    .main_2 i {
+        color: #222222;
+        float: right;
+        padding-right: 0.5rem;
+        padding-top: 0.3rem;
+        font-size: 0.9rem !important;
+    }
+
+    .main_2 p {
+        color: #222;
+        font-size: 0.75rem;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .main_2 {
+        font-size: 0.8rem;
+        height: 2rem;
+        line-height: 2rem;
+    }
+
+    .aui-padded-15 img {
+        margin: 0 auto;
+    }
+
+    .pad {
+        padding-top: 3.5rem;
+    }
+
+    .hg {
+        line-height: 1.2rem;
+    }
+</style>
+
+<body>
+    <header class="aui-bar aui-bar-nav" id="header">
+        <div class="aui-title">医师活动管理</div>
+    </header>
+    <div class="pad"></div>
+    <div id="vue">
+      <!-- 无数据 -->
+      <template v-if="list == false">
+        <div class="aui-text-center "id="wsj">
+            <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+            <p class="aui-font-size-16">暂无数据</p>
+        </div>
+      </template>
+        <div v-for="item in list" v-else>
+            <div class="db aui-margin-15 ">
+                <div class="aui-padded-15">
+                    <p class="aui-font-size-18 color-22 chu" v-text="item.name"></p>
+                    <div class="hg">
+                        <p class="aui-font-size-16 color-33" v-text="item.content"></p>
+                    </div>
+                    <p class="aui-font-size-16 color-33">账号：<span class="color-22" v-text="item.account"> </span></p>
+                    <p class="aui-font-size-16 color-33">专业：<span class="color-22" v-text="item.profession"> </span></p>
+                    <p class="aui-font-size-16 color-33">类型：<span class="color-22" v-text="item.type_name"> </span></p>
+                    <p class="aui-font-size-16 color-33">学历：<span class="color-22" v-text="item.education_name"> </span></p>
+                    <p class="aui-font-size-16 color-33">年级：<span class="color-22" v-text="item.grade"> </span></p>
+                    <p class="aui-font-size-16 color-33">规培状态：<span class="color-22" v-text="item.is_rotate_name"> </span></p>
+                    <p class="aui-font-size-16 color-33">数量：<span class="color-22" v-text="item.count"> </span></p>
+
+                    <div class="aui-hr"></div>
+                    <div class="main_2" tapmode v-on:click="yshd1(item.uid)">
+                        <i class="aui-iconfont iconfont icon-arrow-right"></i>
+                        <p class="aui-text-left">查看详情</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/vue/vue.min.js"></script>
+<script src="../../script/AHelper.js"></script>
+<script src="../../script/base.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#vue",
+        data: {
+            list: []
+        },
+        methods: {
+            yshd1: function(uid) {
+                H.setStorage("zy_ysuid", uid);
+                    api.openWin({
+                        name: 'yshd1',
+                        url: '../zygly/zy-yshd1.html',
+                        pageParam: {
+                            name: 'test'
+                        }
+                    });
+            },
+
+
+        }
+    })
+
+    H.ready(function() {
+        var address = "/index.php/api/profession/teaching_activities_r1";
+        var token = H.getStorage('token');
+        $base.showLoading();
+        var ajaxData = {
+            token: token,
+        };
+        $base.get(address, ajaxData, function(ret) {
+            // console.log(JSON.stringify(ret));
+            vm.list = ret.data;
+            $base.closeLoading();
+        }, function(err) {
+            console.log(JSON.stringify(err));
+        });
+        //处理点击延迟
+        $(function() {
+            FastClick.attach(document.body);
+        });
+    });
+</script>
+
+</html>

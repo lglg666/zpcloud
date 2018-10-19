@@ -190,12 +190,15 @@
     var vm = new Vue({
         el: ".vue",
         data: {
-            inputval: {}
+            inputval: {
+              date:getnewDate(),
+              success:"1",
+            }
         },
         methods: {
             submit: function() {
                 console.log(JSON.stringify(this.inputval));
-                var address = "/Hospital/index.php/api/ys/skill_register";
+                var address = "/index.php/api/ys/skill_register";
                 var token = H.getStorage('token');
                 var s_id = H.getStorage('s_id');
                 var ajaxData = {

@@ -8,6 +8,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="../css/aui.css">
     <link rel="stylesheet" href="../css/iconfont/iconfont.css">
+    <link rel="stylesheet" href="../css/style/style.css">
 </head>
 <style media="screen">
     header {
@@ -133,7 +134,14 @@
     <div class="pad"></div>
 
     <div class="" id="notice_info">
-        <div class="" v-for="item in list">
+      <!-- 无数据 -->
+      <template v-if="list == false">
+        <div class="aui-text-center "id="wsj">
+            <i class="iconfont icon-vacancy aui-iconfont clo-99"></i>
+            <p class="aui-font-size-16">暂无数据</p>
+        </div>
+      </template>
+        <div class="" v-for="item in list" v-else>
             <div class=" aui-text-center">
                 <a class="s">{{item.date}}</a>
             </div>
@@ -165,9 +173,10 @@
 <script src="../script/base.js"></script>
 <script src="../script/zepto.min.js"></script>
 <script src="../script/fastclick.js"></script>
+<link rel="stylesheet" href="../css/style/style.css">
 <script>
     H.ready(function() {
-        var address = "/Hospital/index.php/api/user/get_notice_info";
+        var address = "/index.php/api/user/get_notice_info";
         var token = H.getStorage('token');
         var userid = H.getStorage("user_id");
         var user_role = H.getStorage("user_role");

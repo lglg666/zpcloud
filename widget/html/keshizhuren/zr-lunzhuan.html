@@ -373,10 +373,10 @@
             list: []
         },
         methods: {
-            agreetoout: function(index = 0) {
+            agreetoout: function(index) {
                 var rid = this.list[index].rid;
                 var token = H.getStorage('token');
-                var address = "/Hospital/index.php/api/department/rotate_message";
+                var address = "/index.php/api/department/rotate_message";
                 var ajaxData = {
                     token: token,
                     action: "doout",
@@ -418,9 +418,12 @@
                     }
                 });
             },
-            choosepaper: function(index = 0) {
+            choosepaper: function(index) {
                 H.setStorage('rid', this.list[index].rid);
                 H.setStorage('ysid', this.list[index].uid);
+                H.setStorage('username', this.list[index].username);
+                H.setStorage('useraccount', this.list[index].useraccount);
+                H.setStorage('departmentname', this.list[index].departmentname);
                 api.openWin({
                     name: 'zr-xzsj',
                     url: './../keshizhuren/zr-szkaoshi.html',
@@ -438,9 +441,9 @@
             list: []
         },
         methods: {
-            doaccept: function(rid, index = 0) {
+            doaccept: function(rid, index) {
                 var token = H.getStorage('token');
-                var address = "/Hospital/index.php/api/department/rotate_message";
+                var address = "/index.php/api/department/rotate_message";
                 var ajaxData = {
                     token: token,
                     action: "doaccept",
@@ -476,7 +479,7 @@
 
 
     apiready = function() {
-        var address = "/Hospital/index.php/api/department/rotate_message";
+        var address = "/index.php/api/department/rotate_message";
         var token = H.getStorage('token');
         var ajaxData = {
             token: token,
@@ -527,6 +530,18 @@
         $(function() {
             FastClick.attach(document.body);
         });
+
+        //接收设置试卷监听
+        api.addEventListener({
+            name: 'zr_szsj'
+        }, function(ret, err){
+            if( ret ){
+                location.reload()
+            }else{
+                 alert( JSON.stringify( err ) );
+            }
+        });
+
     }
 
     //导航栏

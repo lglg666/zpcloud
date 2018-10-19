@@ -111,10 +111,6 @@
         api.closeWin({});
     }
 
-
-    function sh() {
-        $base.toast("审核成功")
-    }
     var vm = new Vue({
         el: "#vm",
         data: {
@@ -134,7 +130,7 @@
           },
           sh:(id)=>{
             console.log(id);
-            var address = "/Hospital/index.php/api/department/rescuerecord";
+            var address = "/index.php/api/department/rescuerecord";
             var token = H.getStorage('token');
             var ajaxData = {
                 token: token,
@@ -145,6 +141,9 @@
                 console.log(JSON.stringify(ret));
                   if(ret.status == 1){
                     $base.toast(ret.errmsg);
+                    setTimeout(function () {
+                      location.reload();
+                    },500)
                   }else{
                       $base.toast(ret.errmsg);
                   }
@@ -155,7 +154,7 @@
         }
     })
     H.ready(function() {
-        var address = "/Hospital/index.php/api/department/emergencytreatment";
+        var address = "/index.php/api/department/emergencytreatment";
         var token = H.getStorage('token');
         $base.showLoading();
         var ajaxData = {

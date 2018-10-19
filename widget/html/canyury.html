@@ -88,7 +88,7 @@
         var pp = H.getStorage("panduan");
         console.log(pp);
         if (pp == "jx") {
-            var address = "/Hospital/index.php/api/ys/teaching_activities";
+            var address = "/index.php/api/ys/teaching_activities";
             var token = H.getStorage('token');
             var id = H.getStorage("jx_id");
             console.log(id);
@@ -108,7 +108,7 @@
             });
         } else {
           console.log("课程");
-            var address = "/Hospital/index.php/api/user/course";
+            var address = "/index.php/api/user/course";
             var token = H.getStorage('token');
             var course_id = H.getStorage('course_id');
             $base.showLoading();

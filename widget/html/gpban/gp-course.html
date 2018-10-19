@@ -145,13 +145,13 @@
         el: '.vue',
         data: {
             item: {
-              start_time:"2018-05-11T00:00",
+              start_time:getnewDate()+"T00:00",
             }
         },
         methods: {
             submit: function() {
                 console.log(JSON.stringify(this.item.title));
-                var address = "/Hospital/index.php/api/user/course";
+                var address = "/index.php/api/user/course";
                 var token = H.getStorage('token');
                 var ajaxData = {
                     token: token,
@@ -167,7 +167,17 @@
                 $base.get(address, ajaxData, function(ret) {
                     console.log(JSON.stringify(ret));
                       if(ret.status == 1){
-                        $base.toast(ret.errmsg)
+                        $base.toast(ret.errmsg);
+                        api.sendEvent({
+                            name: 'gp-kc',
+                            extra: {
+                                key1: true,
+                            }
+                        });
+
+                        setTimeout(function () {
+                          api.closeWin({});
+                        },500)
                       }else{
                         $base.toast(ret.errmsg)
                       }
@@ -184,18 +194,6 @@
       });
     })
 
-    var toast = new auiToast({})
-
-    function showDefault(type) {
-        switch (type) {
-            case "success":
-                toast.success({
-                    title: "发布成功",
-                    duration: 2000
-                });
-                break;
-        }
-    }
 
     function fh() {
         api.closeWin({});

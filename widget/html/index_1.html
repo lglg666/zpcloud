@@ -128,6 +128,7 @@
         color: #999;
         font-size: 16px;
     }
+
     .loading-bg {
         background-image: url(../image/loading_bg.gif);
         background-position: center;
@@ -139,9 +140,11 @@
 </style>
 
 <body class="loading-bg">
+  <header id="header">
 
+  </header>
     <div class="aui-row">
-        <div class="aui-col-xs-2" tapmode >
+        <div class="aui-col-xs-2" tapmode>
             <i class="iconfont icon-saoma"></i>
         </div>
         <div class="aui-col-xs-8 " style="padding:0.4rem 0;">
@@ -223,7 +226,7 @@
 
 <script>
     H.ready(function() {
-        var address = "/Hospital/index.php/api/user/index_info";
+        var address = "/index.php/api/user/index_info";
         var token = H.getStorage('token');
         var userid = H.getStorage("user_id");
         var user_role = H.getStorage("user_role");
@@ -234,21 +237,23 @@
             user_role: user_role
         };
         $base.get(address, ajaxData, function(ret) {
-
+        console.log(JSON.stringify(ret.notice_info.title));
             $("#rotate_type").html(ret.rotate_type);
             $("#time").html(ret.notice_info.time);
-            $("#title").html(ret.notice_info.title);
-            if (ret.notice_num > 0) {
-                $("#notice_num").show();
-                $("#notice_num").html(ret.notice_num);
+            if (!ret.notice_info.title == "") {
+                $("#title").html(ret.notice_info.title);
             } else {
-
+                $("#title").html("暂时没有通知内容");
             }
 
-
+            //通知红点提示
+            // if (ret.notice_num > 0) {
+            //     $("#notice_num").show();
+            //     $("#notice_num").html(ret.notice_num);
+            // } else {
+            //
+            // }
             // $base.closeLoading();
-        }, function(ret) {
-            console.log(JSON.stringify(ret));
         });
 
 
@@ -267,16 +272,16 @@
             console.log(ret.value);
         });
 
-        $("input").focus(function(){
-api.openWin({
-    name: 'gp-search',
-    url: '../html/gpban/gp-search.html',
-    pageParam: {
-        name: 'test'
-    }
-});
+        $("input").focus(function() {
+            api.openWin({
+                name: 'gp-search',
+                url: '../html/gpban/gp-search.html',
+                pageParam: {
+                    name: 'test'
+                }
+            });
 
-});
+        });
     });
 
     window.onload = function() {
@@ -285,27 +290,27 @@ api.openWin({
     }
 
     function sm() {
-      $base.toast("扫码功能暂未开放")
-        // var FNScanner = api.require('FNScanner');
-        // FNScanner.openScanner({
-        //     autorotation: true
-        // }, function(ret, err) {
-        //     if (ret) {
-        //         alert(JSON.stringify(ret));
-        //         console.log(JSON.stringify(ret));
-        //         var url = JSON.stringify(ret.content);
-        //         console.log(url);
-        //     } else {
-        //         alert(JSON.stringify(err));
-        //     }
-        // });
+        $base.toast("扫码功能暂未开放")
+            // var FNScanner = api.require('FNScanner');
+            // FNScanner.openScanner({
+            //     autorotation: true
+            // }, function(ret, err) {
+            //     if (ret) {
+            //         alert(JSON.stringify(ret));
+            //         console.log(JSON.stringify(ret));
+            //         var url = JSON.stringify(ret.content);
+            //         console.log(url);
+            //     } else {
+            //         alert(JSON.stringify(err));
+            //     }
+            // });
     }
 
     function tz() {
 
         var userid = H.getStorage("user_id");
 
-        var address = "/Hospital/index.php/api/user/update_user_time";
+        var address = "/index.php/api/user/update_user_time";
         var ajaxData = {
             userid: userid,
             key: "notice_time"
@@ -342,7 +347,7 @@ api.openWin({
         api.openWin({
             name: 'jx',
             url: './jiaoxue.html',
-            type:"push",
+            type: "push",
             pageParam: {
                 name: 'test',
 

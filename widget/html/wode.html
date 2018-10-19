@@ -10,14 +10,14 @@
     <link rel="stylesheet" href="../css/iconfont/iconfont.css">
     <style media="screen">
         header {
-            position: fixed;
+            position: relative;
+            ;
             width: 100%;
             z-index: 99;
         }
-
-        .pad {
+        /*.pad {
             padding-top: 16.35rem;
-        }
+        }*/
 
         .top {
             color: #fff;
@@ -190,7 +190,7 @@
         <div id="jd"></div>
 
         <div class="aui-row aui-text-center">
-            <div class="aui-hr" style="width: 100%";></div>
+            <div class="aui-hr" style="width: 100%" ;></div>
             <div class="aui-col-xs-4 aui-border-r">
                 <p class="aui-font-size-18 clo-lan aui-padded-t-10" id="all_time">730</p>
                 <p class="aui-font-size-14 clo-99">培训总天数</p>
@@ -263,7 +263,7 @@
 <script src="../script/api.js"></script>
 <script>
     H.ready(function() {
-        var address = "/Hospital/index.php/api/user/user_info";
+        var address = "/index.php/api/user/user_info";
         var token = H.getStorage('token');
         var userid = H.getStorage("user_id");
         // $base.showLoading();
@@ -305,6 +305,15 @@
 
             console.log(ret.value);
         });
+
+        api.addEventListener({
+            name: "scrolltobottom",
+            extra: {
+                threshold: 50 //设置距离底部多少距离时触发，默认值为0，数字类型
+            }
+        }, function(ret, err) {
+            console.log('请求了')
+        });
     })
 
     function upimg() {
@@ -336,7 +345,7 @@
             }, function(ret, err) {
                 // 获取拍照图像并剪辑
                 if (ret) {
-                  console.log(JSON.stringify(ret));
+                    console.log(JSON.stringify(ret));
                     $api.byId('box').style.visibility = 'visible';
                     var FNImageClip = api.require('FNImageClip');
                     FNImageClip.open({
@@ -446,17 +455,17 @@
             //上传剪辑后的图像到服务器
 
             // var hospital_ip = H.getStorage("hospital_ip");
-            // var address = "/Hospital/index.php/api/user/user_image";
+            // var address = "/index.php/api/user/user_image";
             // var url = hospital_ip+address;
             var userid = H.getStorage("user_id");
-            var address = "/Hospital/index.php/api/user/user_image";
+            var address = "/index.php/api/user/user_image";
             var ajaxData = {
                 file: tx,
                 userid: userid
             };
 
             $base.submit(address, ajaxData, function(ret) {
-              console.log(JSON.stringify(ret));
+                console.log(JSON.stringify(ret));
                 if (ret.status == 0) {
                     api.toast({
                         msg: '上传错误',
@@ -465,7 +474,7 @@
                     });
                 } else if (ret.status == 1) {
                     $api.byId('tx').innerHTML = '<img src="' + ret.path + ret.name + '">';
-                    //$api.byId('tx').innerHTML = '<img src="http://192.168.1.27/Hospital/www/user_head_img/201805051009-33.jpg">';
+                    //$api.byId('tx').innerHTML = '<img src="http://192.168.1.27/www/user_head_img/201805051009-33.jpg">';
                     api.toast({
                         msg: '上传成功',
                         duration: 3000,
@@ -483,7 +492,7 @@
             });
         });
     }
-//生成随机数
+    //生成随机数
     function nub(minNum, maxNum) {
         switch (arguments.length) {
             case 1:
@@ -502,13 +511,16 @@
         api.openWin({
             name: 'sz',
             url: './shezhi.html',
+            reload: true,
             pageParam: {
                 name: 'test'
+
             }
         });
 
 
     }
+
     function fx() {
         api.openFrame({
             name: 'page2',

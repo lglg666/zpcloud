@@ -36,7 +36,7 @@
 
     <preference name="autoUpdate" value="true"/>
 
-    <preference name="smartUpdate" value="false"/>
+    <preference name="smartUpdate" value="true"/>
 
     <preference name="debug" value="true"/>
 
@@ -61,7 +61,12 @@
     <permission name="hardware"/>
 
     <preference name="softInputMode" value="auto"/>
-<!-- 短信验证 -->
+
+    <feature name="bMap">
+        <param name="android_api_key" value="PGTskDG56UMXwmrGa9Rhi4Ra1z0Yc5Uq"/>
+        <param name="ios_api_key" value="14B9YsQ4gWurUxiQiOSSnMHy5NayZEVl"/>
+    </feature>
+    <!-- 短信验证 -->
     <!-- <feature name="smsVerify">
         <param name="android_app_key" value="247d6fcfe1ce6"/>
         <param name="android_app_secret" value="33f820f80c44cbb619d4e4b199b9251a"/>

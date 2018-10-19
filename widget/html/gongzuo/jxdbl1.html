@@ -208,8 +208,8 @@
         el: ".dd",
         data: {
             inputtext: {
-              patientAdmissionDate:"2018-02-01",
-              recordDate:"2018-02-01",
+              patientAdmissionDate:getnewDate(),
+              recordDate:getnewDate(),
               patientSex:"1",
               patientMarriage:"0",
             }
@@ -217,7 +217,7 @@
         methods: {
             submit: function() {
                 console.log(JSON.stringify(this.inputtext));
-                var address = "/Hospital/index.php/api/ys/rotate_case_history";
+                var address = "/index.php/api/ys/rotate_case_history";
                 var token = H.getStorage('token');
                 var ajaxData = {
                     token: token,

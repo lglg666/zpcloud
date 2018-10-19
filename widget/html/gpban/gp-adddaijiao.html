@@ -53,7 +53,7 @@
             margin: 0;
             height: 2.5rem;
             line-height: 2.5rem;
-            font-size: 0.7rem;
+            font-size: 0.5rem;
         }
 
         option {
@@ -137,7 +137,7 @@
                     <option value=""  selected="selected">请选择</option>
                      <option :value="education.id" v-for="education in config.educations">{{education.name}}</option>
 
-      </select>
+                </select>
 
             </div>
 
@@ -202,7 +202,7 @@
                 //     $base.toast("密码不正确")
                 // }else{}
                 console.log("输入正确");
-                var address = "/Hospital/index.php/api/office/user_list";
+                var address = "/index.php/api/office/user_list";
                 var token = H.getStorage('token');
                 console.log(parseInt(this.inp));
                 var ajaxData = {

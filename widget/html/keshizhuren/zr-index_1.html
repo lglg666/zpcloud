@@ -219,7 +219,7 @@
 <script src="../../script/base.js"></script>
 <script>
     H.ready(function() {
-        var address = "/Hospital/index.php/api/user/index_info";
+        var address = "/index.php/api/user/index_info";
         var token = H.getStorage('token');
         var userid = H.getStorage("user_id");
         var user_role = H.getStorage("user_role");
@@ -234,12 +234,18 @@
             $("#rotate_type").html(ret.rotate_type);
             $("#time").html(ret.notice_info.time);
             $("#title").html(ret.notice_info.title);
-            if (ret.notice_num > 0) {
-                $("#notice_num").show();
-                $("#notice_num").html(ret.notice_num);
+            if (!ret.notice_info.title == null) {
+                $("#title").html(ret.notice_info.title);
             } else {
-
+                $("#title").html("暂时没有通知内容");
             }
+            //红点通知
+            // if (ret.notice_num > 0) {
+            //     $("#notice_num").show();
+            //     $("#notice_num").html(ret.notice_num);
+            // } else {
+            //
+            // }
 
 
             // $base.closeLoading();
@@ -268,7 +274,7 @@
     function tz() {
         var userid = H.getStorage("user_id");
 
-        var address = "/Hospital/index.php/api/user/update_user_time";
+        var address = "/index.php/api/user/update_user_time";
         var ajaxData = {
             userid: userid,
             key: "notice_time"
